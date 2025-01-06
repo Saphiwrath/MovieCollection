@@ -2,9 +2,13 @@
     <string name="app_name">MovieCollection</string>
 
     <!-- TOP APP BAR TITLES -->
-    <string name="home_screen_title">Home</string>
+    <string name="home_screen_title">My movies</string>
 
     <!-- ACCESSIBILITY DESCRIPTIONS -->
     <string name="favourites_button_desc">Favourites</string>
     <string name="navigate_up_button_desc">Go back</string>
+    <string name="account_button_desc">Account</string>
+    <string name="achievements_button_desc">Achievements</string>
+    <string name="settings_button_desc">Achievements</string>
+    <string name="add_movie_button_desc">Add movie</string>
 </resources>

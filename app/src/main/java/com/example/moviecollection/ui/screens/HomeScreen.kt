@@ -13,12 +13,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -31,20 +33,27 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.moviecollection.R
 import com.example.moviecollection.ui.StandardAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    navController: NavController
+) {
     Scaffold (
         topBar = {
             StandardAppBar(
                 title = stringResource(R.string.home_screen_title),
                 actions = {
                     FavouritesButton()
-                }
+                },
+                navigateUp = { navController.navigateUp() }
             )
+        },
+        floatingActionButton = {
+            AddMovieFloatingActionButton()
         },
     ) {paddingValues ->
         LazyVerticalGrid (
@@ -121,5 +130,21 @@ fun MovieCard() {
                 )
             }
         }
+    }
+}
+
+@Composable
+fun AddMovieFloatingActionButton(
+    onClick: () -> Unit = { /* TODO */ }
+) {
+    FloatingActionButton(
+        onClick = onClick,
+        containerColor = MaterialTheme.colorScheme.primary,
+        contentColor = MaterialTheme.colorScheme.onPrimary,
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.Add,
+            contentDescription = stringResource(R.string.add_movie_button_desc)
+        )
     }
 }

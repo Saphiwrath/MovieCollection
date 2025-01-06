@@ -16,9 +16,9 @@ import androidx.compose.ui.text.font.FontWeight
 import com.example.moviecollection.R
 
 @Composable
-fun NavigateUpButton() {
+fun NavigateUpButton(onClick: () -> Unit) {
    IconButton(
-       onClick = { /*TODO*/ }
+       onClick = onClick
    ) {
        Icon(
            imageVector = Icons.Outlined.ArrowBack,
@@ -32,6 +32,7 @@ fun NavigateUpButton() {
 fun StandardAppBar(
     title: String,
     actions: @Composable() (RowScope.() -> Unit),
+    navigateUp: () -> Unit
 ) {
     CenterAlignedTopAppBar(
         title = {
@@ -47,6 +48,6 @@ fun StandardAppBar(
             navigationIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
         ),
         actions = actions,
-        navigationIcon = { NavigateUpButton() }
+        navigationIcon = { NavigateUpButton(navigateUp) }
     )
 }
