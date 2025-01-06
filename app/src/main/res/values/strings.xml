@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MovieCollection</string>
+
+    <!-- TOP APP BAR TITLES -->
+    <string name="home_screen_title">Home</string>
+
+    <!-- ACCESSIBILITY DESCRIPTIONS -->
+    <string name="favourites_button_desc">Favourites</string>
+    <string name="navigate_up_button_desc">Go back</string>
+</resources>
