@@ -28,6 +28,8 @@ import com.example.moviecollection.R
 import com.example.moviecollection.ui.components.AddWatchSessionFloatingActionButton
 import com.example.moviecollection.ui.components.DetailsCardDataRow
 import com.example.moviecollection.ui.components.StandardAppBar
+import com.example.moviecollection.ui.components.ViewWatchSessionsFloatingActionButton
+import com.example.moviecollection.ui.navigation.NavigationRoute
 
 @Composable
 fun MovieDetailsScreen(
@@ -44,10 +46,10 @@ fun MovieDetailsScreen(
             )
         },
         floatingActionButton = {
-            AddWatchSessionFloatingActionButton(
-            /*TODO make sure when you click from this screen,
-            * the movie on this screen shows up already in the movie title field */
-            )
+            ViewWatchSessionsFloatingActionButton {
+                /* TODO */
+                navController.navigate(NavigationRoute.MovieWatchSessions.route)
+            }
         }
     ) {paddingValues ->
         val scrollState = rememberScrollState()

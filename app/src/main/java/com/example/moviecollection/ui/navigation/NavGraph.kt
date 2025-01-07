@@ -8,8 +8,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.moviecollection.ui.screens.AccountScreen
+import com.example.moviecollection.ui.screens.AddMovieScreen
 import com.example.moviecollection.ui.screens.HomeScreen
 import com.example.moviecollection.ui.screens.MovieDetailsScreen
+import com.example.moviecollection.ui.screens.MovieWatchSessionScreen
 import com.example.moviecollection.ui.screens.SettingsScreen
 import com.example.moviecollection.ui.screens.WatchSessionDetailsScreen
 import com.example.moviecollection.ui.viewmodels.SettingsViewModel
@@ -49,6 +51,14 @@ fun NavGraph(
                 actions = settingsViewModel.actions,
                 state = settingsState
             )
+        }
+
+        composable(NavigationRoute.MovieWatchSessions.route) {
+            MovieWatchSessionScreen(navController)
+        }
+
+        composable(NavigationRoute.AddMovie.route) {
+            AddMovieScreen(navController)
         }
 
     }

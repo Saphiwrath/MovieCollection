@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
 import com.example.moviecollection.ui.components.AddMovieFloatingActionButton
+import com.example.moviecollection.ui.components.FavouritesButton
 import com.example.moviecollection.ui.components.FilterButton
 import com.example.moviecollection.ui.components.MovieCard
 import com.example.moviecollection.ui.components.StandardAppBar
@@ -56,7 +57,7 @@ fun HomeScreen(
             )
         },
         floatingActionButton = {
-            AddMovieFloatingActionButton(/*TODO*/)
+            AddMovieFloatingActionButton { navController.navigate(NavigationRoute.AddMovie.route) }
         },
     ) {paddingValues ->
         LazyVerticalGrid (
@@ -73,18 +74,5 @@ fun HomeScreen(
                 )
             }
         }
-    }
-}
-
-@Composable
-fun FavouritesButton(onClick: () -> Unit = {}) {
-    IconButton(
-        onClick = onClick,
-    ) {
-        Icon(
-            imageVector = Icons.Outlined.Favorite,
-            contentDescription = stringResource(R.string.favourites_button_desc),
-            tint = MaterialTheme.colorScheme.onPrimaryContainer
-        )
     }
 }

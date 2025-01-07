@@ -18,6 +18,7 @@ import com.example.moviecollection.ui.components.AddWatchSessionFloatingActionBu
 import com.example.moviecollection.ui.components.FilterButton
 import com.example.moviecollection.ui.components.StandardAppBar
 import com.example.moviecollection.ui.components.WatchSessionCard
+import com.example.moviecollection.ui.components.WatchSessionLazyList
 import com.example.moviecollection.ui.navigation.NavigationRoute
 
 @Composable
@@ -48,25 +49,6 @@ fun AccountScreen(
         ){
             AccountCard()
             WatchSessionLazyList(navController)
-        }
-    }
-}
-
-
-@Composable
-fun WatchSessionLazyList(
-    navController: NavHostController
-) {
-    LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalAlignment = Alignment.Start
-    ) {
-        items(20) {
-            WatchSessionCard(
-                title = "title",
-                date = "12 gennaio",
-                onClick = {navController.navigate(NavigationRoute.WatchSessionDetails.route)},
-            )
         }
     }
 }

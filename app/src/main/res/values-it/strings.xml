@@ -7,6 +7,8 @@
     <string name="account_screen_title">Profilo utente</string>
     <string name="watch_session_details_title">Dettagli proiezione</string>
     <string name="settings_screen_title">Impostazioni</string>
+    <string name="movie_watch_sessions_screen_title">Proiezioni di </string>
+    <string name="add_movie_screen_title">Aggiungi film</string>
 
     <!-- ACCESSIBILITY DESCRIPTIONS -->
     <!-- Buttons of all types-->
@@ -23,6 +25,7 @@
     <string name="light_mode_button">Chiaro</string>
     <string name="dark_mode_button">Scuro</string>
     <string name="system_mode_button">Sistema</string>
+    <string name="view_watch_sessions_button">Visualizza proiezioni</string>
 
     <!-- Images -->
     <string name="movie_details_poster_desc">poster del film</string>
@@ -41,4 +44,11 @@
 
     <string name="theme_label">Tema</string>
     <string name="username_label">Nome utente</string>
+
+    <string name="movie_title_label">Titolo</string>
+    <string name="movie_year_label">Anno</string>
+    <string name="movie_director_label">Regista</string>
+    <string name="movie_actors_label">Attori</string>
+    <string name="movie_genre_label">Genere/i</string>
+    <string name="movie_format_label">Formato</string>
 </resources>

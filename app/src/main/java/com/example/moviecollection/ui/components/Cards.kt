@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -81,7 +82,7 @@ fun MovieCard(
                 )
                 IconButton(onClick = favorite) {
                     Icon(
-                        imageVector = Icons.Outlined.Favorite,
+                        imageVector = Icons.Outlined.FavoriteBorder,
                         contentDescription = stringResource(R.string.favorite_movie_button_desc)
                     )
                 }

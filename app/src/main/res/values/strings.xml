@@ -7,6 +7,8 @@
     <string name="account_screen_title">Account</string>
     <string name="watch_session_details_title">Screening details</string>
     <string name="settings_screen_title">Settings</string>
+    <string name="movie_watch_sessions_screen_title">Screenings of </string>
+    <string name="add_movie_screen_title">Add movie</string>
 
     <!-- ACCESSIBILITY DESCRIPTIONS -->
     <!-- Buttons of all types-->
@@ -23,6 +25,7 @@
     <string name="light_mode_button">Light</string>
     <string name="dark_mode_button">Dark</string>
     <string name="system_mode_button">System</string>
+    <string name="view_watch_sessions_button">View screenings</string>
 
     <!-- Images -->
     <string name="movie_details_poster_desc">Movie poster</string>
@@ -41,5 +44,12 @@
 
     <string name="theme_label">Theme</string>
     <string name="username_label">Username</string>
+
+    <string name="movie_title_label">Title</string>
+    <string name="movie_year_label">Year</string>
+    <string name="movie_director_label">Director</string>
+    <string name="movie_actors_label">Actors</string>
+    <string name="movie_genre_label">Genre(s)</string>
+    <string name="movie_format_label">Format</string>
 
 </resources>

@@ -1,6 +1,8 @@
 package com.example.moviecollection.ui.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.List
@@ -14,9 +16,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.moviecollection.R
+import com.example.moviecollection.ui.navigation.NavigationRoute
 
 @Composable
 fun NavigateUpButton(onClick: () -> Unit) {
@@ -65,4 +71,22 @@ fun StandardAppBar(
         actions = actions,
         navigationIcon = { NavigateUpButton(navigateUp) }
     )
+}
+
+@Composable
+fun WatchSessionLazyList(
+    navController: NavHostController
+) {
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.Start
+    ) {
+        items(20) {
+            WatchSessionCard(
+                title = "title",
+                date = "12 gennaio",
+                onClick = {navController.navigate(NavigationRoute.WatchSessionDetails.route)},
+            )
+        }
+    }
 }

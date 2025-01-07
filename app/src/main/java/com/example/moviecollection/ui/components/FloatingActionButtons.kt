@@ -2,6 +2,8 @@ package com.example.moviecollection.ui.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
+import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material.icons.outlined.Movie
 import androidx.compose.material.icons.outlined.MovieFilter
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -37,6 +39,38 @@ fun AddMovieFloatingActionButton(
     ) {
         Icon(
             imageVector = Icons.Outlined.Add,
+            contentDescription = stringResource(R.string.add_movie_button_desc)
+        )
+    }
+}
+
+@Composable
+fun ViewWatchSessionsFloatingActionButton (
+    onClick: () -> Unit = {}
+) {
+    FloatingActionButton(
+        onClick = onClick,
+        containerColor = MaterialTheme.colorScheme.primary,
+        contentColor = MaterialTheme.colorScheme.onPrimary,
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.Movie,
+            contentDescription = stringResource(R.string.add_movie_button_desc)
+        )
+    }
+}
+
+@Composable
+fun ConfirmFloatingActionButton(
+    onClick: () -> Unit = {}
+) {
+    FloatingActionButton(
+        onClick = onClick,
+        containerColor = MaterialTheme.colorScheme.primary,
+        contentColor = MaterialTheme.colorScheme.onPrimary,
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.Check,
             contentDescription = stringResource(R.string.add_movie_button_desc)
         )
     }
