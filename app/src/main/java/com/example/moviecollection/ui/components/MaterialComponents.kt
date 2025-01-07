@@ -1,8 +1,9 @@
-package com.example.moviecollection.ui
+package com.example.moviecollection.ui.components
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBack
+import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.outlined.MovieFilter
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,6 +28,18 @@ fun NavigateUpButton(onClick: () -> Unit) {
            contentDescription = stringResource(R.string.navigate_up_button_desc),
        )
    }
+}
+
+@Composable
+fun FilterButton(onClick: () -> Unit = {}) {
+    IconButton(
+        onClick = onClick
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.List,
+            contentDescription = stringResource(R.string.navigate_up_button_desc),
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -32,7 +33,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
-import com.example.moviecollection.ui.StandardAppBar
+import com.example.moviecollection.ui.components.FilterButton
+import com.example.moviecollection.ui.components.StandardAppBar
 import com.example.moviecollection.ui.navigation.NavigationRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,13 +47,14 @@ fun HomeScreen(
             StandardAppBar(
                 title = stringResource(R.string.home_screen_title),
                 actions = {
-                    FavouritesButton()
+                    FavouritesButton(/*TODO*/)
+                    FilterButton(/*TODO*/)
                 },
                 navigateUp = { navController.navigateUp() }
             )
         },
         floatingActionButton = {
-            AddMovieFloatingActionButton()
+            AddMovieFloatingActionButton(/*TODO*/)
         },
     ) {paddingValues ->
         LazyVerticalGrid (
@@ -62,14 +65,17 @@ fun HomeScreen(
             modifier = Modifier.padding(paddingValues)
         ) {
             items(30) {
-                MovieCard { navController.navigate(NavigationRoute.MovieDetails.route) }
+                MovieCard (
+                    onClick = { navController.navigate(NavigationRoute.MovieDetails.route) },
+                    favorite = {/*TODO*/}
+                )
             }
         }
     }
 }
 
 @Composable
-fun FavouritesButton(onClick: () -> Unit = { /* TODO */ }) {
+fun FavouritesButton(onClick: () -> Unit = {}) {
     IconButton(
         onClick = onClick,
     ) {
@@ -84,7 +90,8 @@ fun FavouritesButton(onClick: () -> Unit = { /* TODO */ }) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieCard(
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
+    favorite: () -> Unit = {}
 ) {
     Card(
         colors = CardDefaults.cardColors(
@@ -103,32 +110,45 @@ fun MovieCard(
                 .padding(16.dp)
                 .fillMaxSize()
         ) {
-            Image(
-                Icons.Outlined.Image ,
-                contentDescription = "Movie poster",
-                modifier = Modifier,
-                alignment = Alignment.Center,
-            )
-            Text(
-                "Movie title",
-                style = MaterialTheme.typography.titleMedium,
-                textAlign = TextAlign.Left,
-                fontWeight = FontWeight.Bold,
+            Row (
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ){
+                /*TODO add actual image if present*/
+                if (true) {
+                    Image(
+                        Icons.Outlined.Image ,
+                        contentDescription = "Movie poster",
+                        modifier = Modifier.size(70.dp),
+                        alignment = Alignment.Center,
+                    )
+                }
+            }
+            Row (
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
-            )
-            Text(
-                "genre genre genre",
-                textAlign = TextAlign.Left,
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.SemiBold
-            )
+            ) {
+                Text(
+                    "Movie title",
+                    style = MaterialTheme.typography.titleMedium,
+                    textAlign = TextAlign.Left,
+                    fontWeight = FontWeight.Bold,
+                )
+                IconButton(onClick = favorite) {
+                    Icon(
+                        imageVector = Icons.Outlined.Favorite,
+                        contentDescription = stringResource(R.string.favorite_movie_button_desc)
+                    )
+                }
+            }
         }
     }
 }
 
 @Composable
 fun AddMovieFloatingActionButton(
-    onClick: () -> Unit = { /* TODO */ }
+    onClick: () -> Unit = {}
 ) {
     FloatingActionButton(
         onClick = onClick,

@@ -4,6 +4,8 @@
     <!-- TOP APP BAR TITLES -->
     <string name="home_screen_title">I miei film</string>
     <string name="movie_details_screen_title">Dettagli film</string>
+    <string name="account_screen_title">Profilo utente</string>
+    <string name="watch_session_details_title">Dettagli proiezione</string>
 
     <!-- ACCESSIBILITY DESCRIPTIONS -->
     <!-- Buttons of all types-->
@@ -14,7 +16,18 @@
     <string name="settings_button_desc">Impostazioni</string>
     <string name="add_movie_button_desc">Aggiungi film</string>
     <string name="add_watch_session_button_desc">Aggiungi sessione</string>
+    <string name="filter_button_desc">Filtra</string>
+    <string name="home_button_desc">Vai ai miei film</string>
+    <string name="favorite_movie_button_desc">Aggiungi film ai preferiti</string>
 
     <!-- Images -->
-    <string name="movie_details_poster_desc">Poster del film</string>
+    <string name="movie_details_poster_desc">poster del film</string>
+    <string name="profile_image">Immagine di profilo</string>
+
+    <!-- Labels -->
+    <string name="genre_label">genere</string>
+    <string name="director_label">diretto da</string>
+    <string name="actors_label">con</string>
+    <string name="year_label">anno</string>
+    <string name="format_label">formato</string>
 </resources>

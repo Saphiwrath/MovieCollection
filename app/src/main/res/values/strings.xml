@@ -4,6 +4,8 @@
     <!-- TOP APP BAR TITLES -->
     <string name="home_screen_title">My movies</string>
     <string name="movie_details_screen_title">Movie details</string>
+    <string name="account_screen_title">Account</string>
+    <string name="watch_session_details_title">Screening details</string>
 
     <!-- ACCESSIBILITY DESCRIPTIONS -->
     <!-- Buttons of all types-->
@@ -11,10 +13,21 @@
     <string name="navigate_up_button_desc">Go back</string>
     <string name="account_button_desc">Account</string>
     <string name="achievements_button_desc">Achievements</string>
-    <string name="settings_button_desc">Achievements</string>
+    <string name="settings_button_desc">Settings</string>
     <string name="add_movie_button_desc">Add movie</string>
     <string name="add_watch_session_button_desc">Add watch session</string>
+    <string name="filter_button_desc">Filter</string>
+    <string name="home_button_desc">Go to my movies</string>
+    <string name="favorite_movie_button_desc">Add movie to favorites</string>
 
     <!-- Images -->
     <string name="movie_details_poster_desc">Movie poster</string>
+    <string name="profile_image">Profile picture</string>
+
+    <!-- Labels -->
+    <string name="genre_label">genre</string>
+    <string name="director_label">directed by</string>
+    <string name="actors_label">starring</string>
+    <string name="year_label">year</string>
+    <string name="format_label">format</string>
 </resources>

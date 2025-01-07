@@ -6,6 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.moviecollection.ui.screens.AccountScreen
 import com.example.moviecollection.ui.screens.HomeScreen
 import com.example.moviecollection.ui.screens.MovieDetailsScreen
 
@@ -25,6 +26,10 @@ fun NavGraph(
 
         composable(NavigationRoute.MovieDetails.route) {
             MovieDetailsScreen(navController)
+        }
+
+        composable(NavigationRoute.Account.route) {
+            AccountScreen(navController)
         }
     }
 }

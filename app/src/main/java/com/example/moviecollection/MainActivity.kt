@@ -18,6 +18,7 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.EmojiEvents
+import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -37,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.moviecollection.ui.navigation.NavGraph
+import com.example.moviecollection.ui.navigation.NavigationRoute
 import com.example.moviecollection.ui.screens.HomeScreen
 import com.example.moviecollection.ui.theme.MovieCollectionTheme
 
@@ -69,14 +71,19 @@ class MainActivity : ComponentActivity() {
                                         contentDescription = stringResource(R.string.achievements_button_desc),
                                     )
                                     NavBarIconButton(
+                                        onClick = { navController.navigate(NavigationRoute.Account.route) },
+                                        imageVector = Icons.Outlined.AccountCircle,
+                                        contentDescription = stringResource(R.string.account_button_desc)
+                                    )
+                                    NavBarIconButton(
                                         onClick = { /* TODO */ },
                                         imageVector = Icons.Outlined.Settings,
                                         contentDescription = stringResource(R.string.settings_button_desc),
                                     )
                                     NavBarIconButton(
-                                        onClick = { /*TODO*/ },
-                                        imageVector = Icons.Outlined.AccountCircle,
-                                        contentDescription = stringResource(R.string.account_button_desc)
+                                        onClick = { navController.navigate(NavigationRoute.Home.route)},
+                                        imageVector = Icons.Outlined.Home,
+                                        contentDescription = stringResource(R.string.home_screen_title)
                                     )
                                 }
                             }
