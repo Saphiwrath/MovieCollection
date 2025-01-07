@@ -33,7 +33,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
+import com.example.moviecollection.ui.components.AddMovieFloatingActionButton
 import com.example.moviecollection.ui.components.FilterButton
+import com.example.moviecollection.ui.components.MovieCard
 import com.example.moviecollection.ui.components.StandardAppBar
 import com.example.moviecollection.ui.navigation.NavigationRoute
 
@@ -83,81 +85,6 @@ fun FavouritesButton(onClick: () -> Unit = {}) {
             imageVector = Icons.Outlined.Favorite,
             contentDescription = stringResource(R.string.favourites_button_desc),
             tint = MaterialTheme.colorScheme.onPrimaryContainer
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MovieCard(
-    onClick: () -> Unit = {},
-    favorite: () -> Unit = {}
-) {
-    Card(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer,
-            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
-        ),
-        modifier = Modifier
-            .size(150.dp)
-            .fillMaxWidth(),
-        onClick = onClick,
-    ) {
-        Column (
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxSize()
-        ) {
-            Row (
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ){
-                /*TODO add actual image if present*/
-                if (true) {
-                    Image(
-                        Icons.Outlined.Image ,
-                        contentDescription = "Movie poster",
-                        modifier = Modifier.size(70.dp),
-                        alignment = Alignment.Center,
-                    )
-                }
-            }
-            Row (
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    "Movie title",
-                    style = MaterialTheme.typography.titleMedium,
-                    textAlign = TextAlign.Left,
-                    fontWeight = FontWeight.Bold,
-                )
-                IconButton(onClick = favorite) {
-                    Icon(
-                        imageVector = Icons.Outlined.Favorite,
-                        contentDescription = stringResource(R.string.favorite_movie_button_desc)
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun AddMovieFloatingActionButton(
-    onClick: () -> Unit = {}
-) {
-    FloatingActionButton(
-        onClick = onClick,
-        containerColor = MaterialTheme.colorScheme.primary,
-        contentColor = MaterialTheme.colorScheme.onPrimary,
-    ) {
-        Icon(
-            imageVector = Icons.Outlined.Add,
-            contentDescription = stringResource(R.string.add_movie_button_desc)
         )
     }
 }

@@ -18,6 +18,14 @@ sealed class NavigationRoute(
         route = "AccountScreen"
     )
 
+    data object WatchSessionDetails: NavigationRoute(
+        route = "WatchSessionDetailsScreen"
+    )
+
+    data object Settings: NavigationRoute(
+        route = "SettingsScreen"
+    )
+
     companion object {
         val routes = setOf(Home, NavigationRoute)
     }

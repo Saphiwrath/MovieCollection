@@ -6,6 +6,7 @@
     <string name="movie_details_screen_title">Dettagli film</string>
     <string name="account_screen_title">Profilo utente</string>
     <string name="watch_session_details_title">Dettagli proiezione</string>
+    <string name="settings_screen_title">Impostazioni</string>
 
     <!-- ACCESSIBILITY DESCRIPTIONS -->
     <!-- Buttons of all types-->
@@ -19,6 +20,9 @@
     <string name="filter_button_desc">Filtra</string>
     <string name="home_button_desc">Vai ai miei film</string>
     <string name="favorite_movie_button_desc">Aggiungi film ai preferiti</string>
+    <string name="light_mode_button">Chiaro</string>
+    <string name="dark_mode_button">Scuro</string>
+    <string name="system_mode_button">Sistema</string>
 
     <!-- Images -->
     <string name="movie_details_poster_desc">poster del film</string>
@@ -30,4 +34,10 @@
     <string name="actors_label">con</string>
     <string name="year_label">anno</string>
     <string name="format_label">formato</string>
+
+    <string name="place_label">luogo</string>
+    <string name="date_label">data</string>
+    <string name="notes_label">note</string>
+
+    <string name="theme_label">Tema</string>
 </resources>

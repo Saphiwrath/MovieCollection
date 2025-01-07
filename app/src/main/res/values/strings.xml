@@ -6,6 +6,7 @@
     <string name="movie_details_screen_title">Movie details</string>
     <string name="account_screen_title">Account</string>
     <string name="watch_session_details_title">Screening details</string>
+    <string name="settings_screen_title">Settings</string>
 
     <!-- ACCESSIBILITY DESCRIPTIONS -->
     <!-- Buttons of all types-->
@@ -19,6 +20,9 @@
     <string name="filter_button_desc">Filter</string>
     <string name="home_button_desc">Go to my movies</string>
     <string name="favorite_movie_button_desc">Add movie to favorites</string>
+    <string name="light_mode_button">Light</string>
+    <string name="dark_mode_button">Dark</string>
+    <string name="system_mode_button">System</string>
 
     <!-- Images -->
     <string name="movie_details_poster_desc">Movie poster</string>
@@ -30,4 +34,11 @@
     <string name="actors_label">starring</string>
     <string name="year_label">year</string>
     <string name="format_label">format</string>
+
+    <string name="place_label">place</string>
+    <string name="date_label">date</string>
+    <string name="notes_label">notes</string>
+
+    <string name="theme_label">Theme</string>
+
 </resources>

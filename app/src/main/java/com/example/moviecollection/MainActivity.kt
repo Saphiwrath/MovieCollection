@@ -3,6 +3,7 @@ package com.example.moviecollection
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,6 +29,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -36,18 +38,29 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
+import com.example.moviecollection.data.models.Theme
 import com.example.moviecollection.ui.navigation.NavGraph
 import com.example.moviecollection.ui.navigation.NavigationRoute
 import com.example.moviecollection.ui.screens.HomeScreen
 import com.example.moviecollection.ui.theme.MovieCollectionTheme
+import com.example.moviecollection.ui.viewmodels.SettingsViewModel
+import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MovieCollectionTheme {
-                // A surface container using the 'background' color from the theme
+            val settingsViewModel = koinViewModel<SettingsViewModel>()
+            val themeState by settingsViewModel.themeState.collectAsStateWithLifecycle()
+            MovieCollectionTheme (
+                darkTheme = when (themeState.theme) {
+                    Theme.Light -> false
+                    Theme.Dark -> true
+                    Theme.System -> isSystemInDarkTheme()
+                }
+            ){
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -76,7 +89,7 @@ class MainActivity : ComponentActivity() {
                                         contentDescription = stringResource(R.string.account_button_desc)
                                     )
                                     NavBarIconButton(
-                                        onClick = { /* TODO */ },
+                                        onClick = { navController.navigate(NavigationRoute.Settings.route) },
                                         imageVector = Icons.Outlined.Settings,
                                         contentDescription = stringResource(R.string.settings_button_desc),
                                     )

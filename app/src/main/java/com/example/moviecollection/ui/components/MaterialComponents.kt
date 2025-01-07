@@ -66,19 +66,3 @@ fun StandardAppBar(
         navigationIcon = { NavigateUpButton(navigateUp) }
     )
 }
-
-@Composable
-fun AddWatchSessionFloatingActionButton(
-    onClick: () -> Unit = {},
-) {
-    FloatingActionButton(
-        onClick = onClick,
-        contentColor = MaterialTheme.colorScheme.onPrimary,
-        containerColor = MaterialTheme.colorScheme.primary,
-    ) {
-        Icon(
-            imageVector = Icons.Outlined.MovieFilter,
-            contentDescription = stringResource(R.string.add_watch_session_button_desc)
-        )
-    }
-}
