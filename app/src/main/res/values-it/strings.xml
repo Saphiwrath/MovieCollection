@@ -3,12 +3,18 @@
 
     <!-- TOP APP BAR TITLES -->
     <string name="home_screen_title">I miei film</string>
+    <string name="movie_details_screen_title">Dettagli film</string>
 
     <!-- ACCESSIBILITY DESCRIPTIONS -->
+    <!-- Buttons of all types-->
     <string name="favourites_button_desc">Preferiti</string>
     <string name="navigate_up_button_desc">Torna indietro</string>
     <string name="account_button_desc">Account</string>
     <string name="achievements_button_desc">Trofei</string>
     <string name="settings_button_desc">Impostazioni</string>
     <string name="add_movie_button_desc">Aggiungi film</string>
+    <string name="add_watch_session_button_desc">Aggiungi sessione</string>
+
+    <!-- Images -->
+    <string name="movie_details_poster_desc">Poster del film</string>
 </resources>

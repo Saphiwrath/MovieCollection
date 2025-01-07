@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountCircle
@@ -29,6 +31,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
@@ -60,11 +64,6 @@ class MainActivity : ComponentActivity() {
                                     modifier = Modifier.fillMaxSize()
                                 ){
                                     NavBarIconButton(
-                                        onClick = { /*TODO*/ },
-                                        imageVector = Icons.Outlined.AccountCircle,
-                                        contentDescription = stringResource(R.string.account_button_desc)
-                                    )
-                                    NavBarIconButton(
                                         onClick = { /* TODO */ },
                                         imageVector = Icons.Outlined.EmojiEvents,
                                         contentDescription = stringResource(R.string.achievements_button_desc),
@@ -73,6 +72,11 @@ class MainActivity : ComponentActivity() {
                                         onClick = { /* TODO */ },
                                         imageVector = Icons.Outlined.Settings,
                                         contentDescription = stringResource(R.string.settings_button_desc),
+                                    )
+                                    NavBarIconButton(
+                                        onClick = { /*TODO*/ },
+                                        imageVector = Icons.Outlined.AccountCircle,
+                                        contentDescription = stringResource(R.string.account_button_desc)
                                     )
                                 }
                             }
@@ -98,11 +102,11 @@ fun NavBarIconButton(
     Column (
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.wrapContentWidth()
     ) {
         IconButton(
             onClick = onClick,
             modifier = Modifier.wrapContentSize(unbounded = true),
-
         ) {
             Icon(
                 imageVector = imageVector,
@@ -112,7 +116,10 @@ fun NavBarIconButton(
         }
         Text(
             text = contentDescription,
-            style = MaterialTheme.typography.labelMedium
+            style = MaterialTheme.typography.labelMedium,
+            modifier = Modifier.width(100.dp),
+            overflow = TextOverflow.Visible,
+            textAlign = TextAlign.Center
         )
     }
 }

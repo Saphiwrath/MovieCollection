@@ -10,7 +10,11 @@ sealed class NavigationRoute(
         route = "HomeScreen"
     )
 
+    data object MovieDetails: NavigationRoute(
+        route = "MovieDetailsScreen"
+    )
+
     companion object {
-        val routes = setOf(Home)
+        val routes = setOf(Home, NavigationRoute)
     }
 }

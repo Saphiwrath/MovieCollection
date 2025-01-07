@@ -3,8 +3,10 @@ package com.example.moviecollection.ui
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBack
+import androidx.compose.material.icons.outlined.MovieFilter
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -50,4 +52,20 @@ fun StandardAppBar(
         actions = actions,
         navigationIcon = { NavigateUpButton(navigateUp) }
     )
+}
+
+@Composable
+fun AddWatchSessionFloatingActionButton(
+    onClick: () -> Unit = {},
+) {
+    FloatingActionButton(
+        onClick = onClick,
+        contentColor = MaterialTheme.colorScheme.onPrimary,
+        containerColor = MaterialTheme.colorScheme.primary,
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.MovieFilter,
+            contentDescription = stringResource(R.string.add_watch_session_button_desc)
+        )
+    }
 }

@@ -4,8 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,7 +14,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Image
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -33,14 +30,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.moviecollection.R
 import com.example.moviecollection.ui.StandardAppBar
+import com.example.moviecollection.ui.navigation.NavigationRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    navController: NavController
+    navController: NavHostController
 ) {
     Scaffold (
         topBar = {
@@ -64,7 +62,7 @@ fun HomeScreen(
             modifier = Modifier.padding(paddingValues)
         ) {
             items(30) {
-                MovieCard()
+                MovieCard { navController.navigate(NavigationRoute.MovieDetails.route) }
             }
         }
     }
@@ -83,19 +81,23 @@ fun FavouritesButton(onClick: () -> Unit = { /* TODO */ }) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MovieCard() {
-    Card (
+fun MovieCard(
+    onClick: () -> Unit = {}
+) {
+    Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.secondaryContainer,
             contentColor = MaterialTheme.colorScheme.onSecondaryContainer
         ),
         modifier = Modifier
             .size(150.dp)
-            .fillMaxWidth()
+            .fillMaxWidth(),
+        onClick = onClick,
     ) {
         Column (
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .padding(16.dp)
@@ -107,28 +109,19 @@ fun MovieCard() {
                 modifier = Modifier,
                 alignment = Alignment.Center,
             )
-            Spacer(modifier = Modifier.size(8.dp))
             Text(
                 "Movie title",
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.titleMedium,
                 textAlign = TextAlign.Left,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.size(8.dp))
-            Row (
-                verticalAlignment = Alignment.Top,
-                horizontalArrangement = Arrangement.Start,
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Text(
-                    "genre genre genre",
-                    textAlign = TextAlign.Left,
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.SemiBold
-                )
-            }
+            Text(
+                "genre genre genre",
+                textAlign = TextAlign.Left,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.SemiBold
+            )
         }
     }
 }
