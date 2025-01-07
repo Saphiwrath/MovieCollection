@@ -43,11 +43,11 @@ fun NavGraph(
 
         composable(NavigationRoute.Settings.route) {
             val settingsViewModel = koinViewModel<SettingsViewModel>()
-            val themeState by settingsViewModel.themeState.collectAsStateWithLifecycle()
+            val settingsState by settingsViewModel.state.collectAsStateWithLifecycle()
             SettingsScreen(
                 navController = navController,
                 actions = settingsViewModel.actions,
-                themeState = themeState
+                state = settingsState
             )
         }
 

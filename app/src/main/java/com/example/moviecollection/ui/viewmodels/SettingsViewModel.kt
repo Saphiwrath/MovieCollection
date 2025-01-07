@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-data class ThemeState(
+data class SettingsState(
     val theme: Theme
 )
 
@@ -21,10 +21,10 @@ interface SettingsActions {
 class SettingsViewModel(
     private val repository: SettingsRepository
 ) : ViewModel() {
-    val themeState = repository.theme.map { ThemeState(it) }.stateIn(
+    val state = repository.theme.map { SettingsState(it) }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(),
-        initialValue = ThemeState(Theme.System)
+        initialValue = SettingsState(Theme.System)
     )
 
     val actions = object : SettingsActions {

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
@@ -20,18 +21,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
 import com.example.moviecollection.data.models.Theme
+import com.example.moviecollection.ui.components.SettingsLabelText
 import com.example.moviecollection.ui.components.StandardAppBar
+import com.example.moviecollection.ui.components.StandardTextField
 import com.example.moviecollection.ui.viewmodels.SettingsActions
-import com.example.moviecollection.ui.viewmodels.ThemeState
+import com.example.moviecollection.ui.viewmodels.SettingsState
 
 @Composable
 fun SettingsScreen(
     navController: NavHostController,
     actions: SettingsActions,
-    themeState: ThemeState
+    state: SettingsState
 ) {
     Scaffold (
         topBar = {
@@ -44,29 +48,48 @@ fun SettingsScreen(
             )
         }
     ){paddingValues ->
+        val rowSpacedBy = 20.dp
         val scrollState = rememberScrollState()
         Column (
+            verticalArrangement = Arrangement.spacedBy(15.dp),
             modifier = Modifier
                 .padding(paddingValues)
+                .padding(12.dp)
                 .fillMaxSize()
                 .verticalScroll(scrollState)
         ){
-            Row (
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .selectableGroup()
-            ){
-                Text(
-                    text = stringResource(R.string.theme_label),
-                    style = MaterialTheme.typography.labelMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
+            Row(
+                verticalAlignment = Alignment.Top,
+                horizontalArrangement = Arrangement.spacedBy(rowSpacedBy),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                SettingsLabelText(
+                    text = stringResource(R.string.theme_label)
                 )
-                Theme.entries.forEach {theme ->
-                    RadioButtonRow(theme = theme, actions = actions, state = themeState)
+                Column(
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.Start,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .selectableGroup()
+                ) {
+                    Theme.entries.forEach { theme ->
+                        RadioButtonRow(theme = theme, actions = actions, state = state)
+                    }
                 }
+            }
+            Row(
+                verticalAlignment = Alignment.Top,
+                horizontalArrangement = Arrangement.spacedBy(rowSpacedBy),
+                modifier = Modifier.fillMaxSize()
+            ) {
+                SettingsLabelText(
+                    text = stringResource(R.string.username_label)
+                )
+                StandardTextField(
+                    value = "",
+                    onValueChange = {value -> /*TODO*/}
+                )
             }
         }
     }
@@ -76,7 +99,7 @@ fun SettingsScreen(
 fun RadioButtonRow(
     theme: Theme,
     actions: SettingsActions,
-    state: ThemeState
+    state: SettingsState
 ) {
     Row (
         modifier = Modifier

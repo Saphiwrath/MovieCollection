@@ -53,9 +53,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val settingsViewModel = koinViewModel<SettingsViewModel>()
-            val themeState by settingsViewModel.themeState.collectAsStateWithLifecycle()
+            val settingsState by settingsViewModel.state.collectAsStateWithLifecycle()
             MovieCollectionTheme (
-                darkTheme = when (themeState.theme) {
+                darkTheme = when (settingsState.theme) {
                     Theme.Light -> false
                     Theme.Dark -> true
                     Theme.System -> isSystemInDarkTheme()
