@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
 import com.example.moviecollection.data.models.Theme
+import com.example.moviecollection.ui.components.RadioButtonRow
 import com.example.moviecollection.ui.components.SettingsLabelText
 import com.example.moviecollection.ui.components.StandardAppBar
 import com.example.moviecollection.ui.components.StandardTextField
@@ -74,7 +75,15 @@ fun SettingsScreen(
                         .selectableGroup()
                 ) {
                     Theme.entries.forEach { theme ->
-                        RadioButtonRow(theme = theme, actions = actions, state = state)
+                        RadioButtonRow(
+                            selected = (theme == state.theme),
+                            onCLick = {actions.changeTheme(theme)},
+                            text = when (theme) {
+                                Theme.Light -> stringResource(R.string.light_mode_button)
+                                Theme.Dark -> stringResource(R.string.dark_mode_button)
+                                Theme.System -> stringResource(R.string.system_mode_button)
+                            },
+                        )
                     }
                 }
             }
@@ -92,35 +101,5 @@ fun SettingsScreen(
                 )
             }
         }
-    }
-}
-
-@Composable
-fun RadioButtonRow(
-    theme: Theme,
-    actions: SettingsActions,
-    state: SettingsState
-) {
-    Row (
-        modifier = Modifier
-            .selectable(
-                selected = (theme == state.theme),
-                onClick = {actions.changeTheme(theme)},
-                role = Role.RadioButton
-            ),
-    ){
-        RadioButton(
-            selected = (theme == state.theme),
-            onClick = null
-        )
-        Text(
-            text = when (theme) {
-                Theme.Light -> stringResource(R.string.light_mode_button)
-                Theme.Dark -> stringResource(R.string.dark_mode_button)
-                Theme.System -> stringResource(R.string.system_mode_button)
-            },
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface
-        )
     }
 }

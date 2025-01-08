@@ -22,14 +22,3 @@ fun SettingsLabelText(
         modifier = androidx.compose.ui.Modifier.width(labelWidth)
     )
 }
-
-@Composable
-fun StandardTextField(
-    value: String,
-    onValueChange: (String) -> Unit = {}
-) {
-    OutlinedTextField(
-        value = "",
-        onValueChange = onValueChange
-    )
-}

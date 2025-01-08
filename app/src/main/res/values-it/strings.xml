@@ -26,6 +26,7 @@
     <string name="dark_mode_button">Scuro</string>
     <string name="system_mode_button">Sistema</string>
     <string name="view_watch_sessions_button">Visualizza proiezioni</string>
+    <string name="drop_down_actors">Espandi lista attori</string>
 
     <!-- Images -->
     <string name="movie_details_poster_desc">poster del film</string>
@@ -51,4 +52,10 @@
     <string name="movie_actors_label">Attori</string>
     <string name="movie_genre_label">Genere/i</string>
     <string name="movie_format_label">Formato</string>
+
+    <!-- Formats -->
+    <string name="dvd">DVD</string>
+    <string name="bluray">Blu-Ray</string>
+    <string name="vhs">VHS</string>
+    <string name="digital">Digitale</string>
 </resources>

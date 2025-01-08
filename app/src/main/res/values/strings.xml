@@ -26,6 +26,7 @@
     <string name="dark_mode_button">Dark</string>
     <string name="system_mode_button">System</string>
     <string name="view_watch_sessions_button">View screenings</string>
+    <string name="drop_down_actors">Expand actor list</string>
 
     <!-- Images -->
     <string name="movie_details_poster_desc">Movie poster</string>
@@ -52,4 +53,9 @@
     <string name="movie_genre_label">Genre(s)</string>
     <string name="movie_format_label">Format</string>
 
+    <!-- Formats -->
+    <string name="dvd">DVD</string>
+    <string name="bluray">Blu-Ray</string>
+    <string name="vhs">VHS</string>
+    <string name="digital">Digital</string>
 </resources>
