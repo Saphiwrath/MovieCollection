@@ -36,7 +36,7 @@ fun AccountScreen(
             )
         },
         floatingActionButton = {
-            AddWatchSessionFloatingActionButton(/*TODO*/)
+            AddWatchSessionFloatingActionButton{ navController.navigate(NavigationRoute.AddWatchSession.route) }
         }
     ) {paddingValues->
         Column (

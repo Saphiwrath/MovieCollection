@@ -15,6 +15,7 @@ import com.example.moviecollection.R
 import com.example.moviecollection.ui.components.AddWatchSessionFloatingActionButton
 import com.example.moviecollection.ui.components.StandardAppBar
 import com.example.moviecollection.ui.components.WatchSessionLazyList
+import com.example.moviecollection.ui.navigation.NavigationRoute
 
 @Composable
 fun MovieWatchSessionScreen(
@@ -29,10 +30,10 @@ fun MovieWatchSessionScreen(
             )
         },
         floatingActionButton = {
-            AddWatchSessionFloatingActionButton(
-                /*TODO make sure when you click from this screen,
-                * the movie on this screen shows up already in the movie title field */
-            )
+            AddWatchSessionFloatingActionButton{
+                /*TODO make sure when you click from this screen it autocompletes the title field*/
+                navController.navigate(NavigationRoute.AddWatchSession.route)
+            }
         }
     ){paddingValues ->
         Column (

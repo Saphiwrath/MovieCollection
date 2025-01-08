@@ -33,6 +33,9 @@ sealed class NavigationRoute(
     data object AddMovie: NavigationRoute(
         route = "AddMovieScreen"
     )
+    data object AddWatchSession: NavigationRoute(
+        route = "AddWatchSessionScreen"
+    )
 
     companion object {
         val routes = setOf(Home, NavigationRoute)

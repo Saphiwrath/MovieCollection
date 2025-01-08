@@ -9,6 +9,7 @@
     <string name="settings_screen_title">Settings</string>
     <string name="movie_watch_sessions_screen_title">Screenings of </string>
     <string name="add_movie_screen_title">Add movie</string>
+    <string name="add_watch_session_title">Add screening</string>
 
     <!-- ACCESSIBILITY DESCRIPTIONS -->
     <!-- Buttons of all types-->
@@ -27,6 +28,7 @@
     <string name="system_mode_button">System</string>
     <string name="view_watch_sessions_button">View screenings</string>
     <string name="drop_down_actors">Expand actor list</string>
+    <string name="drop_down_movies">Expand movie title list</string>
 
     <!-- Images -->
     <string name="movie_details_poster_desc">Movie poster</string>
@@ -52,6 +54,10 @@
     <string name="movie_actors_label">Actors</string>
     <string name="movie_genre_label">Genre(s)</string>
     <string name="movie_format_label">Format</string>
+
+    <string name="screening_date_label">Date</string>
+    <string name="screening_place_label">Place</string>
+    <string name="screening_notes_label">Notes</string>
 
     <!-- Formats -->
     <string name="dvd">DVD</string>
