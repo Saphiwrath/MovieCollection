@@ -60,9 +60,6 @@ fun HomeScreen(
         floatingActionButton = {
             AddMovieFloatingActionButton { navController.navigate(NavigationRoute.AddMovie.route) }
         },
-        bottomBar = {
-            CustomNavBar(navController)
-        },
     ) {paddingValues ->
         LazyVerticalGrid (
             columns = GridCells.Fixed(2),

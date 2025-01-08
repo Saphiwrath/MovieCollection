@@ -44,9 +44,6 @@ fun WatchSessionDetailsScreen(
                 navigateUp = {navController.navigateUp()}
             )
         },
-        bottomBar = {
-            CustomNavBar(navController)
-        },
     ){paddingValues ->
         val scrollState = rememberScrollState()
         Column(

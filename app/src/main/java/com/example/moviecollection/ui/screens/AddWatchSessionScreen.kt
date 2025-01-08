@@ -41,9 +41,6 @@ fun AddWatchSessionScreen(
         floatingActionButton = {
             ConfirmFloatingActionButton({/*TODO*/})
         },
-        bottomBar = {
-            CustomNavBar(navController)
-        },
     ){ paddingValues ->
         Column (
             modifier = Modifier

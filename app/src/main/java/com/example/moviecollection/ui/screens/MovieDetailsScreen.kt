@@ -52,9 +52,6 @@ fun MovieDetailsScreen(
                 navController.navigate(NavigationRoute.MovieWatchSessions.route)
             }
         },
-        bottomBar = {
-            CustomNavBar(navController)
-        },
     ) {paddingValues ->
         val scrollState = rememberScrollState()
         Column(

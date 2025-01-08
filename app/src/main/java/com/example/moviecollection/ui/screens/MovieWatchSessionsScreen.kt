@@ -36,9 +36,6 @@ fun MovieWatchSessionScreen(
                 navController.navigate(NavigationRoute.AddWatchSession.route)
             }
         },
-        bottomBar = {
-            CustomNavBar(navController)
-        },
     ){paddingValues ->
         Column (
             verticalArrangement = Arrangement.SpaceAround,

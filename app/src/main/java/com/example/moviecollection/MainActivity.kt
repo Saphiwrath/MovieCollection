@@ -30,6 +30,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -39,14 +40,19 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.moviecollection.data.models.Theme
+import com.example.moviecollection.ui.components.CustomNavBar
 import com.example.moviecollection.ui.navigation.NavGraph
 import com.example.moviecollection.ui.navigation.NavigationRoute
 import com.example.moviecollection.ui.screens.HomeScreen
 import com.example.moviecollection.ui.theme.MovieCollectionTheme
 import com.example.moviecollection.ui.viewmodels.SettingsViewModel
 import org.koin.androidx.compose.koinViewModel
+
+val NO_BOTTOM_BAR_SCREENS = listOf(NavigationRoute.Login.route,
+                                    NavigationRoute.Signup.route)
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +72,14 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    Scaffold (){paddingValues ->
+                    Scaffold (
+                        bottomBar = {
+                            val backStackEntry by navController.currentBackStackEntryAsState()
+                            if (!NO_BOTTOM_BAR_SCREENS.contains(backStackEntry?.destination?.route )) {
+                                CustomNavBar(navController = navController)
+                            }
+                        }
+                    ){paddingValues ->
                         NavGraph(
                             navController = navController,
                             modifier = Modifier.padding(paddingValues)

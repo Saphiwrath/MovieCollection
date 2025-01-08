@@ -49,9 +49,6 @@ fun SettingsScreen(
                 navigateUp = {navController.navigateUp()}
             )
         },
-        bottomBar = {
-            CustomNavBar(navController)
-        },
     ){paddingValues ->
         val rowSpacedBy = 20.dp
         val scrollState = rememberScrollState()

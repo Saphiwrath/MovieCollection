@@ -36,9 +36,6 @@ fun AccountScreen(
                 navigateUp = {navController.navigateUp()}
             )
         },
-        bottomBar = {
-            CustomNavBar(navController)
-        },
         floatingActionButton = {
             AddWatchSessionFloatingActionButton{ navController.navigate(NavigationRoute.AddWatchSession.route) }
         }

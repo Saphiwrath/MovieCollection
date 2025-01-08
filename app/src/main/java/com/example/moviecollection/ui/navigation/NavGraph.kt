@@ -15,6 +15,7 @@ import com.example.moviecollection.ui.screens.LoginScreen
 import com.example.moviecollection.ui.screens.MovieDetailsScreen
 import com.example.moviecollection.ui.screens.MovieWatchSessionScreen
 import com.example.moviecollection.ui.screens.SettingsScreen
+import com.example.moviecollection.ui.screens.SignupScreen
 import com.example.moviecollection.ui.screens.WatchSessionDetailsScreen
 import com.example.moviecollection.ui.viewmodels.SettingsViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -69,6 +70,10 @@ fun NavGraph(
 
         composable(NavigationRoute.Login.route) {
             LoginScreen(navController)
+        }
+
+        composable(NavigationRoute.Signup.route) {
+            SignupScreen(navController)
         }
     }
 }

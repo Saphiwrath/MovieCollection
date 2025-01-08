@@ -11,6 +11,7 @@
     <string name="add_movie_screen_title">Aggiungi film</string>
     <string name="add_watch_session_title">Aggiungi proiezione</string>
     <string name="login_screen_title">Login</string>
+    <string name="signup_screen_title">Registrati</string>
 
     <!-- ACCESSIBILITY DESCRIPTIONS -->
     <!-- Buttons of all types-->
@@ -65,6 +66,7 @@
 
     <string name="password_field_label">Password</string>
     <string name="username_field_label">Nome utente</string>
+    <string name="email_field_label">Email</string>
 
     <!-- Formats -->
     <string name="dvd">DVD</string>
