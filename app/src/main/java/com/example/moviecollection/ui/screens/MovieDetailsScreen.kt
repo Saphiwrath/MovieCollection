@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
 import com.example.moviecollection.ui.components.AddWatchSessionFloatingActionButton
+import com.example.moviecollection.ui.components.CustomNavBar
 import com.example.moviecollection.ui.components.DetailsCardDataRow
 import com.example.moviecollection.ui.components.StandardAppBar
 import com.example.moviecollection.ui.components.ViewWatchSessionsFloatingActionButton
@@ -50,7 +51,10 @@ fun MovieDetailsScreen(
                 /* TODO */
                 navController.navigate(NavigationRoute.MovieWatchSessions.route)
             }
-        }
+        },
+        bottomBar = {
+            CustomNavBar(navController)
+        },
     ) {paddingValues ->
         val scrollState = rememberScrollState()
         Column(

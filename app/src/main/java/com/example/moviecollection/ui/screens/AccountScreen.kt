@@ -15,6 +15,7 @@ import androidx.navigation.NavHostController
 import com.example.moviecollection.R
 import com.example.moviecollection.ui.components.AccountCard
 import com.example.moviecollection.ui.components.AddWatchSessionFloatingActionButton
+import com.example.moviecollection.ui.components.CustomNavBar
 import com.example.moviecollection.ui.components.FilterButton
 import com.example.moviecollection.ui.components.StandardAppBar
 import com.example.moviecollection.ui.components.WatchSessionCard
@@ -34,6 +35,9 @@ fun AccountScreen(
                 },
                 navigateUp = {navController.navigateUp()}
             )
+        },
+        bottomBar = {
+            CustomNavBar(navController)
         },
         floatingActionButton = {
             AddWatchSessionFloatingActionButton{ navController.navigate(NavigationRoute.AddWatchSession.route) }

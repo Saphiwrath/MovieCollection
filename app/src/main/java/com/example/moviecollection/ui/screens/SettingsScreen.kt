@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
 import com.example.moviecollection.data.models.Theme
+import com.example.moviecollection.ui.components.CustomNavBar
 import com.example.moviecollection.ui.components.RadioButtonRow
 import com.example.moviecollection.ui.components.SettingsLabelText
 import com.example.moviecollection.ui.components.StandardAppBar
@@ -47,7 +48,10 @@ fun SettingsScreen(
                 },
                 navigateUp = {navController.navigateUp()}
             )
-        }
+        },
+        bottomBar = {
+            CustomNavBar(navController)
+        },
     ){paddingValues ->
         val rowSpacedBy = 20.dp
         val scrollState = rememberScrollState()

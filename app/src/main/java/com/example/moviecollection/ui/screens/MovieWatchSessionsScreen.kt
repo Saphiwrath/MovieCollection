@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
 import com.example.moviecollection.ui.components.AddWatchSessionFloatingActionButton
+import com.example.moviecollection.ui.components.CustomNavBar
 import com.example.moviecollection.ui.components.StandardAppBar
 import com.example.moviecollection.ui.components.WatchSessionLazyList
 import com.example.moviecollection.ui.navigation.NavigationRoute
@@ -34,7 +35,10 @@ fun MovieWatchSessionScreen(
                 /*TODO make sure when you click from this screen it autocompletes the title field*/
                 navController.navigate(NavigationRoute.AddWatchSession.route)
             }
-        }
+        },
+        bottomBar = {
+            CustomNavBar(navController)
+        },
     ){paddingValues ->
         Column (
             verticalArrangement = Arrangement.SpaceAround,

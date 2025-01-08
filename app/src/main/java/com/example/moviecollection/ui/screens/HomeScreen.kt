@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
 import com.example.moviecollection.ui.components.AddMovieFloatingActionButton
+import com.example.moviecollection.ui.components.CustomNavBar
 import com.example.moviecollection.ui.components.FavouritesButton
 import com.example.moviecollection.ui.components.FilterButton
 import com.example.moviecollection.ui.components.MovieCard
@@ -58,6 +59,9 @@ fun HomeScreen(
         },
         floatingActionButton = {
             AddMovieFloatingActionButton { navController.navigate(NavigationRoute.AddMovie.route) }
+        },
+        bottomBar = {
+            CustomNavBar(navController)
         },
     ) {paddingValues ->
         LazyVerticalGrid (

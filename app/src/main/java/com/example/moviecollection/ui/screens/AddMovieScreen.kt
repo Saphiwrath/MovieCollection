@@ -22,6 +22,7 @@ import com.example.moviecollection.R
 import com.example.moviecollection.ui.components.AutoCompleteTextField
 import com.example.moviecollection.ui.components.ClickableLazyList
 import com.example.moviecollection.ui.components.ConfirmFloatingActionButton
+import com.example.moviecollection.ui.components.CustomNavBar
 import com.example.moviecollection.ui.components.RadioButtonRowWithLabel
 import com.example.moviecollection.ui.components.StandardAppBar
 
@@ -38,7 +39,10 @@ fun AddMovieScreen(
         },
         floatingActionButton = {
             ConfirmFloatingActionButton({/*TODO*/})
-        }
+        },
+        bottomBar = {
+            CustomNavBar(navController)
+        },
     ){paddingValues ->
         Column (
             modifier = Modifier

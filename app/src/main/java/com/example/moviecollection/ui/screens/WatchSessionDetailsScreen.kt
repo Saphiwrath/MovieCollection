@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
+import com.example.moviecollection.ui.components.CustomNavBar
 import com.example.moviecollection.ui.components.DetailsCardDataRow
 import com.example.moviecollection.ui.components.StandardAppBar
 
@@ -42,7 +43,10 @@ fun WatchSessionDetailsScreen(
                 },
                 navigateUp = {navController.navigateUp()}
             )
-        }
+        },
+        bottomBar = {
+            CustomNavBar(navController)
+        },
     ){paddingValues ->
         val scrollState = rememberScrollState()
         Column(

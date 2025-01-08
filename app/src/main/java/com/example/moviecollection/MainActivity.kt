@@ -66,42 +66,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    Scaffold (
-                        bottomBar = {
-                            NavigationBar (
-                                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                                modifier = Modifier.wrapContentSize()
-                            ) {
-                                Row (
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.SpaceEvenly,
-                                    modifier = Modifier.fillMaxSize()
-                                ){
-                                    NavBarIconButton(
-                                        onClick = { /* TODO */ },
-                                        imageVector = Icons.Outlined.EmojiEvents,
-                                        contentDescription = stringResource(R.string.achievements_button_desc),
-                                    )
-                                    NavBarIconButton(
-                                        onClick = { navController.navigate(NavigationRoute.Account.route) },
-                                        imageVector = Icons.Outlined.AccountCircle,
-                                        contentDescription = stringResource(R.string.account_button_desc)
-                                    )
-                                    NavBarIconButton(
-                                        onClick = { navController.navigate(NavigationRoute.Settings.route) },
-                                        imageVector = Icons.Outlined.Settings,
-                                        contentDescription = stringResource(R.string.settings_button_desc),
-                                    )
-                                    NavBarIconButton(
-                                        onClick = { navController.navigate(NavigationRoute.Home.route)},
-                                        imageVector = Icons.Outlined.Home,
-                                        contentDescription = stringResource(R.string.home_screen_title)
-                                    )
-                                }
-                            }
-                        }
-                    ){paddingValues ->
+                    Scaffold (){paddingValues ->
                         NavGraph(
                             navController = navController,
                             modifier = Modifier.padding(paddingValues)
@@ -113,33 +78,3 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun NavBarIconButton(
-    onClick: () -> Unit = {},
-    imageVector: ImageVector,
-    contentDescription: String,
-) {
-    Column (
-        verticalArrangement = Arrangement.SpaceAround,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.wrapContentWidth()
-    ) {
-        IconButton(
-            onClick = onClick,
-            modifier = Modifier.wrapContentSize(unbounded = true),
-        ) {
-            Icon(
-                imageVector = imageVector,
-                contentDescription = contentDescription,
-                modifier = Modifier.size(100.dp)
-            )
-        }
-        Text(
-            text = contentDescription,
-            style = MaterialTheme.typography.labelMedium,
-            modifier = Modifier.width(100.dp),
-            overflow = TextOverflow.Visible,
-            textAlign = TextAlign.Center
-        )
-    }
-}

@@ -21,6 +21,7 @@ import androidx.navigation.NavHostController
 import com.example.moviecollection.R
 import com.example.moviecollection.ui.components.AutoCompleteTextField
 import com.example.moviecollection.ui.components.ConfirmFloatingActionButton
+import com.example.moviecollection.ui.components.CustomNavBar
 import com.example.moviecollection.ui.components.StandardAppBar
 
 @Composable
@@ -39,7 +40,10 @@ fun AddWatchSessionScreen(
         },
         floatingActionButton = {
             ConfirmFloatingActionButton({/*TODO*/})
-        }
+        },
+        bottomBar = {
+            CustomNavBar(navController)
+        },
     ){ paddingValues ->
         Column (
             modifier = Modifier
