@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.moviecollection.ui.screens.AccountScreen
+import com.example.moviecollection.ui.screens.AchievementsScreen
 import com.example.moviecollection.ui.screens.AddMovieScreen
 import com.example.moviecollection.ui.screens.AddWatchSessionScreen
 import com.example.moviecollection.ui.screens.HomeScreen
@@ -74,6 +75,9 @@ fun NavGraph(
 
         composable(NavigationRoute.Signup.route) {
             SignupScreen(navController)
+        }
+        composable(NavigationRoute.Achievements.route) {
+            AchievementsScreen(navController)
         }
     }
 }

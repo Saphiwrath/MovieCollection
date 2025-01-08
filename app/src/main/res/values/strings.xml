@@ -12,6 +12,7 @@
     <string name="add_watch_session_title">Add screening</string>
     <string name="login_screen_title">Login</string>
     <string name="signup_screen_title">Sign up</string>
+    <string name="achievements_screen_title">Achievements</string>
 
     <!-- ACCESSIBILITY DESCRIPTIONS -->
     <!-- Buttons of all types-->
@@ -38,6 +39,7 @@
     <!-- Images -->
     <string name="movie_details_poster_desc">Movie poster</string>
     <string name="profile_image">Profile picture</string>
+    <string name="achievement_icon">Achievement</string>
 
     <!-- Labels -->
     <string name="genre_label">genre</string>
@@ -68,6 +70,8 @@
     <string name="username_field_label">Username</string>
     <string name="email_field_label">Email</string>
 
+    <string name="graph_label">Movies you watched this week</string>
+
     <!-- FORMATS -->
     <string name="dvd">DVD</string>
     <string name="bluray">Blu-Ray</string>
@@ -76,4 +80,6 @@
 
     <!-- TEXT -->
     <string name="signup_link_text">Don\'t have an account?</string>
+    <string name="achieved_title">Your achievements</string>
+    <string name="not_achieved_title">Missing achievements</string>
 </resources>

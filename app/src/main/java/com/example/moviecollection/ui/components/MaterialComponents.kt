@@ -115,7 +115,7 @@ fun CustomNavBar(
             modifier = Modifier.fillMaxSize()
         ){
             NavBarIconButton(
-                onClick = { /* TODO */ },
+                onClick = { navController.navigate(NavigationRoute.Achievements.route) },
                 imageVector = Icons.Outlined.EmojiEvents,
                 contentDescription = stringResource(R.string.achievements_button_desc),
             )

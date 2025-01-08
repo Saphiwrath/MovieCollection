@@ -1,7 +1,12 @@
 package com.example.moviecollection.ui.components
 
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,9 +17,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.EmojiEvents
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Image
@@ -26,16 +33,26 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.moviecollection.R
+import ir.ehsannarmani.compose_charts.ColumnChart
+import ir.ehsannarmani.compose_charts.models.BarProperties
+import ir.ehsannarmani.compose_charts.models.Bars
+import ir.ehsannarmani.compose_charts.models.Bars.*
+import ir.ehsannarmani.compose_charts.models.DrawStyle
+import ir.ehsannarmani.compose_charts.models.LabelProperties
+import ir.ehsannarmani.compose_charts.models.StrokeStyle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -227,7 +244,133 @@ fun SelectableCard(
             text = item,
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.padding(10.dp).fillMaxWidth()
+            modifier = Modifier
+                .padding(10.dp)
+                .fillMaxWidth()
         )
+    }
+}
+
+@Composable
+fun GraphCard() {
+    val firstGraphLine = MaterialTheme.colorScheme.primaryContainer
+    Card (
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White,
+            contentColor = Color.Black
+        ),
+        modifier = Modifier
+            .padding(10.dp)
+            .wrapContentHeight()
+    ){
+        Column (
+            horizontalAlignment = Alignment.Start,
+            verticalArrangement = Arrangement.spacedBy(15.dp),
+            modifier = Modifier.height(380.dp)
+        ) {
+            Text(
+                text = stringResource(id = R.string.graph_label),
+                style = MaterialTheme.typography.titleMedium,
+                textAlign = TextAlign.Center
+            )
+            ColumnChart(
+                modifier = Modifier
+                    .height(250.dp)
+                    .padding(horizontal = 22.dp),
+                data = remember {
+                    listOf(
+                        Bars(
+                            label = "7 giorni fa",
+                            values = listOf(
+                                Bars.Data(label = "Linux", value = 80.0, color = SolidColor(firstGraphLine)),
+                            ),
+                        ),
+                        Bars(
+                            label = "6 giorni fa",
+                            values = listOf(
+                                Bars.Data(label = "Linux", value = 80.0, color = SolidColor(firstGraphLine)),
+                            ),
+                        ),
+                        Bars(
+                            label = "5 giorni fa",
+                            values = listOf(
+                                Bars.Data(label = "Linux", value = 80.0, color = SolidColor(firstGraphLine)),
+                            ),
+                        ),
+                        Bars(
+                            label = "4 giorni fa",
+                            values = listOf(
+                                Bars.Data(label = "Linux", value = 80.0, color = SolidColor(firstGraphLine)),
+                            ),
+                        ),
+                        Bars(
+                            label = "L'altro ieri",
+                            values = listOf(
+                                Bars.Data(label = "Linux", value = 80.0, color = SolidColor(firstGraphLine)),
+                            ),
+                        ),
+                        Bars(
+                            label = "Ieri",
+                            values = listOf(
+                                Bars.Data(label = "Linux", value = 80.0, color = SolidColor(firstGraphLine)),
+                            ),
+                        ),
+                        Bars(
+                            label = "Oggi",
+                            values = listOf(
+                                Bars.Data(label = "Linux", value = 50.0, color = SolidColor(firstGraphLine)),
+                            ),
+                        ),
+
+                    )
+                },
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                    stiffness = Spring.StiffnessLow
+                ),
+            )
+        }
+    }
+}
+
+@Composable
+fun AchievementCard(
+    name: String = "Test Achievement",
+    condition: String = "Test your achievements for the 34875235th time!",
+    achieved: Boolean = true
+) {
+    Card (
+       colors = CardDefaults.cardColors(
+           contentColor = if (achieved) {
+               MaterialTheme.colorScheme.primaryContainer
+           } else Color.DarkGray,
+           containerColor = if(achieved) {
+               MaterialTheme.colorScheme.onPrimaryContainer
+           } else Color.LightGray
+       ),
+        modifier = Modifier.size(200.dp)
+    ){
+        Column(
+            verticalArrangement = Arrangement.SpaceEvenly,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxSize()
+        ) {
+            Image(
+                imageVector = Icons.Outlined.EmojiEvents,
+                contentDescription = stringResource(R.string.achievement_icon),
+                modifier = Modifier.size(50.dp)
+            )
+            Text(
+                text = name,
+                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.titleMedium
+            )
+            Text(
+                text = condition,
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
     }
 }

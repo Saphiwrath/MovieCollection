@@ -55,6 +55,10 @@ sealed class NavigationRoute(
         title = "Signup",
         route = "SignupScreen"
     )
+    data object Achievements: NavigationRoute(
+        title = "Achievements",
+        route = "AchievementsScreen"
+    )
 
     companion object {
         val routes = setOf(Home, MovieDetails, Account, WatchSessionDetails, Settings,

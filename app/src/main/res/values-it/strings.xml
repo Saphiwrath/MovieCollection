@@ -12,6 +12,7 @@
     <string name="add_watch_session_title">Aggiungi proiezione</string>
     <string name="login_screen_title">Login</string>
     <string name="signup_screen_title">Registrati</string>
+    <string name="achievements_screen_title">Trofei</string>
 
     <!-- ACCESSIBILITY DESCRIPTIONS -->
     <!-- Buttons of all types-->
@@ -38,6 +39,7 @@
     <!-- Images -->
     <string name="movie_details_poster_desc">poster del film</string>
     <string name="profile_image">Immagine di profilo</string>
+    <string name="achievement_icon">Trofeo</string>
 
     <!-- Labels -->
     <string name="genre_label">genere</string>
@@ -68,6 +70,8 @@
     <string name="username_field_label">Nome utente</string>
     <string name="email_field_label">Email</string>
 
+    <string name="graph_label">Quanti film hai guardato questa settimana?</string>
+
     <!-- Formats -->
     <string name="dvd">DVD</string>
     <string name="bluray">Blu-Ray</string>
@@ -76,4 +80,6 @@
 
     <!-- TEXT -->
     <string name="signup_link_text">Non hai un account?</string>
+    <string name="achieved_title">I tuoi trofei</string>
+    <string name="not_achieved_title">Trofei mancanti</string>
 </resources>
