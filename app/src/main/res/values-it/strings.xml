@@ -10,6 +10,7 @@
     <string name="movie_watch_sessions_screen_title">Proiezioni di </string>
     <string name="add_movie_screen_title">Aggiungi film</string>
     <string name="add_watch_session_title">Aggiungi proiezione</string>
+    <string name="login_screen_title">Login</string>
 
     <!-- ACCESSIBILITY DESCRIPTIONS -->
     <!-- Buttons of all types-->
@@ -29,6 +30,9 @@
     <string name="view_watch_sessions_button">Visualizza proiezioni</string>
     <string name="drop_down_actors">Espandi lista attori</string>
     <string name="drop_down_movies">Espandi lista titoli film</string>
+
+    <string name="login_button">Login</string>
+    <string name="signup_button">Registrati</string>
 
     <!-- Images -->
     <string name="movie_details_poster_desc">poster del film</string>
@@ -59,9 +63,15 @@
     <string name="screening_place_label">Posto</string>
     <string name="screening_notes_label">Note</string>
 
+    <string name="password_field_label">Password</string>
+    <string name="username_field_label">Nome utente</string>
+
     <!-- Formats -->
     <string name="dvd">DVD</string>
     <string name="bluray">Blu-Ray</string>
     <string name="vhs">VHS</string>
     <string name="digital">Digitale</string>
+
+    <!-- TEXT -->
+    <string name="signup_link_text">Non hai un account?</string>
 </resources>

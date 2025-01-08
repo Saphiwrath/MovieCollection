@@ -10,6 +10,7 @@
     <string name="movie_watch_sessions_screen_title">Screenings of </string>
     <string name="add_movie_screen_title">Add movie</string>
     <string name="add_watch_session_title">Add screening</string>
+    <string name="login_screen_title">Login</string>
 
     <!-- ACCESSIBILITY DESCRIPTIONS -->
     <!-- Buttons of all types-->
@@ -29,6 +30,9 @@
     <string name="view_watch_sessions_button">View screenings</string>
     <string name="drop_down_actors">Expand actor list</string>
     <string name="drop_down_movies">Expand movie title list</string>
+
+    <string name="login_button">Login</string>
+    <string name="signup_button">Sign up</string>
 
     <!-- Images -->
     <string name="movie_details_poster_desc">Movie poster</string>
@@ -59,9 +63,15 @@
     <string name="screening_place_label">Place</string>
     <string name="screening_notes_label">Notes</string>
 
-    <!-- Formats -->
+    <string name="password_field_label">Password</string>
+    <string name="username_field_label">Username</string>
+
+    <!-- FORMATS -->
     <string name="dvd">DVD</string>
     <string name="bluray">Blu-Ray</string>
     <string name="vhs">VHS</string>
     <string name="digital">Digital</string>
+
+    <!-- TEXT -->
+    <string name="signup_link_text">Don\'t have an account?</string>
 </resources>

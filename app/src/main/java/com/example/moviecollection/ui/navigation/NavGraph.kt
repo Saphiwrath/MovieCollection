@@ -11,6 +11,7 @@ import com.example.moviecollection.ui.screens.AccountScreen
 import com.example.moviecollection.ui.screens.AddMovieScreen
 import com.example.moviecollection.ui.screens.AddWatchSessionScreen
 import com.example.moviecollection.ui.screens.HomeScreen
+import com.example.moviecollection.ui.screens.LoginScreen
 import com.example.moviecollection.ui.screens.MovieDetailsScreen
 import com.example.moviecollection.ui.screens.MovieWatchSessionScreen
 import com.example.moviecollection.ui.screens.SettingsScreen
@@ -25,7 +26,7 @@ fun NavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = NavigationRoute.Home.route,
+        startDestination = NavigationRoute.Login.route,
         modifier = modifier
     ) {
         composable(NavigationRoute.Home.route) {
@@ -66,5 +67,8 @@ fun NavGraph(
             AddWatchSessionScreen(navController)
         }
 
+        composable(NavigationRoute.Login.route) {
+            LoginScreen(navController)
+        }
     }
 }

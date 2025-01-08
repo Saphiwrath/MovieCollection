@@ -37,6 +37,10 @@ sealed class NavigationRoute(
         route = "AddWatchSessionScreen"
     )
 
+    data object Login: NavigationRoute(
+        route = "LoginScreen"
+    )
+
     companion object {
         val routes = setOf(Home, NavigationRoute)
     }
