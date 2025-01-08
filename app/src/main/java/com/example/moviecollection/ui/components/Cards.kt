@@ -254,6 +254,15 @@ fun SelectableCard(
 @Composable
 fun GraphCard() {
     val firstGraphLine = MaterialTheme.colorScheme.primaryContainer
+    val columnLabels = arrayOf(
+        stringResource(R.string.first_graph_column),
+        stringResource(R.string.second_graph_column),
+        stringResource(R.string.third_graph_column),
+        stringResource(R.string.fourth_graph_column),
+        stringResource(R.string.fifth_graph_column),
+        stringResource(R.string.sixth_graph_column),
+        stringResource(R.string.seventh_graph_column)
+    )
     Card (
         colors = CardDefaults.cardColors(
             containerColor = Color.White,
@@ -280,45 +289,45 @@ fun GraphCard() {
                 data = remember {
                     listOf(
                         Bars(
-                            label = "7 giorni fa",
+                            label = columnLabels[0],
                             values = listOf(
-                                Bars.Data(label = "Linux", value = 80.0, color = SolidColor(firstGraphLine)),
+                                Bars.Data(value = 80.0, color = SolidColor(firstGraphLine)),
                             ),
                         ),
                         Bars(
-                            label = "6 giorni fa",
+                            label = columnLabels[1],
                             values = listOf(
-                                Bars.Data(label = "Linux", value = 80.0, color = SolidColor(firstGraphLine)),
+                                Bars.Data(value = 80.0, color = SolidColor(firstGraphLine)),
                             ),
                         ),
                         Bars(
-                            label = "5 giorni fa",
+                            label = columnLabels[2],
                             values = listOf(
-                                Bars.Data(label = "Linux", value = 80.0, color = SolidColor(firstGraphLine)),
+                                Bars.Data(value = 80.0, color = SolidColor(firstGraphLine)),
                             ),
                         ),
                         Bars(
-                            label = "4 giorni fa",
+                            label = columnLabels[3],
                             values = listOf(
-                                Bars.Data(label = "Linux", value = 80.0, color = SolidColor(firstGraphLine)),
+                                Bars.Data(value = 80.0, color = SolidColor(firstGraphLine)),
                             ),
                         ),
                         Bars(
-                            label = "L'altro ieri",
+                            label = columnLabels[4],
                             values = listOf(
-                                Bars.Data(label = "Linux", value = 80.0, color = SolidColor(firstGraphLine)),
+                                Bars.Data(value = 80.0, color = SolidColor(firstGraphLine)),
                             ),
                         ),
                         Bars(
-                            label = "Ieri",
+                            label = columnLabels[5],
                             values = listOf(
-                                Bars.Data(label = "Linux", value = 80.0, color = SolidColor(firstGraphLine)),
+                                Bars.Data(value = 80.0, color = SolidColor(firstGraphLine)),
                             ),
                         ),
                         Bars(
-                            label = "Oggi",
+                            label = columnLabels[6],
                             values = listOf(
-                                Bars.Data(label = "Linux", value = 50.0, color = SolidColor(firstGraphLine)),
+                                Bars.Data(value = 50.0, color = SolidColor(firstGraphLine)),
                             ),
                         ),
 

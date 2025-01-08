@@ -82,4 +82,13 @@
     <string name="signup_link_text">Non hai un account?</string>
     <string name="achieved_title">I tuoi trofei</string>
     <string name="not_achieved_title">Trofei mancanti</string>
+
+    <!-- GRAPH -->
+    <string name="first_graph_column">6 giorni fa</string>
+    <string name="second_graph_column">5 giorni fa</string>
+    <string name="third_graph_column">4 giorni fa</string>
+    <string name="fourth_graph_column">3 giorni fa</string>
+    <string name="fifth_graph_column">L\'altro ieri</string>
+    <string name="sixth_graph_column">Ieri</string>
+    <string name="seventh_graph_column">oggi</string>
 </resources>

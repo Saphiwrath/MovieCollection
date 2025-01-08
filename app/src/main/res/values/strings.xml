@@ -82,4 +82,13 @@
     <string name="signup_link_text">Don\'t have an account?</string>
     <string name="achieved_title">Your achievements</string>
     <string name="not_achieved_title">Missing achievements</string>
+
+    <!-- GRAPH -->
+    <string name="first_graph_column">6 days ago</string>
+    <string name="second_graph_column">5 days ago</string>
+    <string name="third_graph_column">4 days ago</string>
+    <string name="fourth_graph_column">3 days ago</string>
+    <string name="fifth_graph_column">2 days ago</string>
+    <string name="sixth_graph_column">Yesterday</string>
+    <string name="seventh_graph_column">Today</string>
 </resources>
