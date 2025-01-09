@@ -1,5 +1,6 @@
 package com.example.moviecollection.ui.components
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -40,6 +41,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.moviecollection.R
+import com.example.moviecollection.data.models.Actor
 import com.example.moviecollection.data.models.MovieFormat
 
 @Composable
@@ -56,6 +58,7 @@ fun StandardTextField(
 @Composable
 fun ClickableLazyList(
     modifier: Modifier,
+    selectedAction: (List<String>) -> Unit
 ) {
     val selectedItems = remember { mutableStateListOf<String>()}
     LazyColumn(
@@ -69,6 +72,7 @@ fun ClickableLazyList(
                     if (it in selectedItems) {
                         selectedItems.remove(it)
                     } else selectedItems.add(it)
+                    selectedAction(selectedItems)
                 },
                 containerColor =
                     if (it in selectedItems) {
@@ -88,7 +92,11 @@ fun ClickableLazyList(
 fun RadioButtonRowWithLabel(
     modifier: Modifier,
     label: String,
+    selectedAction: (List<MovieFormat>) -> Unit
 ) {
+    val selectedItems = remember {
+        mutableStateListOf<MovieFormat>()
+    }
     Row (
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
@@ -105,8 +113,13 @@ fun RadioButtonRowWithLabel(
         ){
             MovieFormat.entries.forEach {
                 RadioButtonRow(
-                    selected = false,
-                    onCLick = { /*TODO*/ },
+                    selected = (selectedItems.contains(it)),
+                    onCLick = {
+                        if (it in selectedItems) {
+                            selectedItems.remove(it)
+                        } else selectedItems.add(it)
+                        selectedAction(selectedItems)
+                    },
                     text = when (it) {
                         MovieFormat.DVD -> stringResource(R.string.dvd)
                         MovieFormat.BLURAY -> stringResource(R.string.bluray)
@@ -148,14 +161,17 @@ fun RadioButtonRow(
 fun AutoCompleteTextField(
     modifier: Modifier = Modifier,
     contentDescription: String,
-    items: List<String> = listOf(
-        "arancia", "limone", "fragola", "lampone", "kiwi", "banana",
-        "frutta americana"
-    ).sorted()
+    items: List<Actor> = listOf(
+        Actor(1, "Paoletto Paolini"),
+        Actor(2, "La Pimpa"),
+        Actor(3, "Armando Pimpa"),
+        Actor(4, "Paolo Pimpa")
+    ),
+    selectedAction: (List<Int>) -> Unit,
+    multiSelect: Boolean = true
 ) {
-    /*TODO REPLACE*/
     val selectedItems = remember {
-        mutableStateListOf<String>()
+        mutableStateListOf<Int>()
     }
     var expanded by remember {
         mutableStateOf(false)
@@ -204,24 +220,33 @@ fun AutoCompleteTextField(
                     items(
                         if (item.isNotEmpty()) {
                             items.filter {
-                                it.lowercase().contains(item.lowercase())
-                            }.sorted()
+                                it.name.lowercase().contains(item.lowercase())
+                            }
                         } else items
                     ) {
                         SelectableCard(
-                            item = it,
+                            item = it.name,
                             clickable = {
                                 expanded = false
-                                if(it in selectedItems) {
-                                    selectedItems.remove(it)
-                                } else selectedItems.add(it)
+                                if (multiSelect) {
+                                    if(it.id in selectedItems) {
+                                        selectedItems.remove(it.id)
+                                    } else selectedItems.add(it.id)
+                                }
+                                else {
+                                    if (selectedItems.isNotEmpty()) {
+                                        selectedItems.removeLast()
+                                    }
+                                    selectedItems.add(it.id)
+                                }
+                                selectedAction(selectedItems)
                             },
                             containerColor =
-                                if(it in selectedItems) {
+                                if(it.id in selectedItems) {
                                     MaterialTheme.colorScheme.secondaryContainer
                                 } else MaterialTheme.colorScheme.tertiaryContainer,
                             contentColor =
-                                if(it in selectedItems) {
+                                if(it.id in selectedItems) {
                                     MaterialTheme.colorScheme.onSecondaryContainer
                                 } else MaterialTheme.colorScheme.onTertiaryContainer
                         )

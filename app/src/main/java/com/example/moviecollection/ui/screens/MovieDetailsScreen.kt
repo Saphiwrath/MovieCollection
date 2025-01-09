@@ -92,6 +92,7 @@ fun MovieDetailsScreen(
             DetailsCardDataRow(label = stringResource(R.string.director_label), value = "PAOLETTO PAOLINI")
             DetailsCardDataRow(label = stringResource(R.string.actors_label), value = "PINCO PALLINO    LA PIMPA    MICHAEL JACKSON")
             DetailsCardDataRow(label = stringResource(R.string.format_label), value = "VHS")
+            DetailsCardDataRow(label = stringResource(R.string.notes_label), value = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
         }
     }
 }

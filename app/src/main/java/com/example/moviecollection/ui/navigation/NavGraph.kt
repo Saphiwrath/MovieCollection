@@ -9,16 +9,17 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.moviecollection.ui.screens.AccountScreen
 import com.example.moviecollection.ui.screens.AchievementsScreen
-import com.example.moviecollection.ui.screens.AddMovieScreen
+import com.example.moviecollection.ui.screens.addmovie.AddMovieScreen
 import com.example.moviecollection.ui.screens.AddWatchSessionScreen
 import com.example.moviecollection.ui.screens.HomeScreen
 import com.example.moviecollection.ui.screens.LoginScreen
 import com.example.moviecollection.ui.screens.MovieDetailsScreen
 import com.example.moviecollection.ui.screens.MovieWatchSessionScreen
-import com.example.moviecollection.ui.screens.SettingsScreen
+import com.example.moviecollection.ui.screens.settings.SettingsScreen
 import com.example.moviecollection.ui.screens.SignupScreen
 import com.example.moviecollection.ui.screens.WatchSessionDetailsScreen
-import com.example.moviecollection.ui.viewmodels.SettingsViewModel
+import com.example.moviecollection.ui.screens.addmovie.AddMovieViewModel
+import com.example.moviecollection.ui.screens.settings.SettingsViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -62,7 +63,13 @@ fun NavGraph(
         }
 
         composable(NavigationRoute.AddMovie.route) {
-            AddMovieScreen(navController)
+            val addMovieViewModel = koinViewModel<AddMovieViewModel>()
+            val state by addMovieViewModel.state.collectAsStateWithLifecycle()
+            AddMovieScreen(
+                navController,
+                actions = addMovieViewModel.actions,
+                state = state
+            )
         }
 
         composable(NavigationRoute.AddWatchSession.route) {

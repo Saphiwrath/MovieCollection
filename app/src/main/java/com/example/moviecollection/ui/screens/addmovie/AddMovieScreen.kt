@@ -1,5 +1,6 @@
-package com.example.moviecollection.ui.screens
+package com.example.moviecollection.ui.screens.addmovie
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,26 +10,37 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.chargemap.compose.numberpicker.NumberPicker
 import com.example.moviecollection.R
 import com.example.moviecollection.ui.components.AutoCompleteTextField
 import com.example.moviecollection.ui.components.ClickableLazyList
 import com.example.moviecollection.ui.components.ConfirmFloatingActionButton
-import com.example.moviecollection.ui.components.CustomNavBar
 import com.example.moviecollection.ui.components.RadioButtonRowWithLabel
 import com.example.moviecollection.ui.components.StandardAppBar
+import java.time.LocalDate
+import java.util.Calendar
 
 @Composable
 fun AddMovieScreen(
-    navController: NavHostController
+    navController: NavHostController,
+    actions: AddMovieActions,
+    state: AddMovieState
 ) {
     Scaffold (
         topBar = {
@@ -38,7 +50,10 @@ fun AddMovieScreen(
             ) { navController.navigateUp() }
         },
         floatingActionButton = {
-            ConfirmFloatingActionButton({/*TODO*/})
+            ConfirmFloatingActionButton {
+                /* TODO */
+
+            }
         },
     ){paddingValues ->
         Column (
@@ -50,24 +65,49 @@ fun AddMovieScreen(
             verticalArrangement = Arrangement.spacedBy(15.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            /* TODO Add image picker */
             OutlinedTextField(
-                value = "",
-                onValueChange = {},
+                value = state.title,
+                onValueChange = { actions.setTitle(it) },
                 label = { Text(stringResource(R.string.movie_title_label)) },
                 modifier = Modifier.fillMaxWidth()
             )
-            OutlinedTextField(
-                value = "",
-                onValueChange = {},
-                label = { Text(stringResource(R.string.movie_year_label)) },
-                modifier = Modifier.fillMaxWidth()
-            )
-            OutlinedTextField(
-                value = "",
-                onValueChange = {},
-                label = { Text(stringResource(R.string.movie_director_label)) },
-                modifier = Modifier.fillMaxWidth()
-            )
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.LightGray,
+                    contentColor = Color.Black
+                ),
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Row (
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = stringResource(R.string.movie_year_label))
+                    NumberPicker(
+                        value = state.year,
+                        onValueChange = {
+                            actions.setYear(it)
+                        },
+                        range = 1870..Calendar.getInstance().get(Calendar.YEAR),
+                        dividersColor = Color.DarkGray
+                    )
+                }
+            }
+            Row (
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.Top,
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ){
+                Text(text = stringResource(R.string.movie_director_label))
+                AutoCompleteTextField(
+                    contentDescription = stringResource(R.string.drop_down_actors),
+                    selectedAction = actions::setDirector,
+                    multiSelect = false
+                )
+            }
             Row (
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -75,7 +115,11 @@ fun AddMovieScreen(
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ){
                 Text(text = stringResource(R.string.movie_actors_label))
-                AutoCompleteTextField(contentDescription = stringResource(R.string.drop_down_actors))
+                AutoCompleteTextField(
+                    contentDescription = stringResource(R.string.drop_down_actors),
+                    selectedAction = actions::setActors,
+                    multiSelect = true
+                )
             }
             Row (
                 modifier = Modifier
@@ -87,12 +131,14 @@ fun AddMovieScreen(
                 ClickableLazyList(
                     modifier = Modifier
                         .height(200.dp)
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
+                    selectedAction = actions::setGenres
                 )
             }
             RadioButtonRowWithLabel(
                 modifier = Modifier.fillMaxWidth(),
-                label = stringResource(R.string.movie_format_label)
+                label = stringResource(R.string.movie_format_label),
+                selectedAction = actions::setFormat
             )
         }
     }

@@ -1,4 +1,4 @@
-package com.example.moviecollection.ui.viewmodels
+package com.example.moviecollection.ui.screens.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,25 +11,32 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 data class SettingsState(
-    val theme: Theme
+    val theme: Theme,
+    var username: String
 )
 
 interface SettingsActions {
     fun changeTheme(theme: Theme) : Job
+    fun setUsername(string: String)
 }
 
 class SettingsViewModel(
     private val repository: SettingsRepository
 ) : ViewModel() {
-    val state = repository.theme.map { SettingsState(it) }.stateIn(
+    var state = repository.theme.map { SettingsState(it, "username") }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(),
-        initialValue = SettingsState(Theme.System)
+        initialValue = SettingsState(Theme.System, "username")
     )
 
     val actions = object : SettingsActions {
         override fun changeTheme(theme: Theme) = viewModelScope.launch{
             repository.setTheme(theme)
+        }
+
+        override fun setUsername(username: String) {
+            state.value.username = username
+            TODO("Not yet implemented")
         }
     }
 }

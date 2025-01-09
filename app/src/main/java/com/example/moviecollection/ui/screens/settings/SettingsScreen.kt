@@ -1,4 +1,4 @@
-package com.example.moviecollection.ui.screens
+package com.example.moviecollection.ui.screens.settings
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -6,32 +6,30 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.RadioButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
 import com.example.moviecollection.data.models.Theme
-import com.example.moviecollection.ui.components.CustomNavBar
 import com.example.moviecollection.ui.components.RadioButtonRow
 import com.example.moviecollection.ui.components.SettingsLabelText
 import com.example.moviecollection.ui.components.StandardAppBar
 import com.example.moviecollection.ui.components.StandardTextField
-import com.example.moviecollection.ui.viewmodels.SettingsActions
-import com.example.moviecollection.ui.viewmodels.SettingsState
 
 @Composable
 fun SettingsScreen(
@@ -52,6 +50,9 @@ fun SettingsScreen(
     ){paddingValues ->
         val rowSpacedBy = 20.dp
         val scrollState = rememberScrollState()
+        var usernameField by remember {
+            mutableStateOf("")
+        }
         Column (
             verticalArrangement = Arrangement.spacedBy(15.dp),
             modifier = Modifier
@@ -97,9 +98,15 @@ fun SettingsScreen(
                     text = stringResource(R.string.username_label)
                 )
                 StandardTextField(
-                    value = "",
-                    onValueChange = {value -> /*TODO*/}
+                    value = usernameField,
+                    onValueChange = {value -> usernameField = value}
                 )
+                IconButton(onClick = { actions.setUsername(usernameField) }) {
+                    Icon(
+                        imageVector = Icons.Outlined.Check,
+                        contentDescription = stringResource(R.string.generic_confirm_button)
+                    )
+                }
             }
         }
     }

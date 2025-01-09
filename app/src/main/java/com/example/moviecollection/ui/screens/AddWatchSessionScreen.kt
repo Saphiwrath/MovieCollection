@@ -61,7 +61,11 @@ fun AddWatchSessionScreen(
                     text = stringResource(R.string.movie_title_label),
                     color = MaterialTheme.colorScheme.onSurface
                 )
-                AutoCompleteTextField(contentDescription = stringResource(R.string.drop_down_actors))
+                AutoCompleteTextField(
+                    contentDescription = stringResource(R.string.drop_down_movies),
+                    selectedAction = {},
+                    multiSelect = false
+                )
             }
             OutlinedTextField(
                 value = "",

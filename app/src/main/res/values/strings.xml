@@ -32,6 +32,7 @@
     <string name="view_watch_sessions_button">View screenings</string>
     <string name="drop_down_actors">Expand actor list</string>
     <string name="drop_down_movies">Expand movie title list</string>
+    <string name="generic_confirm_button">Confirm</string>
 
     <string name="login_button">Login</string>
     <string name="signup_button">Sign up</string>

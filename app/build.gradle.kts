@@ -53,6 +53,7 @@ android {
 
 dependencies {
     implementation ("io.github.ehsannarmani:compose-charts:0.1.0")
+    implementation ("com.chargemap.compose:numberpicker:1.0.3")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
