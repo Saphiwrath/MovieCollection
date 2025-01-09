@@ -26,10 +26,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
 import com.example.moviecollection.data.models.Theme
-import com.example.moviecollection.ui.components.RadioButtonRow
+import com.example.moviecollection.ui.components.inputs.RadioButtonRow
 import com.example.moviecollection.ui.components.SettingsLabelText
 import com.example.moviecollection.ui.components.StandardAppBar
-import com.example.moviecollection.ui.components.StandardTextField
+import com.example.moviecollection.ui.components.inputs.StandardTextField
 
 @Composable
 fun SettingsScreen(

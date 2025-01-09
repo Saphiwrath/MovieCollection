@@ -10,7 +10,7 @@ import androidx.navigation.compose.composable
 import com.example.moviecollection.ui.screens.AccountScreen
 import com.example.moviecollection.ui.screens.AchievementsScreen
 import com.example.moviecollection.ui.screens.addmovie.AddMovieScreen
-import com.example.moviecollection.ui.screens.AddWatchSessionScreen
+import com.example.moviecollection.ui.screens.addwatchsession.AddWatchSessionScreen
 import com.example.moviecollection.ui.screens.HomeScreen
 import com.example.moviecollection.ui.screens.LoginScreen
 import com.example.moviecollection.ui.screens.MovieDetailsScreen
@@ -19,6 +19,7 @@ import com.example.moviecollection.ui.screens.settings.SettingsScreen
 import com.example.moviecollection.ui.screens.SignupScreen
 import com.example.moviecollection.ui.screens.WatchSessionDetailsScreen
 import com.example.moviecollection.ui.screens.addmovie.AddMovieViewModel
+import com.example.moviecollection.ui.screens.addwatchsession.AddWatchSessionViewModel
 import com.example.moviecollection.ui.screens.settings.SettingsViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -73,7 +74,13 @@ fun NavGraph(
         }
 
         composable(NavigationRoute.AddWatchSession.route) {
-            AddWatchSessionScreen(navController)
+            val addWatchSessionViewModel = koinViewModel<AddWatchSessionViewModel>()
+            val state by addWatchSessionViewModel.state.collectAsStateWithLifecycle()
+            AddWatchSessionScreen(
+                navController,
+                actions = addWatchSessionViewModel.actions,
+                state = state
+            )
         }
 
         composable(NavigationRoute.Login.route) {

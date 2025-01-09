@@ -1,6 +1,5 @@
-package com.example.moviecollection.ui.components
+package com.example.moviecollection.ui.components.inputs
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -8,12 +7,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material3.Card
@@ -23,8 +20,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -33,16 +28,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.moviecollection.R
-import com.example.moviecollection.data.models.Actor
+import com.example.moviecollection.data.models.ListItemData
 import com.example.moviecollection.data.models.MovieFormat
+import com.example.moviecollection.ui.components.SelectableCard
 
 @Composable
 fun StandardTextField(
@@ -161,11 +153,11 @@ fun RadioButtonRow(
 fun AutoCompleteTextField(
     modifier: Modifier = Modifier,
     contentDescription: String,
-    items: List<Actor> = listOf(
-        Actor(1, "Paoletto Paolini"),
-        Actor(2, "La Pimpa"),
-        Actor(3, "Armando Pimpa"),
-        Actor(4, "Paolo Pimpa")
+    items: List<ListItemData> = listOf(
+        ListItemData(1, "Paoletto Paolini"),
+        ListItemData(2, "La Pimpa"),
+        ListItemData(3, "Armando Pimpa"),
+        ListItemData(4, "Paolo Pimpa")
     ),
     selectedAction: (List<Int>) -> Unit,
     multiSelect: Boolean = true

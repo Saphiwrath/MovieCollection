@@ -1,6 +1,5 @@
 package com.example.moviecollection.ui.screens.addmovie
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,14 +11,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,12 +23,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.chargemap.compose.numberpicker.NumberPicker
 import com.example.moviecollection.R
-import com.example.moviecollection.ui.components.AutoCompleteTextField
-import com.example.moviecollection.ui.components.ClickableLazyList
+import com.example.moviecollection.ui.components.inputs.AutoCompleteTextField
+import com.example.moviecollection.ui.components.inputs.ClickableLazyList
 import com.example.moviecollection.ui.components.ConfirmFloatingActionButton
-import com.example.moviecollection.ui.components.RadioButtonRowWithLabel
+import com.example.moviecollection.ui.components.inputs.RadioButtonRowWithLabel
 import com.example.moviecollection.ui.components.StandardAppBar
-import java.time.LocalDate
 import java.util.Calendar
 
 @Composable
@@ -139,6 +133,15 @@ fun AddMovieScreen(
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.movie_format_label),
                 selectedAction = actions::setFormat
+            )
+            OutlinedTextField(
+                value = state.notes,
+                onValueChange = {
+                    actions.setNotes(it)
+                },
+                label = { Text(stringResource(R.string.screening_notes_label)) },
+                modifier = Modifier.fillMaxWidth(),
+                maxLines = 20
             )
         }
     }

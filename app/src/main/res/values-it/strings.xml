@@ -37,6 +37,10 @@
     <string name="login_button">Login</string>
     <string name="signup_button">Registrati</string>
 
+    <string name="confirm_selection_button">Conferma</string>
+    <string name="dismiss_selection_button">Annulla</string>
+
+
     <!-- Images -->
     <string name="movie_details_poster_desc">poster del film</string>
     <string name="profile_image">Immagine di profilo</string>
@@ -51,6 +55,7 @@
 
     <string name="place_label">luogo</string>
     <string name="date_label">data</string>
+    <string name="date_label_capitalized">Data</string>
     <string name="notes_label">note</string>
 
     <string name="theme_label">Tema</string>
@@ -72,6 +77,8 @@
     <string name="email_field_label">Email</string>
 
     <string name="graph_label">Quanti film hai guardato questa settimana?</string>
+
+    <string name="date_picker_button_icon_label">Scegli data</string>
 
     <!-- Formats -->
     <string name="dvd">DVD</string>

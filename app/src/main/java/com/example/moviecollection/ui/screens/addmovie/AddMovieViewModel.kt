@@ -14,7 +14,8 @@ data class AddMovieState(
     var actors: List<Int> = emptyList(),
     var genres: List<String> = emptyList(),
     var format: List<MovieFormat> = emptyList(),
-    var image: Uri = Uri.EMPTY
+    var image: Uri = Uri.EMPTY,
+    var notes: String = ""
 )
 
 interface AddMovieActions {
@@ -25,6 +26,7 @@ interface AddMovieActions {
     fun setGenres(genres: List<String>)
     fun setFormat(format: List<MovieFormat>)
     fun addImage(image: Uri)
+    fun setNotes(notes: String)
 }
 
 class AddMovieViewModel: ViewModel() {
@@ -58,6 +60,10 @@ class AddMovieViewModel: ViewModel() {
 
         override fun addImage(image: Uri) {
             _state.update { it.copy(image = image) }
+        }
+
+        override fun setNotes(notes: String) {
+            _state.update { it.copy(notes = notes) }
         }
 
     }

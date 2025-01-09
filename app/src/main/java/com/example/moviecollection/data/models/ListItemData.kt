@@ -1,6 +1,6 @@
 package com.example.moviecollection.data.models
 
-data class Actor (
+data class ListItemData (
     val id: Int,
     val name: String
 )

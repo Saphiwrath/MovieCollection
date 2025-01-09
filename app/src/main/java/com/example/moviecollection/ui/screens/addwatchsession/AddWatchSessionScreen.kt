@@ -1,5 +1,6 @@
-package com.example.moviecollection.ui.screens
+package com.example.moviecollection.ui.screens.addwatchsession
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,14 +20,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
-import com.example.moviecollection.ui.components.AutoCompleteTextField
+import com.example.moviecollection.ui.components.inputs.AutoCompleteTextField
 import com.example.moviecollection.ui.components.ConfirmFloatingActionButton
-import com.example.moviecollection.ui.components.CustomNavBar
+import com.example.moviecollection.ui.components.inputs.DatePickerDocked
 import com.example.moviecollection.ui.components.StandardAppBar
+import com.example.moviecollection.ui.components.inputs.DialPicker
 
 @Composable
 fun AddWatchSessionScreen(
-    navController: NavHostController
+    navController: NavHostController,
+    actions: AddWatchSessionActions,
+    state: AddWatchSessionState
 ) {
     Scaffold (
         topBar = {
@@ -39,7 +43,14 @@ fun AddWatchSessionScreen(
             )
         },
         floatingActionButton = {
-            ConfirmFloatingActionButton({/*TODO*/})
+            ConfirmFloatingActionButton{
+                /*TODO*/
+                Log.println(
+                    Log.DEBUG,
+                    "ADDWATCHSESSIONSTATE",
+                    state.toString()
+                )
+            }
         },
     ){ paddingValues ->
         Column (
@@ -63,25 +74,25 @@ fun AddWatchSessionScreen(
                 )
                 AutoCompleteTextField(
                     contentDescription = stringResource(R.string.drop_down_movies),
-                    selectedAction = {},
+                    selectedAction = actions::setMovie,
                     multiSelect = false
                 )
             }
             OutlinedTextField(
-                value = "",
-                onValueChange = {},
+                value = state.place,
+                onValueChange = actions::setPlace,
                 label = { Text(stringResource(R.string.screening_place_label)) },
                 modifier = Modifier.fillMaxWidth()
             )
-            OutlinedTextField(
-                value = "",
-                onValueChange = {},
-                label = { Text(stringResource(R.string.screening_date_label)) },
-                modifier = Modifier.fillMaxWidth()
+            DatePickerDocked(
+                actions::setDate
+            )
+            DialPicker(
+                onConfirm = actions::setTime,
             )
             OutlinedTextField(
-                value = "",
-                onValueChange = {},
+                value = state.notes,
+                onValueChange = actions::setNotes,
                 label = { Text(stringResource(R.string.screening_notes_label)) },
                 modifier = Modifier.fillMaxWidth(),
                 maxLines = 20
