@@ -12,15 +12,18 @@ import com.example.moviecollection.ui.screens.AchievementsScreen
 import com.example.moviecollection.ui.screens.addmovie.AddMovieScreen
 import com.example.moviecollection.ui.screens.addwatchsession.AddWatchSessionScreen
 import com.example.moviecollection.ui.screens.HomeScreen
-import com.example.moviecollection.ui.screens.LoginScreen
+import com.example.moviecollection.ui.screens.login.LoginScreen
 import com.example.moviecollection.ui.screens.MovieDetailsScreen
 import com.example.moviecollection.ui.screens.MovieWatchSessionScreen
 import com.example.moviecollection.ui.screens.settings.SettingsScreen
-import com.example.moviecollection.ui.screens.SignupScreen
+import com.example.moviecollection.ui.screens.signup.SignupScreen
 import com.example.moviecollection.ui.screens.WatchSessionDetailsScreen
 import com.example.moviecollection.ui.screens.addmovie.AddMovieViewModel
 import com.example.moviecollection.ui.screens.addwatchsession.AddWatchSessionViewModel
+import com.example.moviecollection.ui.screens.login.LoginViewModel
 import com.example.moviecollection.ui.screens.settings.SettingsViewModel
+import com.example.moviecollection.ui.screens.signup.SignupActions
+import com.example.moviecollection.ui.screens.signup.SignupViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -84,12 +87,25 @@ fun NavGraph(
         }
 
         composable(NavigationRoute.Login.route) {
-            LoginScreen(navController)
+            val loginViewModel = koinViewModel<LoginViewModel>()
+            val state by loginViewModel.state.collectAsStateWithLifecycle()
+            LoginScreen(
+                navController,
+                actions = loginViewModel.actions,
+                state = state
+            )
         }
 
         composable(NavigationRoute.Signup.route) {
-            SignupScreen(navController)
+            val signupViewModel = koinViewModel<SignupViewModel>()
+            val state by signupViewModel.state.collectAsStateWithLifecycle()
+            SignupScreen(
+                navController,
+                actions = signupViewModel.actions,
+                state = state
+            )
         }
+
         composable(NavigationRoute.Achievements.route) {
             AchievementsScreen(navController)
         }

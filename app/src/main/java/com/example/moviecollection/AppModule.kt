@@ -5,7 +5,9 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.example.moviecollection.data.repositories.SettingsRepository
 import com.example.moviecollection.ui.screens.addmovie.AddMovieViewModel
 import com.example.moviecollection.ui.screens.addwatchsession.AddWatchSessionViewModel
+import com.example.moviecollection.ui.screens.login.LoginViewModel
 import com.example.moviecollection.ui.screens.settings.SettingsViewModel
+import com.example.moviecollection.ui.screens.signup.SignupViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -21,4 +23,8 @@ val appModule = module {
     viewModel { AddMovieViewModel() }
 
     viewModel { AddWatchSessionViewModel() }
+
+    viewModel { LoginViewModel() }
+
+    viewModel { SignupViewModel() }
 }
