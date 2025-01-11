@@ -9,7 +9,9 @@ import kotlinx.coroutines.flow.update
 data class LoginState(
     val username: String = "",
     val password: String = ""
-)
+) {
+    val canSubmit get() = username.isNotBlank() && password.isNotBlank()
+}
 
 interface LoginActions {
     fun setUsername(username: String)

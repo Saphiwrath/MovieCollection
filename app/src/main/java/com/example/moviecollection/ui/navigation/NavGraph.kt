@@ -94,7 +94,8 @@ fun NavGraph(
             LoginScreen(
                 navController,
                 actions = loginViewModel.actions,
-                state = state
+                state = state,
+                onLogin = userViewModel.actions::attemptLogin
             )
         }
 

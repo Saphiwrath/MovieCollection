@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Login
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -23,15 +22,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
 import com.example.moviecollection.ui.navigation.NavigationRoute
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlin.reflect.KSuspendFunction2
 
 const val TAG = "LOGIN"
 
@@ -40,6 +40,7 @@ fun LoginScreen(
     navController: NavHostController,
     actions: LoginActions,
     state: LoginState,
+    onLogin: KSuspendFunction2<String, String, Boolean>
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
@@ -65,13 +66,27 @@ fun LoginScreen(
         )
         Button(
             onClick = {
-                /*TODO*/
-                navController.navigate(NavigationRoute.Home.route)
-                Log.println(
-                    Log.DEBUG,
-                    TAG,
-                    state.toString()
-                )
+                /*TODO ADD SNACKBARS FOR ERRORS*/
+                if (state.canSubmit) {
+                    val loginResult = runBlocking(Dispatchers.IO) {
+                        onLogin(state.username, state.password)
+                    }
+                    if (loginResult) {
+                        navController.navigate(NavigationRoute.Home.route)
+                    } else {
+                        Log.println(
+                            Log.DEBUG,
+                            TAG,
+                            "Nope wrong credentials"
+                        )
+                    }
+                } else {
+                    Log.println(
+                        Log.DEBUG,
+                        TAG,
+                        "Nope empty fields"
+                    )
+                }
             },
             colors = ButtonDefaults.buttonColors(
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer,

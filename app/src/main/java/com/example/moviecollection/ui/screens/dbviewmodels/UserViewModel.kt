@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.WhileSubscribed
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -16,22 +17,24 @@ import kotlinx.coroutines.withContext
 data class LoggedUserState(
     val email: String = "",
     val username: String = "",
-    val image: String? = null
+    val image: String? = null,
+    val id: Int = -1
 )
 
 interface UserActions{
     suspend fun registerUser(user: User): Boolean
-    fun attemptLogin(username: String, password: String): Job
+    suspend fun attemptLogin(username: String, password: String): Boolean
 }
 
 class UserViewModel(
     private val repository: UserRepository
 ): ViewModel() {
-    val state = repository.loggedUser.map {
+    val state = repository.userFlow.map {
         LoggedUserState(
             it.email,
             it.username,
-            it.profileImage
+            it.profileImage,
+            it.id
         )
     }.stateIn(
         scope = viewModelScope,
@@ -40,17 +43,15 @@ class UserViewModel(
     )
 
     val actions = object : UserActions {
-        override suspend fun registerUser(user: User): Boolean = withContext(Dispatchers.IO) {
+        override suspend fun registerUser(user: User): Boolean {
             val duplicateEmailAccount = repository.findUserByEmail(user.email)
-            if (duplicateEmailAccount == null) {
+            return if (duplicateEmailAccount == null) {
                 repository.upsert(user)
-                return@withContext true
-            } else return@withContext false
-
+                true
+            } else false
         }
 
-        override fun attemptLogin(username: String, password: String): Job {
-            TODO("Not yet implemented")
-        }
+        override suspend fun attemptLogin(username: String, password: String): Boolean =
+            repository.attemptLogin(password, username)
     }
 }

@@ -3,12 +3,18 @@ package com.example.moviecollection.data.repositories
 import com.example.moviecollection.data.database.daos.UserDAO
 import com.example.moviecollection.data.database.entities.User
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 
 class UserRepository (
     private val userDAO: UserDAO
 ){
-    var loggedUser: Flow<User> = flowOf()
+    private var _userFlow: Flow<User> = emptyFlow()
+    val userFlow = _userFlow
 
     suspend fun upsert(user: User) = userDAO.registerUser(user)
 
@@ -16,5 +22,14 @@ class UserRepository (
 
     fun findUserByEmail(email:String) = userDAO.findUserByEmail(email)
 
-    fun attemptLogin(password: String, username: String) = userDAO.attemptLogin(password, username)
+    suspend fun attemptLogin(password: String, username: String): Boolean {
+        val user = userDAO.attemptLogin(password, username)
+        return if (user.firstOrNull() == null) {
+            false
+        } else {
+            _userFlow = user
+            true
+        }
+    }
+
 }
