@@ -14,7 +14,8 @@ class UserRepository (
     private val userDAO: UserDAO
 ){
     private var _userFlow: Flow<User> = emptyFlow()
-    val userFlow = _userFlow
+    val userFlow: Flow<User>
+        get() = _userFlow
 
     suspend fun upsert(user: User) = userDAO.registerUser(user)
 
@@ -23,13 +24,8 @@ class UserRepository (
     fun findUserByEmail(email:String) = userDAO.findUserByEmail(email)
 
     suspend fun attemptLogin(password: String, username: String): Boolean {
-        val user = userDAO.attemptLogin(password, username)
-        return if (user.firstOrNull() == null) {
-            false
-        } else {
-            _userFlow = user
-            true
-        }
+        _userFlow = userDAO.attemptLogin(password, username)
+        return _userFlow.firstOrNull() != null
     }
 
 }

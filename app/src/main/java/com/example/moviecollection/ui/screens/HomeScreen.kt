@@ -1,5 +1,6 @@
 package com.example.moviecollection.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,6 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
+import com.example.moviecollection.data.database.entities.User
 import com.example.moviecollection.ui.components.AddMovieFloatingActionButton
 import com.example.moviecollection.ui.components.CustomNavBar
 import com.example.moviecollection.ui.components.FavouritesButton
@@ -40,25 +42,31 @@ import com.example.moviecollection.ui.components.FilterButton
 import com.example.moviecollection.ui.components.MovieCard
 import com.example.moviecollection.ui.components.StandardAppBar
 import com.example.moviecollection.ui.navigation.NavigationRoute
+import com.example.moviecollection.ui.screens.dbviewmodels.LoggedUserState
+
+const val TAG = "HOME"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    navController: NavHostController
+    navController: NavHostController,
+    user: LoggedUserState
 ) {
     Scaffold (
         topBar = {
             StandardAppBar(
                 title = stringResource(R.string.home_screen_title),
                 actions = {
-                    FavouritesButton(/*TODO*/)
+                    FavouritesButton{/*TODO*/ Log.println(Log.DEBUG, TAG, user.username)}
                     FilterButton(/*TODO*/)
                 },
                 navigateUp = { navController.navigateUp() }
             )
         },
         floatingActionButton = {
-            AddMovieFloatingActionButton { navController.navigate(NavigationRoute.AddMovie.route) }
+            AddMovieFloatingActionButton {
+                navController.navigate(NavigationRoute.AddMovie.route)
+            }
         },
     ) {paddingValues ->
         LazyVerticalGrid (

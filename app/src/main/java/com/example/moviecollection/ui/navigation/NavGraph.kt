@@ -39,7 +39,11 @@ fun NavGraph(
     ) {
 
         composable(NavigationRoute.Home.route) {
-            HomeScreen(navController)
+            val userState by userViewModel.state.collectAsStateWithLifecycle()
+            HomeScreen(
+                navController,
+                user = userState
+            )
         }
 
         composable(NavigationRoute.MovieDetails.route) {

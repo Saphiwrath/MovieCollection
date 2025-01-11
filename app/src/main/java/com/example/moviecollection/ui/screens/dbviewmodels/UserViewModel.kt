@@ -7,6 +7,7 @@ import com.example.moviecollection.data.repositories.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
@@ -29,18 +30,9 @@ interface UserActions{
 class UserViewModel(
     private val repository: UserRepository
 ): ViewModel() {
-    val state = repository.userFlow.map {
-        LoggedUserState(
-            it.email,
-            it.username,
-            it.profileImage,
-            it.id
-        )
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(),
-        initialValue = LoggedUserState()
-    )
+    private lateinit var _state: StateFlow<LoggedUserState>
+    val state: StateFlow<LoggedUserState>
+        get() = _state
 
     val actions = object : UserActions {
         override suspend fun registerUser(user: User): Boolean {
@@ -51,7 +43,23 @@ class UserViewModel(
             } else false
         }
 
-        override suspend fun attemptLogin(username: String, password: String): Boolean =
-            repository.attemptLogin(password, username)
+        override suspend fun attemptLogin(username: String, password: String): Boolean {
+            val res = repository.attemptLogin(password, username)
+            if (res) {
+                _state = repository.userFlow.map {
+                    LoggedUserState(
+                        it.email,
+                        it.username,
+                        it.profileImage,
+                        it.id
+                    )
+                }.stateIn(
+                    scope = viewModelScope,
+                    started = SharingStarted.WhileSubscribed(),
+                    initialValue = LoggedUserState()
+                )
+            }
+            return res
+        }
     }
 }
