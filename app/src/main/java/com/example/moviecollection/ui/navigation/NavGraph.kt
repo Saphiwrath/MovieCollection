@@ -20,6 +20,7 @@ import com.example.moviecollection.ui.screens.signup.SignupScreen
 import com.example.moviecollection.ui.screens.WatchSessionDetailsScreen
 import com.example.moviecollection.ui.screens.addmovie.AddMovieViewModel
 import com.example.moviecollection.ui.screens.addwatchsession.AddWatchSessionViewModel
+import com.example.moviecollection.ui.screens.dbviewmodels.UserViewModel
 import com.example.moviecollection.ui.screens.login.LoginViewModel
 import com.example.moviecollection.ui.screens.settings.SettingsViewModel
 import com.example.moviecollection.ui.screens.signup.SignupActions
@@ -31,11 +32,13 @@ fun NavGraph(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
+    val userViewModel = koinViewModel<UserViewModel>()
     NavHost(
         navController = navController,
         startDestination = NavigationRoute.Login.route,
         modifier = modifier
     ) {
+
         composable(NavigationRoute.Home.route) {
             HomeScreen(navController)
         }
@@ -102,7 +105,8 @@ fun NavGraph(
             SignupScreen(
                 navController,
                 actions = signupViewModel.actions,
-                state = state
+                state = state,
+                onSignup = userViewModel.actions::registerUser
             )
         }
 

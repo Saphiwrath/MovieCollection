@@ -24,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
+import com.example.moviecollection.data.database.entities.User
 import com.example.moviecollection.ui.navigation.NavigationRoute
 
 const val TAG = "SIGNUP"
@@ -32,7 +33,8 @@ const val TAG = "SIGNUP"
 fun SignupScreen(
     navController: NavHostController,
     actions: SignupActions,
-    state: SignupState
+    state: SignupState,
+    onSignup: (User) -> Boolean
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
@@ -62,13 +64,13 @@ fun SignupScreen(
             label = {  Text(text = stringResource(R.string.email_field_label)) }
         )
         Button(
-            onClick = {/*TODO*/
-                navController.navigate(NavigationRoute.Login.route)
-                  Log.println(
-                      Log.DEBUG,
-                      TAG,
-                      state.toString()
-                  )
+            onClick = {
+                /*TODO ADD ALERT TO ELSE CLAUSES*/
+                if (state.canSubmit) {
+                    if (onSignup(state.toUser())) {
+                        navController.navigate(NavigationRoute.Login.route)
+                    }
+                }
             },
             colors = ButtonDefaults.buttonColors(
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer,

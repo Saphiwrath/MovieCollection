@@ -7,7 +7,7 @@ import com.example.moviecollection.data.database.entities.Cast
 import com.example.moviecollection.data.database.entities.Movie
 
 @Entity(
-    primaryKeys = ["movieId, castId"],
+    primaryKeys = ["movieId", "castId"],
     foreignKeys = [
         ForeignKey(
             entity = Movie::class,
@@ -25,7 +25,7 @@ import com.example.moviecollection.data.database.entities.Movie
         )
     ]
 )
-data class WithCast(
+data class WithActors(
     @ColumnInfo val movieId: Int,
     @ColumnInfo val castId: Int
 )

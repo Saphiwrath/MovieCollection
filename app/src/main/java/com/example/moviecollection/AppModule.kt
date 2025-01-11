@@ -2,9 +2,13 @@ package com.example.moviecollection
 
 import android.content.Context
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.room.Room
+import com.example.moviecollection.data.database.MovieCollectionDatabase
 import com.example.moviecollection.data.repositories.SettingsRepository
+import com.example.moviecollection.data.repositories.UserRepository
 import com.example.moviecollection.ui.screens.addmovie.AddMovieViewModel
 import com.example.moviecollection.ui.screens.addwatchsession.AddWatchSessionViewModel
+import com.example.moviecollection.ui.screens.dbviewmodels.UserViewModel
 import com.example.moviecollection.ui.screens.login.LoginViewModel
 import com.example.moviecollection.ui.screens.settings.SettingsViewModel
 import com.example.moviecollection.ui.screens.signup.SignupViewModel
@@ -27,4 +31,22 @@ val appModule = module {
     viewModel { LoginViewModel() }
 
     viewModel { SignupViewModel() }
+
+    viewModel { UserViewModel(get()) }
+
+    // DATABASE
+
+    single {
+        Room.databaseBuilder(
+            get(),
+            MovieCollectionDatabase::class.java,
+            "movie_collection"
+        ).build()
+    }
+
+    // REPOSITORIES WITH DAOs
+
+    single {
+        UserRepository(get<MovieCollectionDatabase>().userDAO())
+    }
 }

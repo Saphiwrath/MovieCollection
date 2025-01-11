@@ -1,6 +1,7 @@
 package com.example.moviecollection.ui.screens.signup
 
 import androidx.lifecycle.ViewModel
+import com.example.moviecollection.data.database.entities.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -9,7 +10,18 @@ data class SignupState(
     val username: String = "",
     val email: String = "",
     val password: String = ""
-)
+){
+    val canSubmit get() = username.isNotBlank()
+            && email.isNotBlank()
+            && password.isNotBlank()
+
+    fun toUser() = User(
+        username = username,
+        password = password,
+        email = email,
+        profileImage = null
+    )
+}
 
 interface SignupActions {
     fun setUsername(username: String)

@@ -39,7 +39,7 @@ const val TAG = "LOGIN"
 fun LoginScreen(
     navController: NavHostController,
     actions: LoginActions,
-    state: LoginState
+    state: LoginState,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
