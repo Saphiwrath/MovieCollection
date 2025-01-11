@@ -26,6 +26,9 @@ import androidx.navigation.NavHostController
 import com.example.moviecollection.R
 import com.example.moviecollection.data.database.entities.User
 import com.example.moviecollection.ui.navigation.NavigationRoute
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlin.reflect.KSuspendFunction1
 
 const val TAG = "SIGNUP"
 
@@ -34,7 +37,7 @@ fun SignupScreen(
     navController: NavHostController,
     actions: SignupActions,
     state: SignupState,
-    onSignup: (User) -> Boolean
+    onSignup: KSuspendFunction1<User, Boolean>
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
@@ -67,9 +70,22 @@ fun SignupScreen(
             onClick = {
                 /*TODO ADD ALERT TO ELSE CLAUSES*/
                 if (state.canSubmit) {
-                    if (onSignup(state.toUser())) {
+                    val signupResult = runBlocking(Dispatchers.IO) { onSignup(state.toUser()) }
+                    if (signupResult) {
                         navController.navigate(NavigationRoute.Login.route)
+                    } else {
+                        Log.println(
+                            Log.DEBUG,
+                            TAG,
+                            "Nope email already in use"
+                        )
                     }
+                } else {
+                    Log.println(
+                        Log.DEBUG,
+                        TAG,
+                        "Nope some fields are empty"
+                    )
                 }
             },
             colors = ButtonDefaults.buttonColors(

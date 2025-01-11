@@ -23,7 +23,6 @@ import com.example.moviecollection.ui.screens.addwatchsession.AddWatchSessionVie
 import com.example.moviecollection.ui.screens.dbviewmodels.UserViewModel
 import com.example.moviecollection.ui.screens.login.LoginViewModel
 import com.example.moviecollection.ui.screens.settings.SettingsViewModel
-import com.example.moviecollection.ui.screens.signup.SignupActions
 import com.example.moviecollection.ui.screens.signup.SignupViewModel
 import org.koin.androidx.compose.koinViewModel
 
