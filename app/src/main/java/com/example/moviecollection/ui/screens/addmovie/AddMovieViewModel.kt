@@ -18,7 +18,8 @@ data class AddMovieState(
     var image: Uri = Uri.EMPTY,
     var notes: String = ""
 ) {
-    val canSubmit = title.isNotBlank() && director != -1
+    val canSubmit = title.isNotBlank() && director != -1 && actors.isNotEmpty()
+            && genres.isNotEmpty() && format.isNotEmpty()
     fun toMovie() = Movie(
         title = title,
         year = year,

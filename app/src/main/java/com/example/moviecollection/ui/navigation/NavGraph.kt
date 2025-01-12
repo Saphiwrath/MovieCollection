@@ -1,5 +1,6 @@
 package com.example.moviecollection.ui.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -7,6 +8,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.moviecollection.data.database.entities.Genre
 import com.example.moviecollection.ui.screens.AccountScreen
 import com.example.moviecollection.ui.screens.AchievementsScreen
 import com.example.moviecollection.ui.screens.addmovie.AddMovieScreen
@@ -102,8 +104,15 @@ fun NavGraph(
                 actions = addMovieViewModel.actions,
                 state = state,
                 addMovieAction = {
+                    Log.println(Log.DEBUG, "debug", state.canSubmit.toString() + state.toString())
                     if (state.canSubmit) {
-                        movieViewModel.actions.addMovie(state.toMovie())
+                        movieViewModel.actions.addMovieWithRels(
+                            movie = state.toMovie(),
+                            genres = state.genres.map { Genre(it) },
+                            actors = state.actors,
+                            formats = state.format,
+                            userId = userViewModel.state.value.id
+                        )
                         navController.navigate(NavigationRoute.Home.route)
                     }
                 },
