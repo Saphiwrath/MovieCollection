@@ -42,7 +42,7 @@ fun NavGraph(
             val userState by userViewModel.state.collectAsStateWithLifecycle()
             HomeScreen(
                 navController,
-                user = userState
+                userState = userState
             )
         }
 
@@ -64,7 +64,10 @@ fun NavGraph(
             SettingsScreen(
                 navController = navController,
                 actions = settingsViewModel.actions,
-                state = settingsState
+                state = settingsState,
+                updateUsername = { userViewModel.actions.changeUsername(settingsState.username) },
+                updateEmail = {userViewModel.actions.changeEmail(settingsState.email)},
+                updatePassword = {userViewModel.actions.changePassword(settingsState.password)}
             )
         }
 

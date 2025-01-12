@@ -14,6 +14,11 @@
     <string name="signup_screen_title">Sign up</string>
     <string name="achievements_screen_title">Achievements</string>
 
+    <!-- SNACKBARS -->
+    <string name="username_updated">Username updated!</string>
+    <string name="email_updated">Email updated!</string>
+    <string name="password_updated">Password updated!</string>
+
     <!-- ACCESSIBILITY DESCRIPTIONS -->
     <!-- Buttons of all types-->
     <string name="favourites_button_desc">Favourites</string>

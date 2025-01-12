@@ -14,6 +14,11 @@
     <string name="signup_screen_title">Registrati</string>
     <string name="achievements_screen_title">Trofei</string>
 
+    <!-- SNACKBARS -->
+    <string name="username_updated">Nome utente aggiornato!</string>
+    <string name="email_updated">Email aggiornata!</string>
+    <string name="password_updated">Password aggiornata!</string>
+
     <!-- ACCESSIBILITY DESCRIPTIONS -->
     <!-- Buttons of all types-->
     <string name="favourites_button_desc">Preferiti</string>

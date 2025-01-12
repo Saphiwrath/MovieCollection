@@ -6,12 +6,14 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -30,21 +32,45 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.moviecollection.R
 import com.example.moviecollection.data.models.ListItemData
 import com.example.moviecollection.data.models.MovieFormat
 import com.example.moviecollection.ui.components.SelectableCard
+import com.example.moviecollection.ui.components.SettingsLabelText
+import com.example.moviecollection.ui.components.showSnackBar
+import kotlinx.coroutines.launch
 
 @Composable
-fun StandardTextField(
+fun InputFieldWithSideLabel(
+    onClick: () -> Unit,
+    onValueChange: (String) -> Unit,
     value: String,
-    onValueChange: (String) -> Unit = {}
+    rowSpacedBy: Dp,
+    text: String
 ) {
-    OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange
-    )
+    Row(
+        verticalAlignment = Alignment.Top,
+        horizontalArrangement = Arrangement.spacedBy(rowSpacedBy),
+        modifier = Modifier.fillMaxSize()
+    ) {
+        SettingsLabelText(
+            text = text
+        )
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            trailingIcon = {
+                IconButton(onClick = onClick) {
+                    Icon(
+                        imageVector = Icons.Outlined.Check,
+                        contentDescription = stringResource(R.string.generic_confirm_button)
+                    )
+                }
+            }
+        )
+    }
 }
 
 @Composable

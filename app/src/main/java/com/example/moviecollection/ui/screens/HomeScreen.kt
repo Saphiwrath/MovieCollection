@@ -50,14 +50,14 @@ const val TAG = "HOME"
 @Composable
 fun HomeScreen(
     navController: NavHostController,
-    user: LoggedUserState
+    userState: LoggedUserState
 ) {
     Scaffold (
         topBar = {
             StandardAppBar(
                 title = stringResource(R.string.home_screen_title),
                 actions = {
-                    FavouritesButton{/*TODO*/ Log.println(Log.DEBUG, TAG, user.username)}
+                    FavouritesButton{/*TODO*/ Log.println(Log.DEBUG, TAG, userState.user.username)}
                     FilterButton(/*TODO*/)
                 },
                 navigateUp = { navController.navigateUp() }

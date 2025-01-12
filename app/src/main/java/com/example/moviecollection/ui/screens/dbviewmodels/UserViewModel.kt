@@ -16,15 +16,23 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 data class LoggedUserState(
-    val email: String = "",
-    val username: String = "",
-    val image: String? = null,
-    val id: Int = -1
-)
+    val user: User = User()
+) {
+    val id get() = user.id
+    val username get() = user.password
+    val email get() = user.email
+    val password get() = user.password
+    val image get() = user.profileImage
+}
 
 interface UserActions{
     suspend fun registerUser(user: User): Boolean
     suspend fun attemptLogin(username: String, password: String): Boolean
+    fun changeUsername(username: String) : Job
+
+    fun changeEmail(email: String) : Job
+
+    fun changePassword(password: String) : Job
 }
 
 class UserViewModel(
@@ -47,12 +55,7 @@ class UserViewModel(
             val res = repository.attemptLogin(password, username)
             if (res) {
                 _state = repository.userFlow.map {
-                    LoggedUserState(
-                        it.email,
-                        it.username,
-                        it.profileImage,
-                        it.id
-                    )
+                    LoggedUserState(it)
                 }.stateIn(
                     scope = viewModelScope,
                     started = SharingStarted.WhileSubscribed(),
@@ -60,6 +63,42 @@ class UserViewModel(
                 )
             }
             return res
+        }
+
+        override fun changeUsername(username: String) = viewModelScope.launch {
+            repository.upsert(
+                User (
+                    id = _state.value.id,
+                    username = username,
+                    password = _state.value.password,
+                    email = _state.value.email,
+                    profileImage = _state.value.image
+                )
+            )
+        }
+
+        override fun changePassword(password: String) = viewModelScope.launch {
+            repository.upsert(
+                User (
+                    id = _state.value.id,
+                    username = _state.value.username,
+                    password = password,
+                    email = _state.value.email,
+                    profileImage = _state.value.image
+                )
+            )
+        }
+
+        override fun changeEmail(email: String) = viewModelScope.launch {
+            repository.upsert(
+                User (
+                    id = _state.value.id,
+                    username = _state.value.username,
+                    password = _state.value.password,
+                    email = email,
+                    profileImage = _state.value.image
+                )
+            )
         }
     }
 }

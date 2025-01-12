@@ -13,12 +13,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -29,14 +30,25 @@ import com.example.moviecollection.data.models.Theme
 import com.example.moviecollection.ui.components.inputs.RadioButtonRow
 import com.example.moviecollection.ui.components.SettingsLabelText
 import com.example.moviecollection.ui.components.StandardAppBar
-import com.example.moviecollection.ui.components.inputs.StandardTextField
+import com.example.moviecollection.ui.components.inputs.InputFieldWithSideLabel
+import com.example.moviecollection.ui.components.showSnackBar
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 @Composable
 fun SettingsScreen(
     navController: NavHostController,
     actions: SettingsActions,
-    state: SettingsState
+    state: SettingsState,
+    updateUsername: () -> Unit,
+    updatePassword: () -> Unit,
+    updateEmail: () -> Unit
 ) {
+    val scope = rememberCoroutineScope()
+    val snackBarHostState = remember { SnackbarHostState()}
+    val usernameMessage = stringResource(R.string.username_updated)
+    val passwordMessage = stringResource(R.string.password_updated)
+    val emailMessage = stringResource(R.string.email_updated)
     Scaffold (
         topBar = {
             StandardAppBar(
@@ -47,12 +59,12 @@ fun SettingsScreen(
                 navigateUp = {navController.navigateUp()}
             )
         },
+        snackbarHost = {
+            SnackbarHost(hostState = snackBarHostState)
+        }
     ){paddingValues ->
         val rowSpacedBy = 20.dp
         val scrollState = rememberScrollState()
-        var usernameField by remember {
-            mutableStateOf("")
-        }
         Column (
             verticalArrangement = Arrangement.spacedBy(15.dp),
             modifier = Modifier
@@ -89,25 +101,51 @@ fun SettingsScreen(
                     }
                 }
             }
-            Row(
-                verticalAlignment = Alignment.Top,
-                horizontalArrangement = Arrangement.spacedBy(rowSpacedBy),
-                modifier = Modifier.fillMaxSize()
-            ) {
-                SettingsLabelText(
-                    text = stringResource(R.string.username_label)
-                )
-                StandardTextField(
-                    value = usernameField,
-                    onValueChange = {value -> usernameField = value}
-                )
-                IconButton(onClick = { actions.setUsername(usernameField) }) {
-                    Icon(
-                        imageVector = Icons.Outlined.Check,
-                        contentDescription = stringResource(R.string.generic_confirm_button)
-                    )
+            InputFieldWithSideLabel(
+                onValueChange = actions::setUsername,
+                value = state.username,
+                rowSpacedBy = rowSpacedBy,
+                text = stringResource(R.string.username_label),
+                onClick = {
+                    updateUsername()
+                    scope.launch {
+                        showSnackBar(
+                            message = usernameMessage,
+                            snackBarHostState
+                        )
+                    }
                 }
-            }
+            )
+            InputFieldWithSideLabel(
+                onValueChange = actions::setEmail,
+                value = state.email,
+                rowSpacedBy = rowSpacedBy,
+                text = stringResource(R.string.email_field_label),
+                onClick = {
+                    updateEmail()
+                    scope.launch {
+                        showSnackBar(
+                            message = emailMessage,
+                            snackBarHostState
+                        )
+                    }
+                }
+            )
+            InputFieldWithSideLabel(
+                onValueChange = actions::setPassword,
+                value = state.password,
+                rowSpacedBy = rowSpacedBy,
+                text = stringResource(R.string.password_field_label),
+                onClick = {
+                    updatePassword()
+                    scope.launch {
+                        showSnackBar(
+                            message = passwordMessage,
+                            snackBarHostState
+                        )
+                    }
+                }
+            )
         }
     }
 }
