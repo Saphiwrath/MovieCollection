@@ -18,6 +18,8 @@
     <string name="username_updated">Nome utente aggiornato!</string>
     <string name="email_updated">Email aggiornata!</string>
     <string name="password_updated">Password aggiornata!</string>
+    <string name="genre_added">Genere aggiunto!</string>
+    <string name="genre_not_added">Il genere duplicato non è stato aggiunto</string>
 
     <!-- ACCESSIBILITY DESCRIPTIONS -->
     <!-- Buttons of all types-->
@@ -36,6 +38,7 @@
     <string name="system_mode_button">Sistema</string>
     <string name="view_watch_sessions_button">Visualizza proiezioni</string>
     <string name="drop_down_actors">Espandi lista attori</string>
+    <string name="drop_down_directors">Espandi lista registi</string>
     <string name="drop_down_movies">Espandi lista titoli film</string>
     <string name="generic_confirm_button">Confirm</string>
 
@@ -80,6 +83,10 @@
     <string name="password_field_label">Password</string>
     <string name="username_field_label">Nome utente</string>
     <string name="email_field_label">Email</string>
+    <string name="genre_field_label">Genere</string>
+    <string name="isActor_checkbox_label">Attore</string>
+    <string name="isDirector_checkbox_label">Regista</string>
+    <string name="castName_checkbox_label">Nome</string>
 
     <string name="graph_label">Quanti film hai guardato questa settimana?</string>
 

@@ -23,18 +23,22 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.chargemap.compose.numberpicker.NumberPicker
 import com.example.moviecollection.R
+import com.example.moviecollection.data.models.ListItemData
 import com.example.moviecollection.ui.components.inputs.AutoCompleteTextField
 import com.example.moviecollection.ui.components.inputs.ClickableLazyList
 import com.example.moviecollection.ui.components.ConfirmFloatingActionButton
 import com.example.moviecollection.ui.components.inputs.RadioButtonRowWithLabel
 import com.example.moviecollection.ui.components.StandardAppBar
+import com.example.moviecollection.ui.screens.dbviewmodels.CastState
 import java.util.Calendar
 
 @Composable
 fun AddMovieScreen(
     navController: NavHostController,
     actions: AddMovieActions,
-    state: AddMovieState
+    state: AddMovieState,
+    addMovieAction: () -> Unit,
+    castState: CastState
 ) {
     Scaffold (
         topBar = {
@@ -45,8 +49,7 @@ fun AddMovieScreen(
         },
         floatingActionButton = {
             ConfirmFloatingActionButton {
-                /* TODO */
-
+                addMovieAction()
             }
         },
     ){paddingValues ->
@@ -97,9 +100,10 @@ fun AddMovieScreen(
             ){
                 Text(text = stringResource(R.string.movie_director_label))
                 AutoCompleteTextField(
-                    contentDescription = stringResource(R.string.drop_down_actors),
+                    contentDescription = stringResource(R.string.drop_down_directors),
                     selectedAction = actions::setDirector,
-                    multiSelect = false
+                    multiSelect = false,
+                    items = castState.directors.map { ListItemData(id = it.id, name = it.name) }
                 )
             }
             Row (
@@ -112,7 +116,8 @@ fun AddMovieScreen(
                 AutoCompleteTextField(
                     contentDescription = stringResource(R.string.drop_down_actors),
                     selectedAction = actions::setActors,
-                    multiSelect = true
+                    multiSelect = true,
+                    items = castState.actors.map { ListItemData(id = it.id, name = it.name) }
                 )
             }
             Row (

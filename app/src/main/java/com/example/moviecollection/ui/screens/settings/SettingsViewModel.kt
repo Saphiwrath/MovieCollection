@@ -5,6 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.moviecollection.data.database.entities.Cast
+import com.example.moviecollection.data.database.entities.Genre
 import com.example.moviecollection.data.models.Theme
 import com.example.moviecollection.data.repositories.SettingsRepository
 import kotlinx.coroutines.Job
@@ -21,8 +23,25 @@ data class SettingsState(
     val theme: Theme,
     var username: String = "",
     var email: String = "",
-    var password: String = ""
-)
+    var password: String = "",
+    var genre: String = "",
+    var castName: String = "",
+    var castIsActor: Boolean = false,
+    var castIsDirector: Boolean = false
+) {
+
+    val canSubmitGenre = genre.isNotBlank()
+    fun toGenre() = Genre(
+        name = genre
+    )
+
+    val canSubmitActor = castName.isNotBlank() && (castIsActor || castIsDirector)
+    fun toCast() = Cast(
+        name = castName,
+        isActor = castIsActor,
+        isDirector = castIsDirector
+    )
+}
 
 interface SettingsActions {
     fun changeTheme(theme: Theme) : Job
@@ -31,6 +50,14 @@ interface SettingsActions {
     fun setEmail(email: String)
 
     fun setPassword(password: String)
+
+    fun setGenre(genre: String)
+
+    fun setCastName(castName: String)
+
+    fun setCastIsActor(castIsActor: Boolean)
+
+    fun setCastIsDirector(castIsDirector: Boolean)
 }
 
 class SettingsViewModel(
@@ -54,6 +81,22 @@ class SettingsViewModel(
 
         override fun setPassword(password: String) {
             _state.update { it.copy(password = password) }
+        }
+
+        override fun setGenre(genre: String) {
+            _state.update { it.copy(genre = genre) }
+        }
+
+        override fun setCastName(castName: String) {
+            _state.update { it.copy(castName = castName) }
+        }
+
+        override fun setCastIsActor(castIsActor: Boolean) {
+            _state.update { it.copy(castIsActor = castIsActor) }
+        }
+
+        override fun setCastIsDirector(castIsDirector: Boolean) {
+            _state.update { it.copy(castIsDirector = castIsDirector) }
         }
     }
 

@@ -2,6 +2,9 @@ package com.example.moviecollection.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.example.moviecollection.data.database.daos.CastDAO
+import com.example.moviecollection.data.database.daos.GenreDAO
+import com.example.moviecollection.data.database.daos.MovieDAO
 import com.example.moviecollection.data.database.daos.UserDAO
 import com.example.moviecollection.data.database.entities.Achievement
 import com.example.moviecollection.data.database.entities.Cast
@@ -36,5 +39,11 @@ import com.example.moviecollection.data.database.relationships.WithActors
     version = 1
 )
 abstract class MovieCollectionDatabase : RoomDatabase() {
-    abstract fun userDAO() : UserDAO
+    abstract fun userDAO(): UserDAO
+
+    abstract fun movieDAO(): MovieDAO
+
+    abstract fun castDAO(): CastDAO
+
+    abstract fun genreDAO(): GenreDAO
 }

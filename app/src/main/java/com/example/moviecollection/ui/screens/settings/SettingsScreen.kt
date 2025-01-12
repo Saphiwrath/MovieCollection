@@ -42,13 +42,16 @@ fun SettingsScreen(
     state: SettingsState,
     updateUsername: () -> Unit,
     updatePassword: () -> Unit,
-    updateEmail: () -> Unit
+    updateEmail: () -> Unit,
+    addGenre: () -> Boolean
 ) {
     val scope = rememberCoroutineScope()
     val snackBarHostState = remember { SnackbarHostState()}
     val usernameMessage = stringResource(R.string.username_updated)
     val passwordMessage = stringResource(R.string.password_updated)
     val emailMessage = stringResource(R.string.email_updated)
+    val genreAddedMessage = stringResource(R.string.genre_added)
+    val genreNotAddedMessage = stringResource(R.string.genre_not_added)
     Scaffold (
         topBar = {
             StandardAppBar(
@@ -141,6 +144,23 @@ fun SettingsScreen(
                     scope.launch {
                         showSnackBar(
                             message = passwordMessage,
+                            snackBarHostState
+                        )
+                    }
+                }
+            )
+            InputFieldWithSideLabel(
+                onValueChange = actions::setGenre,
+                value = state.genre,
+                rowSpacedBy = rowSpacedBy,
+                text = stringResource(R.string.genre_field_label),
+                onClick = {
+                    val res = addGenre()
+                    scope.launch {
+                        showSnackBar(
+                            message = if(res) {
+                                genreAddedMessage
+                            } else genreNotAddedMessage,
                             snackBarHostState
                         )
                     }

@@ -2,6 +2,7 @@ package com.example.moviecollection.ui.screens.addmovie
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
+import com.example.moviecollection.data.database.entities.Movie
 import com.example.moviecollection.data.models.MovieFormat
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,7 +17,16 @@ data class AddMovieState(
     var format: List<MovieFormat> = emptyList(),
     var image: Uri = Uri.EMPTY,
     var notes: String = ""
-)
+) {
+    val canSubmit = title.isNotBlank() && director != -1
+    fun toMovie() = Movie(
+        title = title,
+        year = year,
+        directorId = director,
+        poster = image.toString(),
+        notes = notes
+    )
+}
 
 interface AddMovieActions {
     fun setTitle(title: String)

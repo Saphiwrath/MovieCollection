@@ -20,6 +20,9 @@ import com.example.moviecollection.ui.screens.signup.SignupScreen
 import com.example.moviecollection.ui.screens.WatchSessionDetailsScreen
 import com.example.moviecollection.ui.screens.addmovie.AddMovieViewModel
 import com.example.moviecollection.ui.screens.addwatchsession.AddWatchSessionViewModel
+import com.example.moviecollection.ui.screens.dbviewmodels.CastViewModel
+import com.example.moviecollection.ui.screens.dbviewmodels.GenreViewModel
+import com.example.moviecollection.ui.screens.dbviewmodels.MovieViewModel
 import com.example.moviecollection.ui.screens.dbviewmodels.UserViewModel
 import com.example.moviecollection.ui.screens.login.LoginViewModel
 import com.example.moviecollection.ui.screens.settings.SettingsViewModel
@@ -32,6 +35,9 @@ fun NavGraph(
     modifier: Modifier = Modifier
 ) {
     val userViewModel = koinViewModel<UserViewModel>()
+    val movieViewModel = koinViewModel<MovieViewModel>()
+    val genreViewModel = koinViewModel<GenreViewModel>()
+    val castViewModel = koinViewModel<CastViewModel>()
     NavHost(
         navController = navController,
         startDestination = NavigationRoute.Login.route,
@@ -67,7 +73,8 @@ fun NavGraph(
                 state = settingsState,
                 updateUsername = { userViewModel.actions.changeUsername(settingsState.username) },
                 updateEmail = {userViewModel.actions.changeEmail(settingsState.email)},
-                updatePassword = {userViewModel.actions.changePassword(settingsState.password)}
+                updatePassword = {userViewModel.actions.changePassword(settingsState.password)},
+                addGenre = { genreViewModel.actions.addGenre(settingsState.toGenre()) }
             )
         }
 
@@ -78,10 +85,18 @@ fun NavGraph(
         composable(NavigationRoute.AddMovie.route) {
             val addMovieViewModel = koinViewModel<AddMovieViewModel>()
             val state by addMovieViewModel.state.collectAsStateWithLifecycle()
+            val castState by castViewModel.state.collectAsStateWithLifecycle()
             AddMovieScreen(
                 navController,
                 actions = addMovieViewModel.actions,
-                state = state
+                state = state,
+                addMovieAction = {
+                    if (state.canSubmit) {
+                        movieViewModel.actions.addMovie(state.toMovie())
+                        navController.navigate(NavigationRoute.Home.route)
+                    }
+                },
+                castState = castState
             )
         }
 
