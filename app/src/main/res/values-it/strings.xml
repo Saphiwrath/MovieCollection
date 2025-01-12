@@ -20,6 +20,7 @@
     <string name="password_updated">Password aggiornata!</string>
     <string name="genre_added">Genere aggiunto!</string>
     <string name="genre_not_added">Il genere duplicato non è stato aggiunto</string>
+    <string name="cast_member_added">Membro del cast aggiunto!</string>
 
     <!-- ACCESSIBILITY DESCRIPTIONS -->
     <!-- Buttons of all types-->
@@ -86,7 +87,8 @@
     <string name="genre_field_label">Genere</string>
     <string name="isActor_checkbox_label">Attore</string>
     <string name="isDirector_checkbox_label">Regista</string>
-    <string name="castName_checkbox_label">Nome</string>
+    <string name="castName_field_label">Nome</string>
+    <string name="addCastMember_label">Aggiungi membro del cast</string>
 
     <string name="graph_label">Quanti film hai guardato questa settimana?</string>
 

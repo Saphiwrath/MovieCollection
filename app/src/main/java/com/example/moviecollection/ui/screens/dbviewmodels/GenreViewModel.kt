@@ -1,16 +1,14 @@
 package com.example.moviecollection.ui.screens.dbviewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.moviecollection.data.database.daos.GenreDAO
 import com.example.moviecollection.data.database.entities.Genre
 import com.example.moviecollection.data.repositories.GenreRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 data class GenreState(
@@ -31,8 +29,8 @@ class GenreViewModel(
     )
 
     private suspend fun checkAndAddGenre(genre: Genre): Boolean {
-        val alreadyExists = repository.findDuplicate(genre.name)
-        return if (!alreadyExists) {
+        val duplicateGenre = repository.findDuplicate(genre.name)
+        return if (duplicateGenre == null) {
             repository.addGenre(genre)
             true
         } else false

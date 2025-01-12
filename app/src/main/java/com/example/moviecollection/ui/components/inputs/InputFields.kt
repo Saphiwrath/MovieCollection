@@ -74,17 +74,16 @@ fun InputFieldWithSideLabel(
 }
 
 @Composable
-fun ClickableLazyList(
+fun <T> ClickableLazyList(
     modifier: Modifier,
-    selectedAction: (List<String>) -> Unit
+    selectedAction: (List<T>) -> Unit,
+    items: List<T>
 ) {
-    val selectedItems = remember { mutableStateListOf<String>()}
+    val selectedItems = remember { mutableStateListOf<T>()}
     LazyColumn(
         modifier = modifier
     ) {
-        items(
-            items = (1..20).toList().map { "$it" }
-        ) {
+        items(items) {
             SelectableCard(
                 clickable = {
                     if (it in selectedItems) {
@@ -94,13 +93,13 @@ fun ClickableLazyList(
                 },
                 containerColor =
                     if (it in selectedItems) {
-                       MaterialTheme.colorScheme.secondaryContainer
+                       MaterialTheme.colorScheme.primary
                     } else MaterialTheme.colorScheme.tertiaryContainer,
                 contentColor =
                     if (it in selectedItems) {
-                        MaterialTheme.colorScheme.onSecondaryContainer
+                        MaterialTheme.colorScheme.onPrimary
                     } else MaterialTheme.colorScheme.onTertiaryContainer,
-                item = it
+                item = it.toString()
             )
         }
     }
@@ -261,12 +260,12 @@ fun AutoCompleteTextField(
                             },
                             containerColor =
                                 if(it.id in selectedItems) {
-                                    MaterialTheme.colorScheme.secondaryContainer
+                                    MaterialTheme.colorScheme.primary
                                 } else MaterialTheme.colorScheme.tertiaryContainer,
                             contentColor =
                                 if(it.id in selectedItems) {
-                                    MaterialTheme.colorScheme.onSecondaryContainer
-                                } else MaterialTheme.colorScheme.onTertiaryContainer
+                                    MaterialTheme.colorScheme.onPrimary
+                                } else MaterialTheme.colorScheme.onTertiaryContainer,
                         )
                     }
                 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.moviecollection.data.database.entities.Cast
 import com.example.moviecollection.data.repositories.CastRepository
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -15,7 +16,7 @@ data class CastState(
 )
 
 interface CastActions {
-    fun addCast(cast: Cast)
+    fun addCast(cast: Cast): Job
 }
 
 class CastViewModel(
@@ -23,6 +24,13 @@ class CastViewModel(
 ): ViewModel() {
     private val _state = MutableStateFlow(CastState())
     val state = _state.asStateFlow()
+
+    val actions = object : CastActions {
+        override fun addCast(cast: Cast) = viewModelScope.launch{
+            repository.addCast(cast)
+        }
+
+    }
 
     init {
         viewModelScope.launch {

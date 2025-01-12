@@ -30,6 +30,7 @@ import com.example.moviecollection.ui.components.ConfirmFloatingActionButton
 import com.example.moviecollection.ui.components.inputs.RadioButtonRowWithLabel
 import com.example.moviecollection.ui.components.StandardAppBar
 import com.example.moviecollection.ui.screens.dbviewmodels.CastState
+import com.example.moviecollection.ui.screens.dbviewmodels.GenreState
 import java.util.Calendar
 
 @Composable
@@ -38,7 +39,8 @@ fun AddMovieScreen(
     actions: AddMovieActions,
     state: AddMovieState,
     addMovieAction: () -> Unit,
-    castState: CastState
+    castState: CastState,
+    genreState: GenreState
 ) {
     Scaffold (
         topBar = {
@@ -131,7 +133,8 @@ fun AddMovieScreen(
                     modifier = Modifier
                         .height(200.dp)
                         .fillMaxWidth(),
-                    selectedAction = actions::setGenres
+                    selectedAction = actions::setGenres,
+                    items = genreState.genres.map { it.name }
                 )
             }
             RadioButtonRowWithLabel(

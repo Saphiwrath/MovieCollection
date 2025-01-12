@@ -16,7 +16,7 @@ interface GenreDAO {
     suspend fun deleteGenre(genre: Genre)
 
     @Query("SELECT * FROM genre WHERE name=:name")
-    fun findDuplicate(name: String): Boolean
+    fun findDuplicate(name: String): Genre?
 
     @Query("SELECT * FROM genre")
     fun getAllGenres(): Flow<List<Genre>>

@@ -74,7 +74,17 @@ fun NavGraph(
                 updateUsername = { userViewModel.actions.changeUsername(settingsState.username) },
                 updateEmail = {userViewModel.actions.changeEmail(settingsState.email)},
                 updatePassword = {userViewModel.actions.changePassword(settingsState.password)},
-                addGenre = { genreViewModel.actions.addGenre(settingsState.toGenre()) }
+                addGenre = {
+                    if (settingsState.canSubmitGenre) genreViewModel.actions.addGenre(settingsState.toGenre())
+                    else false
+                },
+                addCast = {
+                    if (settingsState.canSubmitActor) {
+                        castViewModel.actions.addCast(settingsState.toCast())
+                        true
+                    }
+                    else false
+                }
             )
         }
 
@@ -86,6 +96,7 @@ fun NavGraph(
             val addMovieViewModel = koinViewModel<AddMovieViewModel>()
             val state by addMovieViewModel.state.collectAsStateWithLifecycle()
             val castState by castViewModel.state.collectAsStateWithLifecycle()
+            val genreState by genreViewModel.state.collectAsStateWithLifecycle()
             AddMovieScreen(
                 navController,
                 actions = addMovieViewModel.actions,
@@ -96,7 +107,8 @@ fun NavGraph(
                         navController.navigate(NavigationRoute.Home.route)
                     }
                 },
-                castState = castState
+                castState = castState,
+                genreState = genreState
             )
         }
 

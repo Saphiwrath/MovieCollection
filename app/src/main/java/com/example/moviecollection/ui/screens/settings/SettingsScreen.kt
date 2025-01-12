@@ -11,22 +11,31 @@ import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
 import com.example.moviecollection.data.models.Theme
+import com.example.moviecollection.ui.components.AddCastCard
 import com.example.moviecollection.ui.components.inputs.RadioButtonRow
 import com.example.moviecollection.ui.components.SettingsLabelText
 import com.example.moviecollection.ui.components.StandardAppBar
@@ -43,7 +52,8 @@ fun SettingsScreen(
     updateUsername: () -> Unit,
     updatePassword: () -> Unit,
     updateEmail: () -> Unit,
-    addGenre: () -> Boolean
+    addGenre: () -> Boolean,
+    addCast: () -> Boolean
 ) {
     val scope = rememberCoroutineScope()
     val snackBarHostState = remember { SnackbarHostState()}
@@ -52,6 +62,7 @@ fun SettingsScreen(
     val emailMessage = stringResource(R.string.email_updated)
     val genreAddedMessage = stringResource(R.string.genre_added)
     val genreNotAddedMessage = stringResource(R.string.genre_not_added)
+    val castMessage = stringResource(R.string.cast_member_added)
     Scaffold (
         topBar = {
             StandardAppBar(
@@ -110,7 +121,6 @@ fun SettingsScreen(
                 rowSpacedBy = rowSpacedBy,
                 text = stringResource(R.string.username_label),
                 onClick = {
-                    updateUsername()
                     scope.launch {
                         showSnackBar(
                             message = usernameMessage,
@@ -166,6 +176,25 @@ fun SettingsScreen(
                     }
                 }
             )
+            AddCastCard(
+                nameValue = state.castName,
+                onNameValueChange = actions::setCastName,
+                isActor = state.castIsActor,
+                isDirector = state.castIsDirector,
+                onIsActorChange = actions::setCastIsActor,
+                onIsDirectorChange = actions::setCastIsDirector
+            ) {
+                val res = addCast()
+                if (res) {
+                    scope.launch {
+                        showSnackBar(
+                            message = castMessage,
+                            snackBarHostState
+                        )
+                    }
+                }
+            }
         }
     }
 }
+

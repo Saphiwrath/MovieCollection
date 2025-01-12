@@ -21,16 +21,19 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.EmojiEvents
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -380,6 +383,77 @@ fun AchievementCard(
                 text = condition,
                 style = MaterialTheme.typography.bodyMedium
             )
+        }
+    }
+}
+
+@Composable
+fun AddCastCard(
+    nameValue: String,
+    onNameValueChange: (String) -> Unit,
+    isActor: Boolean,
+    isDirector: Boolean,
+    onIsActorChange: (Boolean) -> Unit,
+    onIsDirectorChange: (Boolean) -> Unit,
+    onSubmit: () -> Unit
+) {
+    Card (
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+        ),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(5.dp)
+    ){
+        Column (
+            modifier = Modifier.padding(12.dp).fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalAlignment = Alignment.Start,
+        ){
+            Text(
+                text = stringResource(R.string.addCastMember_label),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold
+            )
+            OutlinedTextField(
+                value = nameValue,
+                onValueChange = onNameValueChange,
+                label = {Text(stringResource(R.string.castName_field_label))}
+            )
+            Row (
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ){
+                SettingsLabelText(text = stringResource(R.string.isActor_checkbox_label))
+                Checkbox(
+                    checked = isActor,
+                    onCheckedChange = onIsActorChange,
+                )
+            }
+            Row (
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ){
+                SettingsLabelText(text = stringResource(R.string.isDirector_checkbox_label))
+                Checkbox(
+                    checked = isDirector,
+                    onCheckedChange = onIsDirectorChange,
+                )
+            }
+            Row (
+                horizontalArrangement = Arrangement.End,
+                modifier = Modifier.fillMaxWidth()
+            ){
+                IconButton(onClick = onSubmit) {
+                    Icon(
+                        imageVector = Icons.Outlined.CheckCircle,
+                        contentDescription = stringResource(R.string.confirm_selection_button)
+                    )
+                }
+            }
         }
     }
 }
