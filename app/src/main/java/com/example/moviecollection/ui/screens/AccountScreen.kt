@@ -75,8 +75,11 @@ fun AccountScreen(
                             title = movie.title,
                             date = screening.date,
                             image = screening.image,
-                            onClick = { navController.navigate(NavigationRoute.WatchSessionDetails.route) },
-                        )
+                        ) {
+                            navController.navigate(
+                                NavigationRoute.WatchSessionDetails.buildRoute(screeningId = screening.id)
+                            )
+                        }
                     }
                 }
             }

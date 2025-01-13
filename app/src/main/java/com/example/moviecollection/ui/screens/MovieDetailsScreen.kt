@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -26,19 +27,30 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
 import com.example.moviecollection.data.database.entities.Movie
+import com.example.moviecollection.data.database.relationships.InFormat
+import com.example.moviecollection.data.database.relationships.OfGenre
+import com.example.moviecollection.data.database.relationships.WithActors
 import com.example.moviecollection.ui.components.AddWatchSessionFloatingActionButton
 import com.example.moviecollection.ui.components.CustomNavBar
 import com.example.moviecollection.ui.components.DetailsCardDataRow
 import com.example.moviecollection.ui.components.StandardAppBar
 import com.example.moviecollection.ui.components.ViewWatchSessionsFloatingActionButton
 import com.example.moviecollection.ui.navigation.NavigationRoute
+import com.example.moviecollection.ui.screens.entityviewmodels.CastState
+import com.example.moviecollection.ui.screens.entityviewmodels.InFormatState
+import com.example.moviecollection.ui.screens.entityviewmodels.OfGenreState
+import com.example.moviecollection.ui.screens.entityviewmodels.WithActorsState
 
 const val TAB = "    "
 
 @Composable
 fun MovieDetailsScreen(
     navController: NavHostController,
-    movie: Movie
+    movie: Movie,
+    withActors: WithActorsState,
+    inFormat: InFormatState,
+    castState: CastState,
+    ofGenre: OfGenreState
 ) {
     Scaffold(
         topBar = {
@@ -90,11 +102,56 @@ fun MovieDetailsScreen(
                 fontSize = 30.sp,
                 overflow = TextOverflow.Visible
             )
+
             DetailsCardDataRow(label = stringResource(R.string.year_label), value = movie.year.toString())
-            DetailsCardDataRow(label = stringResource(R.string.genre_label), value = "BANANE    CAROTE    SUPERMAN")
-            DetailsCardDataRow(label = stringResource(R.string.director_label), value = "PAOLETTO PAOLINI")
-            DetailsCardDataRow(label = stringResource(R.string.actors_label), value = "PINCO PALLINO    LA PIMPA    MICHAEL JACKSON")
-            DetailsCardDataRow(label = stringResource(R.string.format_label), value = "VHS")
+
+            var genreLabel = ""
+            ofGenre.ofGenre
+                .filter { it.movieId == movie.id }
+                .map { it.genre }
+                .forEach {
+                    genreLabel += it.uppercase() + TAB
+                }
+            DetailsCardDataRow(
+                label = stringResource(R.string.genre_label),
+                value = genreLabel.trim()
+            )
+
+            DetailsCardDataRow(
+                label = stringResource(R.string.director_label),
+                value = castState.directors
+                    .find { movie.directorId == it.id }
+                    ?.name
+                    ?.uppercase() ?: ""
+            )
+
+            var actorsLabel = ""
+            withActors.withActors
+                .filter { movie.id == it.movieId }
+                .map { withactor ->
+                    requireNotNull(castState.actors
+                        .find { it.id == withactor.castId }
+                    ).name
+                }
+                .forEach {
+                    actorsLabel += it.uppercase() + TAB
+                }
+            DetailsCardDataRow(
+                label = stringResource(R.string.actors_label),
+                value = actorsLabel.trim()
+            )
+
+            var formatsLabel = ""
+            inFormat.inFormat
+                .filter { movie.id == it.movieId }
+                .forEach {
+                    formatsLabel += it.format.uppercase() + TAB
+                }
+            DetailsCardDataRow(
+                label = stringResource(R.string.format_label),
+                value = formatsLabel.trim()
+            )
+
             DetailsCardDataRow(label = stringResource(R.string.notes_label), value = movie.notes)
         }
     }

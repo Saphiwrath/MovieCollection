@@ -1,5 +1,6 @@
 package com.example.moviecollection.ui.navigation
 
+import android.net.Uri
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -29,8 +30,14 @@ sealed class NavigationRoute(
 
     data object WatchSessionDetails: NavigationRoute(
         title = "WatchSessionDetails",
-        route = "WatchSessionDetailsScreen"
-    )
+        route = "WatchSessionDetailsScreen/{screeningId}",
+        arguments = listOf(
+            navArgument("screeningId"){type = NavType.IntType}
+        )
+    ) {
+        fun buildRoute(screeningId: Int) =
+            "WatchSessionDetailsScreen/$screeningId"
+    }
 
     data object Settings: NavigationRoute(
         title = "Settings",

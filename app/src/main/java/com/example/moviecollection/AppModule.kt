@@ -10,6 +10,7 @@ import com.example.moviecollection.data.models.MovieFormat
 import com.example.moviecollection.data.repositories.CastRepository
 import com.example.moviecollection.data.repositories.GenreRepository
 import com.example.moviecollection.data.repositories.MovieRepository
+import com.example.moviecollection.data.repositories.RelationshipsRepository
 import com.example.moviecollection.data.repositories.ScreeningRepository
 import com.example.moviecollection.data.repositories.SettingsRepository
 import com.example.moviecollection.data.repositories.UserRepository
@@ -18,6 +19,7 @@ import com.example.moviecollection.ui.screens.addwatchsession.AddWatchSessionVie
 import com.example.moviecollection.ui.screens.entityviewmodels.CastViewModel
 import com.example.moviecollection.ui.screens.entityviewmodels.GenreViewModel
 import com.example.moviecollection.ui.screens.entityviewmodels.MovieViewModel
+import com.example.moviecollection.ui.screens.entityviewmodels.RelationshipsViewModel
 import com.example.moviecollection.ui.screens.entityviewmodels.ScreeningViewModel
 import com.example.moviecollection.ui.screens.entityviewmodels.UserViewModel
 import com.example.moviecollection.ui.screens.login.LoginViewModel
@@ -61,6 +63,8 @@ val appModule = module {
 
     viewModel { ScreeningViewModel(get()) }
 
+    viewModel { RelationshipsViewModel(get()) }
+
     // DATABASE
     single {
         Room.databaseBuilder(
@@ -87,5 +91,8 @@ val appModule = module {
     }
     single {
         ScreeningRepository(get<MovieCollectionDatabase>().screeningDAO())
+    }
+    single {
+        RelationshipsRepository(get<MovieCollectionDatabase>().relationshipsDAO())
     }
 }

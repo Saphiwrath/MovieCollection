@@ -27,6 +27,7 @@ import com.example.moviecollection.ui.screens.addwatchsession.AddWatchSessionVie
 import com.example.moviecollection.ui.screens.entityviewmodels.CastViewModel
 import com.example.moviecollection.ui.screens.entityviewmodels.GenreViewModel
 import com.example.moviecollection.ui.screens.entityviewmodels.MovieViewModel
+import com.example.moviecollection.ui.screens.entityviewmodels.RelationshipsViewModel
 import com.example.moviecollection.ui.screens.entityviewmodels.ScreeningViewModel
 import com.example.moviecollection.ui.screens.entityviewmodels.UserViewModel
 import com.example.moviecollection.ui.screens.login.LoginViewModel
@@ -44,13 +45,19 @@ fun NavGraph(
     val genreViewModel = koinViewModel<GenreViewModel>()
     val castViewModel = koinViewModel<CastViewModel>()
     val screeningViewModel = koinViewModel<ScreeningViewModel>()
+    val relationshipsViewModel = koinViewModel<RelationshipsViewModel>()
+    val genreState by genreViewModel.state.collectAsStateWithLifecycle()
+    val castState by castViewModel.state.collectAsStateWithLifecycle()
+    val ofGenreState by relationshipsViewModel.ofGenreState.collectAsStateWithLifecycle()
+    val inFormatState by relationshipsViewModel.inFormatState.collectAsStateWithLifecycle()
+    val withActorsState by relationshipsViewModel.withActorsState.collectAsStateWithLifecycle()
     NavHost(
         navController = navController,
         startDestination = NavigationRoute.Login.route,
         modifier = modifier
     ) {
 
-        fun initializeELementLists() {
+        fun initializeElementLists() {
             val userId = userViewModel.state.value.id
             movieViewModel.actions.getAllMoviesAndFavouritesForUser(userId)
             screeningViewModel.actions.getAllScreeningsForUser(userId)
@@ -59,7 +66,7 @@ fun NavGraph(
         composable(NavigationRoute.Home.route) {
             val userState by userViewModel.state.collectAsStateWithLifecycle()
             // Initialize every element list
-            initializeELementLists()
+            initializeElementLists()
             val movieState by movieViewModel.movieState.collectAsStateWithLifecycle()
             val favouritesState by movieViewModel.favouritesState.collectAsStateWithLifecycle()
             HomeScreen(
@@ -80,7 +87,11 @@ fun NavGraph(
                 })
                 MovieDetailsScreen(
                     navController,
-                    movie = movie
+                    movie = movie,
+                    withActors = withActorsState,
+                    inFormat = inFormatState,
+                    ofGenre = ofGenreState,
+                    castState = castState
                 )
             }
         }
@@ -97,8 +108,20 @@ fun NavGraph(
             )
         }
 
-        composable(NavigationRoute.WatchSessionDetails.route) {
-            WatchSessionDetailsScreen(navController)
+        with(NavigationRoute.WatchSessionDetails) {
+            composable(route, arguments){backStackEntry ->
+                val screeningState by screeningViewModel.state.collectAsStateWithLifecycle()
+                val movieState by movieViewModel.movieState.collectAsStateWithLifecycle()
+                val screening = requireNotNull(screeningState.screenings.find {
+                    it.id == backStackEntry.arguments?.getInt("screeningId")
+                })
+                val movie = requireNotNull(movieState.movies.find { it.id == screening.movieId})
+                WatchSessionDetailsScreen(
+                    navController,
+                    screening = screening,
+                    movie = movie
+                )
+            }
         }
 
         composable(NavigationRoute.Settings.route) {
@@ -132,8 +155,6 @@ fun NavGraph(
         composable(NavigationRoute.AddMovie.route) {
             val addMovieViewModel = koinViewModel<AddMovieViewModel>()
             val state by addMovieViewModel.state.collectAsStateWithLifecycle()
-            val castState by castViewModel.state.collectAsStateWithLifecycle()
-            val genreState by genreViewModel.state.collectAsStateWithLifecycle()
             AddMovieScreen(
                 navController,
                 actions = addMovieViewModel.actions,
@@ -187,7 +208,6 @@ fun NavGraph(
         composable(NavigationRoute.Login.route) {
             val loginViewModel = koinViewModel<LoginViewModel>()
             val state by loginViewModel.state.collectAsStateWithLifecycle()
-            val userState by userViewModel.state.collectAsStateWithLifecycle()
             LoginScreen(
                 navController,
                 actions = loginViewModel.actions,

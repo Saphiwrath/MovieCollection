@@ -64,6 +64,7 @@
     <string name="date_label">date</string>
     <string name="date_label_capitalized">Date</string>
     <string name="notes_label">notes</string>
+    <string name="time_label">time</string>
 
     <string name="theme_label">Theme</string>
     <string name="username_label">Username</string>
