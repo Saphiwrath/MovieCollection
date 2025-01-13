@@ -10,6 +10,8 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -37,12 +39,15 @@ fun HomeScreen(
     addToFavs: (movieId: Int, userId: Int) -> Unit,
     removeFromFavs: (movieId: Int, userId: Int) -> Unit
 ) {
+    val isFavouritesFilterActive = remember { mutableStateOf(false) }
     Scaffold (
         topBar = {
             StandardAppBar(
                 title = stringResource(R.string.home_screen_title),
                 actions = {
-                    FavouritesButton{/*TODO*/ Log.println(Log.DEBUG, TAG, userState.user.username)}
+                    FavouritesButton{
+                        isFavouritesFilterActive.value = !isFavouritesFilterActive.value
+                    }
                     FilterButton(/*TODO*/)
                 },
                 navigateUp = { navController.navigateUp() }
@@ -61,7 +66,13 @@ fun HomeScreen(
             contentPadding = PaddingValues(8.dp, 8.dp, 8.dp, 80.dp),
             modifier = Modifier.padding(paddingValues)
         ) {
-            items(movieState.movies.toList()) {
+            items(
+                if (isFavouritesFilterActive.value) {
+                    movieState.movies.filter { it.id in favouritesState.favourites }
+                } else {
+                    movieState.movies
+                }
+            ) {
                 MovieCard (
                     onClick = { navController.navigate(NavigationRoute.MovieDetails.route) },
                     favorite = {
