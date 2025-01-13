@@ -1,6 +1,5 @@
-package com.example.moviecollection.ui.screens.dbviewmodels
+package com.example.moviecollection.ui.screens.entityviewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.moviecollection.data.database.entities.Genre

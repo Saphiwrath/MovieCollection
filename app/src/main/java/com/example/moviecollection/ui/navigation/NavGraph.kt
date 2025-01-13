@@ -9,6 +9,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.moviecollection.data.database.entities.Genre
+import com.example.moviecollection.data.database.entities.Screening
+import com.example.moviecollection.data.models.results.LoginResult
 import com.example.moviecollection.ui.screens.AccountScreen
 import com.example.moviecollection.ui.screens.AchievementsScreen
 import com.example.moviecollection.ui.screens.addmovie.AddMovieScreen
@@ -22,10 +24,11 @@ import com.example.moviecollection.ui.screens.signup.SignupScreen
 import com.example.moviecollection.ui.screens.WatchSessionDetailsScreen
 import com.example.moviecollection.ui.screens.addmovie.AddMovieViewModel
 import com.example.moviecollection.ui.screens.addwatchsession.AddWatchSessionViewModel
-import com.example.moviecollection.ui.screens.dbviewmodels.CastViewModel
-import com.example.moviecollection.ui.screens.dbviewmodels.GenreViewModel
-import com.example.moviecollection.ui.screens.dbviewmodels.MovieViewModel
-import com.example.moviecollection.ui.screens.dbviewmodels.UserViewModel
+import com.example.moviecollection.ui.screens.entityviewmodels.CastViewModel
+import com.example.moviecollection.ui.screens.entityviewmodels.GenreViewModel
+import com.example.moviecollection.ui.screens.entityviewmodels.MovieViewModel
+import com.example.moviecollection.ui.screens.entityviewmodels.ScreeningViewModel
+import com.example.moviecollection.ui.screens.entityviewmodels.UserViewModel
 import com.example.moviecollection.ui.screens.login.LoginViewModel
 import com.example.moviecollection.ui.screens.settings.SettingsViewModel
 import com.example.moviecollection.ui.screens.signup.SignupViewModel
@@ -40,6 +43,7 @@ fun NavGraph(
     val movieViewModel = koinViewModel<MovieViewModel>()
     val genreViewModel = koinViewModel<GenreViewModel>()
     val castViewModel = koinViewModel<CastViewModel>()
+    val screeningViewModel = koinViewModel<ScreeningViewModel>()
     NavHost(
         navController = navController,
         startDestination = NavigationRoute.Login.route,
@@ -127,7 +131,20 @@ fun NavGraph(
             AddWatchSessionScreen(
                 navController,
                 actions = addWatchSessionViewModel.actions,
-                state = state
+                state = state,
+                onSubmit = {
+                    if (state.canSubmit) screeningViewModel.actions.addScreening(
+                        Screening(
+                            movieId = state.movieId,
+                            time = state.time,
+                            date = state.date,
+                            notes = state.notes,
+                            image = state.image.toString(),
+                            place = state.place,
+                            userId = userViewModel.state.value.id
+                        )
+                    )
+                }
             )
         }
 
@@ -138,7 +155,18 @@ fun NavGraph(
                 navController,
                 actions = loginViewModel.actions,
                 state = state,
-                onLogin = userViewModel.actions::attemptLogin
+                onLogin = {
+                    if (state.canSubmit) {
+                        val success = userViewModel.actions.attemptLogin(
+                            username = state.username,
+                            password = state.password
+                        )
+                        if (success) {
+                            movieViewModel.actions.getAllMoviesForUser(userViewModel.state.value.id)
+                            LoginResult.Success
+                        } else LoginResult.WrongCredentials
+                    } else LoginResult.CannotSubmit
+                }
             )
         }
 

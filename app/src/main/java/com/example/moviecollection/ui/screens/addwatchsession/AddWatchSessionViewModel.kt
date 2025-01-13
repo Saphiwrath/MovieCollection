@@ -2,6 +2,7 @@ package com.example.moviecollection.ui.screens.addwatchsession
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
+import com.example.moviecollection.data.database.entities.Screening
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -15,7 +16,12 @@ data class AddWatchSessionState(
     val date: String = "",
     val time: String = "",
     val notes: String = ""
-)
+) {
+    val canSubmit = movieId != -1
+            && place.isNotBlank()
+            && date.isNotBlank()
+            && time.isNotBlank()
+}
 
 interface AddWatchSessionActions {
     fun addImage(image: Uri)

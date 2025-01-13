@@ -30,7 +30,8 @@ import com.example.moviecollection.ui.components.inputs.DialPicker
 fun AddWatchSessionScreen(
     navController: NavHostController,
     actions: AddWatchSessionActions,
-    state: AddWatchSessionState
+    state: AddWatchSessionState,
+    onSubmit: () -> Unit
 ) {
     Scaffold (
         topBar = {
@@ -44,7 +45,7 @@ fun AddWatchSessionScreen(
         },
         floatingActionButton = {
             ConfirmFloatingActionButton{
-                /*TODO*/
+                onSubmit()
                 Log.println(
                     Log.DEBUG,
                     "ADDWATCHSESSIONSTATE",

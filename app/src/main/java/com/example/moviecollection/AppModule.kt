@@ -10,14 +10,16 @@ import com.example.moviecollection.data.models.MovieFormat
 import com.example.moviecollection.data.repositories.CastRepository
 import com.example.moviecollection.data.repositories.GenreRepository
 import com.example.moviecollection.data.repositories.MovieRepository
+import com.example.moviecollection.data.repositories.ScreeningRepository
 import com.example.moviecollection.data.repositories.SettingsRepository
 import com.example.moviecollection.data.repositories.UserRepository
 import com.example.moviecollection.ui.screens.addmovie.AddMovieViewModel
 import com.example.moviecollection.ui.screens.addwatchsession.AddWatchSessionViewModel
-import com.example.moviecollection.ui.screens.dbviewmodels.CastViewModel
-import com.example.moviecollection.ui.screens.dbviewmodels.GenreViewModel
-import com.example.moviecollection.ui.screens.dbviewmodels.MovieViewModel
-import com.example.moviecollection.ui.screens.dbviewmodels.UserViewModel
+import com.example.moviecollection.ui.screens.entityviewmodels.CastViewModel
+import com.example.moviecollection.ui.screens.entityviewmodels.GenreViewModel
+import com.example.moviecollection.ui.screens.entityviewmodels.MovieViewModel
+import com.example.moviecollection.ui.screens.entityviewmodels.ScreeningViewModel
+import com.example.moviecollection.ui.screens.entityviewmodels.UserViewModel
 import com.example.moviecollection.ui.screens.login.LoginViewModel
 import com.example.moviecollection.ui.screens.settings.SettingsViewModel
 import com.example.moviecollection.ui.screens.signup.SignupViewModel
@@ -57,8 +59,9 @@ val appModule = module {
 
     viewModel { GenreViewModel(get()) }
 
-    // DATABASE
+    viewModel { ScreeningViewModel(get()) }
 
+    // DATABASE
     single {
         Room.databaseBuilder(
             get(),
@@ -70,7 +73,6 @@ val appModule = module {
     }
 
     // REPOSITORIES WITH DAOs
-
     single {
         UserRepository(get<MovieCollectionDatabase>().userDAO())
     }
@@ -82,5 +84,8 @@ val appModule = module {
     }
     single {
         GenreRepository(get<MovieCollectionDatabase>().genreDAO())
+    }
+    single {
+        ScreeningRepository(get<MovieCollectionDatabase>().screeningDAO())
     }
 }

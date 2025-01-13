@@ -29,8 +29,8 @@ import com.example.moviecollection.ui.components.inputs.ClickableLazyList
 import com.example.moviecollection.ui.components.ConfirmFloatingActionButton
 import com.example.moviecollection.ui.components.inputs.RadioButtonRowWithLabel
 import com.example.moviecollection.ui.components.StandardAppBar
-import com.example.moviecollection.ui.screens.dbviewmodels.CastState
-import com.example.moviecollection.ui.screens.dbviewmodels.GenreState
+import com.example.moviecollection.ui.screens.entityviewmodels.CastState
+import com.example.moviecollection.ui.screens.entityviewmodels.GenreState
 import java.util.Calendar
 
 @Composable

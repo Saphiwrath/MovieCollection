@@ -24,7 +24,7 @@ import androidx.room.PrimaryKey
     ]
 )
 data class Screening(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo val userId: Int,
     @ColumnInfo val movieId: Int,
     @ColumnInfo val place: String,

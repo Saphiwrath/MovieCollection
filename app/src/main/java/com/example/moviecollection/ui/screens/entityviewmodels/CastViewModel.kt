@@ -1,4 +1,4 @@
-package com.example.moviecollection.ui.screens.dbviewmodels
+package com.example.moviecollection.ui.screens.entityviewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

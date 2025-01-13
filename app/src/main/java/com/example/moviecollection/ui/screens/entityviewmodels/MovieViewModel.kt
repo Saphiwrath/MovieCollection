@@ -1,14 +1,16 @@
-package com.example.moviecollection.ui.screens.dbviewmodels
+package com.example.moviecollection.ui.screens.entityviewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.moviecollection.data.database.entities.Cast
 import com.example.moviecollection.data.database.entities.Genre
 import com.example.moviecollection.data.database.entities.Movie
 import com.example.moviecollection.data.models.MovieFormat
 import com.example.moviecollection.data.repositories.MovieRepository
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 data class MovieState(
@@ -24,7 +26,11 @@ interface MovieActions {
         genres: List<Genre>,
         actors: List<Int>,
         formats: List<MovieFormat>,
-        userId: Int) : Job
+        userId: Int
+    ): Job
+
+    fun getAllMoviesForUser(userId: Int)
+
 }
 
 class MovieViewModel(
@@ -51,6 +57,15 @@ class MovieViewModel(
             userId: Int
         ): Job = viewModelScope.launch{
             repository.addMovieWithRels(movie, genres, actors, formats, userId)
+        }
+
+        override fun getAllMoviesForUser(userId: Int) {
+            repository.getAllUserMovies(userId)
+            repository.movies.map {MovieState(it)}.stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(),
+                initialValue = MovieState(emptyList())
+            )
         }
 
     }

@@ -1,7 +1,6 @@
 package com.example.moviecollection.ui.screens.login
 
 import androidx.lifecycle.ViewModel
-import com.example.moviecollection.ui.screens.dbviewmodels.UserViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

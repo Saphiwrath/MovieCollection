@@ -28,6 +28,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
+import com.example.moviecollection.data.models.results.LoginResult
 import com.example.moviecollection.ui.navigation.NavigationRoute
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -40,7 +41,7 @@ fun LoginScreen(
     navController: NavHostController,
     actions: LoginActions,
     state: LoginState,
-    onLogin: KSuspendFunction2<String, String, Boolean>
+    onLogin: () -> LoginResult
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
@@ -67,25 +68,23 @@ fun LoginScreen(
         Button(
             onClick = {
                 /*TODO ADD SNACKBARS FOR ERRORS*/
-                if (state.canSubmit) {
-                    val loginResult = runBlocking(Dispatchers.IO) {
-                        onLogin(state.username, state.password)
+                val res = onLogin()
+                when (res) {
+                    LoginResult.CannotSubmit -> {
+                        Log.println(
+                            Log.DEBUG,
+                            TAG,
+                            "Nope empty fields"
+                        )
                     }
-                    if (loginResult) {
-                        navController.navigate(NavigationRoute.Home.route)
-                    } else {
+                    LoginResult.WrongCredentials -> {
                         Log.println(
                             Log.DEBUG,
                             TAG,
                             "Nope wrong credentials"
                         )
                     }
-                } else {
-                    Log.println(
-                        Log.DEBUG,
-                        TAG,
-                        "Nope empty fields"
-                    )
+                    LoginResult.Success -> navController.navigate(NavigationRoute.Home.route)
                 }
             },
             colors = ButtonDefaults.buttonColors(

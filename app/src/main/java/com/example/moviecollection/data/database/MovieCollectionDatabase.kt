@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import com.example.moviecollection.data.database.daos.CastDAO
 import com.example.moviecollection.data.database.daos.GenreDAO
 import com.example.moviecollection.data.database.daos.MovieDAO
+import com.example.moviecollection.data.database.daos.ScreeningDAO
 import com.example.moviecollection.data.database.daos.UserDAO
 import com.example.moviecollection.data.database.entities.Achievement
 import com.example.moviecollection.data.database.entities.Cast
@@ -46,4 +47,6 @@ abstract class MovieCollectionDatabase : RoomDatabase() {
     abstract fun castDAO(): CastDAO
 
     abstract fun genreDAO(): GenreDAO
+
+    abstract fun screeningDAO(): ScreeningDAO
 }
