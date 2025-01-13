@@ -74,7 +74,11 @@ fun HomeScreen(
                 }
             ) {
                 MovieCard (
-                    onClick = { navController.navigate(NavigationRoute.MovieDetails.route) },
+                    onClick = {
+                        navController.navigate(
+                            NavigationRoute.MovieDetails.buildRoute(movieId = it.id)
+                        )
+                    },
                     favorite = {
                         if (it.id in favouritesState.favourites) {
                             removeFromFavs(

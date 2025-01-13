@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
+import com.example.moviecollection.data.database.entities.Movie
 import com.example.moviecollection.ui.components.AddWatchSessionFloatingActionButton
 import com.example.moviecollection.ui.components.CustomNavBar
 import com.example.moviecollection.ui.components.DetailsCardDataRow
@@ -32,9 +33,12 @@ import com.example.moviecollection.ui.components.StandardAppBar
 import com.example.moviecollection.ui.components.ViewWatchSessionsFloatingActionButton
 import com.example.moviecollection.ui.navigation.NavigationRoute
 
+const val TAB = "    "
+
 @Composable
 fun MovieDetailsScreen(
-    navController: NavHostController
+    navController: NavHostController,
+    movie: Movie
 ) {
     Scaffold(
         topBar = {
@@ -69,7 +73,7 @@ fun MovieDetailsScreen(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()
             ){
-                if (true) {
+                if (movie.poster.isBlank()) {
                     Icon(
                         imageVector = Icons.Outlined.Image,
                         contentDescription = stringResource(R.string.movie_details_poster_desc),
@@ -78,21 +82,20 @@ fun MovieDetailsScreen(
                     )
                 }
             }
-            val text = "MOVIE TITLE MOVIE TITLE MOVIE TITLE"
             Text(
-                text,
+                movie.title,
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.ExtraBold,
                 color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 30.sp,
                 overflow = TextOverflow.Visible
             )
-            DetailsCardDataRow(label = stringResource(R.string.year_label), value = "1999")
+            DetailsCardDataRow(label = stringResource(R.string.year_label), value = movie.year.toString())
             DetailsCardDataRow(label = stringResource(R.string.genre_label), value = "BANANE    CAROTE    SUPERMAN")
             DetailsCardDataRow(label = stringResource(R.string.director_label), value = "PAOLETTO PAOLINI")
             DetailsCardDataRow(label = stringResource(R.string.actors_label), value = "PINCO PALLINO    LA PIMPA    MICHAEL JACKSON")
             DetailsCardDataRow(label = stringResource(R.string.format_label), value = "VHS")
-            DetailsCardDataRow(label = stringResource(R.string.notes_label), value = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+            DetailsCardDataRow(label = stringResource(R.string.notes_label), value = movie.notes)
         }
     }
 }

@@ -1,6 +1,8 @@
 package com.example.moviecollection.ui.navigation
 
 import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 
 sealed class NavigationRoute(
     val route: String,
@@ -14,8 +16,11 @@ sealed class NavigationRoute(
 
     data object MovieDetails: NavigationRoute(
         title = "MovieDetails",
-        route = "MovieDetailsScreen"
-    )
+        route = "MovieDetailsScreen/{movieId}",
+        arguments = listOf(navArgument("movieId") {type = NavType.IntType})
+    ) {
+        fun buildRoute(movieId: Int) = "MovieDetailsScreen/$movieId"
+    }
 
     data object Account: NavigationRoute(
         title = "Account",
