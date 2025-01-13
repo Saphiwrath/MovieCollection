@@ -42,7 +42,7 @@ class AddWatchSessionViewModel : ViewModel() {
         }
 
         override fun setMovie(id: List<Int>) {
-            _state.update { it.copy(movieId = id.last()) }
+            _state.update { it.copy(movieId = id.first()) }
         }
 
         override fun setPlace(place: String) {

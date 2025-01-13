@@ -7,8 +7,12 @@ import com.example.moviecollection.data.database.entities.User
 import com.example.moviecollection.data.repositories.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectIndexed
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -37,9 +41,8 @@ interface UserActions{
 class UserViewModel(
     private val repository: UserRepository
 ): ViewModel() {
-    private lateinit var _state: StateFlow<LoggedUserState>
-    val state: StateFlow<LoggedUserState>
-        get() = _state
+    private var _state: MutableStateFlow<LoggedUserState> = MutableStateFlow(LoggedUserState(User()))
+    val state get() = _state.asStateFlow()
 
     val actions = object : UserActions {
         override suspend fun registerUser(user: User): Boolean {
@@ -53,13 +56,11 @@ class UserViewModel(
         override fun attemptLogin(username: String, password: String): Boolean {
             val res = runBlocking() {  repository.attemptLogin(password, username) }
             if (res) {
-                _state = repository.userFlow.map {
-                    LoggedUserState(it)
-                }.stateIn(
-                    scope = viewModelScope,
-                    started = SharingStarted.WhileSubscribed(),
-                    initialValue = LoggedUserState()
-                )
+                viewModelScope.launch {
+                    repository.userFlow.map {
+                        LoggedUserState(it)
+                    }.collect {_state.value = it}
+                }
             }
             return res
         }

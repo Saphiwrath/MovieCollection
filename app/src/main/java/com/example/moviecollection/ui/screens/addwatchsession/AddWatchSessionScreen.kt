@@ -20,18 +20,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
+import com.example.moviecollection.data.models.ListItemData
 import com.example.moviecollection.ui.components.inputs.AutoCompleteTextField
 import com.example.moviecollection.ui.components.ConfirmFloatingActionButton
 import com.example.moviecollection.ui.components.inputs.DatePickerDocked
 import com.example.moviecollection.ui.components.StandardAppBar
 import com.example.moviecollection.ui.components.inputs.DialPicker
+import com.example.moviecollection.ui.screens.entityviewmodels.MovieState
 
 @Composable
 fun AddWatchSessionScreen(
     navController: NavHostController,
     actions: AddWatchSessionActions,
     state: AddWatchSessionState,
-    onSubmit: () -> Unit
+    onSubmit: () -> Unit,
+    movieState: MovieState
 ) {
     Scaffold (
         topBar = {
@@ -76,7 +79,11 @@ fun AddWatchSessionScreen(
                 AutoCompleteTextField(
                     contentDescription = stringResource(R.string.drop_down_movies),
                     selectedAction = actions::setMovie,
-                    multiSelect = false
+                    multiSelect = false,
+                    items = movieState.movies.map { ListItemData(
+                        id = it.id,
+                        name = it.title
+                    ) }
                 )
             }
             OutlinedTextField(

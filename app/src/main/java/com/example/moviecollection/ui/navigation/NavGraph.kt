@@ -50,8 +50,14 @@ fun NavGraph(
         modifier = modifier
     ) {
 
+        fun initializeELementLists() {
+            movieViewModel.actions.getAllMoviesForUser(userViewModel.state.value.id)
+        }
+
         composable(NavigationRoute.Home.route) {
             val userState by userViewModel.state.collectAsStateWithLifecycle()
+            // initialize every element list
+            initializeELementLists()
             HomeScreen(
                 navController,
                 userState = userState
@@ -108,7 +114,6 @@ fun NavGraph(
                 actions = addMovieViewModel.actions,
                 state = state,
                 addMovieAction = {
-                    Log.println(Log.DEBUG, "debug", state.canSubmit.toString() + state.toString())
                     if (state.canSubmit) {
                         movieViewModel.actions.addMovieWithRels(
                             movie = state.toMovie(),
@@ -128,6 +133,7 @@ fun NavGraph(
         composable(NavigationRoute.AddWatchSession.route) {
             val addWatchSessionViewModel = koinViewModel<AddWatchSessionViewModel>()
             val state by addWatchSessionViewModel.state.collectAsStateWithLifecycle()
+            val movieState by movieViewModel.state.collectAsStateWithLifecycle()
             AddWatchSessionScreen(
                 navController,
                 actions = addWatchSessionViewModel.actions,
@@ -143,14 +149,16 @@ fun NavGraph(
                             place = state.place,
                             userId = userViewModel.state.value.id
                         )
-                    )
-                }
+                    ) else Log.d("DEBUG", "no can do")
+                },
+                movieState = movieState
             )
         }
 
         composable(NavigationRoute.Login.route) {
             val loginViewModel = koinViewModel<LoginViewModel>()
             val state by loginViewModel.state.collectAsStateWithLifecycle()
+            val userState by userViewModel.state.collectAsStateWithLifecycle()
             LoginScreen(
                 navController,
                 actions = loginViewModel.actions,
@@ -162,7 +170,6 @@ fun NavGraph(
                             password = state.password
                         )
                         if (success) {
-                            movieViewModel.actions.getAllMoviesForUser(userViewModel.state.value.id)
                             LoginResult.Success
                         } else LoginResult.WrongCredentials
                     } else LoginResult.CannotSubmit

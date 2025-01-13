@@ -7,8 +7,10 @@ import com.example.moviecollection.data.database.entities.Movie
 import com.example.moviecollection.data.models.MovieFormat
 import com.example.moviecollection.data.repositories.MovieRepository
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -36,9 +38,8 @@ interface MovieActions {
 class MovieViewModel(
     private val repository: MovieRepository
 ) : ViewModel() {
-    private lateinit var _state: StateFlow<MovieState>
-    val state: StateFlow<MovieState>
-        get() = _state
+    private var _state: MutableStateFlow<MovieState> = MutableStateFlow(MovieState(emptyList()))
+    val state: StateFlow<MovieState> get() = _state.asStateFlow()
 
     val actions = object : MovieActions {
         override fun addMovie(movie: Movie) = viewModelScope.launch {
@@ -60,12 +61,13 @@ class MovieViewModel(
         }
 
         override fun getAllMoviesForUser(userId: Int) {
-            repository.getAllUserMovies(userId)
-            repository.movies.map {MovieState(it)}.stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(),
-                initialValue = MovieState(emptyList())
-            )
+            viewModelScope.launch {
+                repository.getAllUserMovies(userId).map { movies ->
+                    MovieState(movies)
+                }.collect { movieState ->
+                    _state.value = movieState
+                }
+            }
         }
 
     }

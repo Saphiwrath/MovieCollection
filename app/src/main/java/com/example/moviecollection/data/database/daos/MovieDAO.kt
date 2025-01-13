@@ -49,8 +49,8 @@ abstract class MovieDAO {
     abstract suspend fun deleteMovie(movie: Movie)
 
     @Query("SELECT * FROM " +
-            "movie LEFT JOIN registeredby ON movie.id=movieId WHERE" +
-            " userId=:userId")
+            "movie WHERE id IN" +
+            "(SELECT movie.id FROM movie JOIN registeredby ON userId=:userId)")
     abstract fun getAllUserMovies(userId: Int): Flow<List<Movie>>
 
     @Query("SELECT * FROM " +
