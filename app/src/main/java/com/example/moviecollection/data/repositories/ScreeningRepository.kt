@@ -14,4 +14,5 @@ class ScreeningRepository (
 
     suspend fun addScreening(screening: Screening) = screeningDAO.upsert(screening)
     suspend fun deleteScreening(screening: Screening) = screeningDAO.delete(screening)
+    fun getAllScreeningsForUser(userId: Int) = screeningDAO.getAllUserScreenings(userId)
 }

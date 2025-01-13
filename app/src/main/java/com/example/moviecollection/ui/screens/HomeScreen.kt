@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -20,7 +21,9 @@ import com.example.moviecollection.ui.components.FilterButton
 import com.example.moviecollection.ui.components.MovieCard
 import com.example.moviecollection.ui.components.StandardAppBar
 import com.example.moviecollection.ui.navigation.NavigationRoute
+import com.example.moviecollection.ui.screens.entityviewmodels.FavouritesState
 import com.example.moviecollection.ui.screens.entityviewmodels.LoggedUserState
+import com.example.moviecollection.ui.screens.entityviewmodels.MovieState
 
 const val TAG = "HOME"
 
@@ -28,7 +31,11 @@ const val TAG = "HOME"
 @Composable
 fun HomeScreen(
     navController: NavHostController,
-    userState: LoggedUserState
+    userState: LoggedUserState,
+    movieState: MovieState,
+    favouritesState: FavouritesState,
+    addToFavs: (movieId: Int, userId: Int) -> Unit,
+    removeFromFavs: (movieId: Int, userId: Int) -> Unit
 ) {
     Scaffold (
         topBar = {
@@ -54,10 +61,24 @@ fun HomeScreen(
             contentPadding = PaddingValues(8.dp, 8.dp, 8.dp, 80.dp),
             modifier = Modifier.padding(paddingValues)
         ) {
-            items(30) {
+            items(movieState.movies.toList()) {
                 MovieCard (
                     onClick = { navController.navigate(NavigationRoute.MovieDetails.route) },
-                    favorite = {/*TODO*/}
+                    favorite = {
+                        if (it.id in favouritesState.favourites) {
+                            removeFromFavs(
+                                it.id,
+                                userState.id
+                            )
+                        }
+                        else addToFavs(
+                            it.id,
+                            userState.id
+                        )
+                    },
+                    title = it.title,
+                    image = it.poster,
+                    isFavourite = (it.id in favouritesState.favourites)
                 )
             }
         }

@@ -7,6 +7,7 @@ import androidx.room.Upsert
 import com.example.moviecollection.data.database.entities.Cast
 import com.example.moviecollection.data.database.entities.Genre
 import com.example.moviecollection.data.database.entities.Movie
+import com.example.moviecollection.data.database.relationships.Favourites
 import com.example.moviecollection.data.database.relationships.InFormat
 import com.example.moviecollection.data.database.relationships.OfGenre
 import com.example.moviecollection.data.database.relationships.RegisteredBy
@@ -53,8 +54,13 @@ abstract class MovieDAO {
             "(SELECT movie.id FROM movie JOIN registeredby ON userId=:userId)")
     abstract fun getAllUserMovies(userId: Int): Flow<List<Movie>>
 
-    @Query("SELECT * FROM " +
-            "movie LEFT JOIN favourites ON movie.id=movieId WHERE" +
-            " userId=:userId")
-    abstract fun getFavoriteMovies(userId: Int): Flow<List<Movie>>
+    @Query("SELECT movieId FROM favourites " +
+            "WHERE userId=:userId")
+    abstract fun getFavoriteMovies(userId: Int): Flow<List<Int>>
+
+    @Upsert
+    abstract suspend fun addMovieToFavourites(favourite : Favourites)
+
+    @Delete
+    abstract suspend fun removeMovieFromFavourites(favourite: Favourites)
 }

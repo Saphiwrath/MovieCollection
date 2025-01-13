@@ -8,15 +8,18 @@ import com.example.moviecollection.data.models.MovieFormat
 import com.example.moviecollection.data.repositories.MovieRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 data class MovieState(
     val movies: List<Movie>
+)
+
+data class FavouritesState(
+    val favourites: List<Int>
 )
 
 interface MovieActions {
@@ -31,15 +34,22 @@ interface MovieActions {
         userId: Int
     ): Job
 
-    fun getAllMoviesForUser(userId: Int)
+    fun getAllMoviesAndFavouritesForUser(userId: Int)
 
+    fun removeFromFavourites(movieId: Int, userId: Int): Job
+    fun addToFavourites(movieId: Int, userId: Int): Job
 }
 
 class MovieViewModel(
     private val repository: MovieRepository
 ) : ViewModel() {
-    private var _state: MutableStateFlow<MovieState> = MutableStateFlow(MovieState(emptyList()))
-    val state: StateFlow<MovieState> get() = _state.asStateFlow()
+    private var _movieState: MutableStateFlow<MovieState> = MutableStateFlow(MovieState(emptyList()))
+    val movieState: StateFlow<MovieState> get() = _movieState.asStateFlow()
+
+    private var _favouriteState: MutableStateFlow<FavouritesState> = MutableStateFlow(
+        FavouritesState(emptyList())
+    )
+    val favouritesState get() = _favouriteState.asStateFlow()
 
     val actions = object : MovieActions {
         override fun addMovie(movie: Movie) = viewModelScope.launch {
@@ -60,14 +70,25 @@ class MovieViewModel(
             repository.addMovieWithRels(movie, genres, actors, formats, userId)
         }
 
-        override fun getAllMoviesForUser(userId: Int) {
+        override fun getAllMoviesAndFavouritesForUser(userId: Int) {
             viewModelScope.launch {
-                repository.getAllUserMovies(userId).map { movies ->
-                    MovieState(movies)
-                }.collect { movieState ->
-                    _state.value = movieState
-                }
+                repository.getAllUserMovies(userId).map {
+                    MovieState(it)
+                }.collect { _movieState.value = it }
             }
+            viewModelScope.launch {
+                repository.getALlFavourites(userId).map {
+                    FavouritesState(it)
+                }.collect{ _favouriteState.value = it }
+            }
+        }
+
+        override fun removeFromFavourites(movieId: Int, userId: Int) = viewModelScope.launch{
+            repository.removeMovieFromFavourites(userId, movieId)
+        }
+
+        override fun addToFavourites(movieId: Int, userId: Int) = viewModelScope.launch{
+            repository.addMovieToFavourites(userId, movieId)
         }
 
     }

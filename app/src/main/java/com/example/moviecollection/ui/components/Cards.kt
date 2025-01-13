@@ -3,10 +3,7 @@ package com.example.moviecollection.ui.components
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountCircle
@@ -40,28 +36,26 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.moviecollection.R
 import ir.ehsannarmani.compose_charts.ColumnChart
-import ir.ehsannarmani.compose_charts.models.BarProperties
 import ir.ehsannarmani.compose_charts.models.Bars
-import ir.ehsannarmani.compose_charts.models.Bars.*
-import ir.ehsannarmani.compose_charts.models.DrawStyle
-import ir.ehsannarmani.compose_charts.models.LabelProperties
-import ir.ehsannarmani.compose_charts.models.StrokeStyle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieCard(
     onClick: () -> Unit = {},
-    favorite: () -> Unit = {}
+    favorite: () -> Unit = {},
+    title: String,
+    image: String,
+    isFavourite: Boolean
 ) {
     Card(
         colors = CardDefaults.cardColors(
@@ -85,7 +79,7 @@ fun MovieCard(
                 horizontalArrangement = Arrangement.Center
             ){
                 /*TODO add actual image if present*/
-                if (true) {
+                if (image.isBlank()) {
                     Image(
                         Icons.Outlined.Image ,
                         contentDescription = "Movie poster",
@@ -100,14 +94,17 @@ fun MovieCard(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    "Movie title",
+                    title,
                     style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Left,
                     fontWeight = FontWeight.Bold,
+                    modifier = Modifier.width(90.dp),
+                    overflow = TextOverflow.Ellipsis
                 )
                 IconButton(onClick = favorite) {
                     Icon(
-                        imageVector = Icons.Outlined.FavoriteBorder,
+                        imageVector = if (!isFavourite) Icons.Outlined.FavoriteBorder
+                            else Icons.Outlined.Favorite,
                         contentDescription = stringResource(R.string.favorite_movie_button_desc)
                     )
                 }
