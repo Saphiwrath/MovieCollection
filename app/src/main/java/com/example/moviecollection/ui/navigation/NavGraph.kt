@@ -148,8 +148,21 @@ fun NavGraph(
             )
         }
 
-        composable(NavigationRoute.MovieWatchSessions.route) {
-            MovieWatchSessionScreen(navController)
+        with(NavigationRoute.MovieWatchSessions) {
+            composable(route, arguments){
+                backStackEntry ->
+                val screeningState by screeningViewModel.state.collectAsStateWithLifecycle()
+                val movieState by movieViewModel.movieState.collectAsStateWithLifecycle()
+                val movie = requireNotNull(movieState.movies.find {
+                    it.id == backStackEntry.arguments?.getInt("movieId")
+                })
+                val screenings = screeningState.screenings.filter { it.movieId == movie.id }
+                MovieWatchSessionScreen(
+                    navController,
+                    movie = movie,
+                    screenings = screenings,
+                )
+            }
         }
 
         composable(NavigationRoute.AddMovie.route) {

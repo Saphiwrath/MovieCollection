@@ -46,8 +46,11 @@ sealed class NavigationRoute(
 
     data object MovieWatchSessions: NavigationRoute(
         title = "MovieWatchSession",
-        route = "MovieWatchSessionsScreen"
-    )
+        route = "MovieWatchSessionsScreen/{movieId}",
+        arguments = listOf(navArgument("movieId"){type = NavType.IntType})
+    ) {
+        fun buildRoute(movieId: Int) = "MovieWatchSessionsScreen/$movieId"
+    }
 
     data object AddMovie: NavigationRoute(
         title = "AddMovie",

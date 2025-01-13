@@ -64,8 +64,9 @@ fun MovieDetailsScreen(
         },
         floatingActionButton = {
             ViewWatchSessionsFloatingActionButton {
-                /* TODO */
-                navController.navigate(NavigationRoute.MovieWatchSessions.route)
+                navController.navigate(
+                    NavigationRoute.MovieWatchSessions.buildRoute(movie.id)
+                )
             }
         },
     ) {paddingValues ->
