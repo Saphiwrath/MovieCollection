@@ -3,8 +3,10 @@ package com.example.moviecollection
 import android.content.Context
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.moviecollection.data.database.MovieCollectionDatabase
-import com.example.moviecollection.data.database.entities.Genre
+import com.example.moviecollection.data.models.MovieFormat
 import com.example.moviecollection.data.repositories.CastRepository
 import com.example.moviecollection.data.repositories.GenreRepository
 import com.example.moviecollection.data.repositories.MovieRepository
@@ -23,6 +25,14 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val Context.dataStore by preferencesDataStore("theme")
+
+val MIGRATION_1_2 = object : Migration(1, 2) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        MovieFormat.entries.forEach {
+            db.execSQL("INSERT INTO format (type) VALUES (?)", arrayOf(it.toString()))
+        }
+    }
+}
 
 val appModule = module {
     single { get<Context>().dataStore }
@@ -54,7 +64,9 @@ val appModule = module {
             get(),
             MovieCollectionDatabase::class.java,
             "movie_collection"
-        ).build()
+        )
+        .addMigrations(MIGRATION_1_2)
+        .build()
     }
 
     // REPOSITORIES WITH DAOs

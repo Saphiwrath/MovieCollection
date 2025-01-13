@@ -28,7 +28,7 @@ abstract class MovieDAO {
         addRegisteredBy(RegisteredBy(movieId, userId))
         genres.forEach { addOfGenre(OfGenre(movieId, it.name)) }
         actors.forEach { addWithActors(WithActors(movieId, it)) }
-/*        formats.forEach{ addInFormat(InFormat(movieId, it.toString())) }*/
+        formats.forEach{ addInFormat(InFormat(movieId, it.toString())) }
     }
 
     // START of upsert queries for movie addition. Delete queries should be
