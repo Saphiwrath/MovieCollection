@@ -1,6 +1,5 @@
-package com.example.moviecollection.ui.screens
+package com.example.moviecollection.ui.screens.home
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding

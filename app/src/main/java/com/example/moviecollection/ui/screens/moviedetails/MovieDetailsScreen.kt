@@ -1,4 +1,4 @@
-package com.example.moviecollection.ui.screens
+package com.example.moviecollection.ui.screens.moviedetails
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -27,11 +26,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
 import com.example.moviecollection.data.database.entities.Movie
-import com.example.moviecollection.data.database.relationships.InFormat
-import com.example.moviecollection.data.database.relationships.OfGenre
-import com.example.moviecollection.data.database.relationships.WithActors
-import com.example.moviecollection.ui.components.AddWatchSessionFloatingActionButton
-import com.example.moviecollection.ui.components.CustomNavBar
 import com.example.moviecollection.ui.components.DetailsCardDataRow
 import com.example.moviecollection.ui.components.StandardAppBar
 import com.example.moviecollection.ui.components.ViewWatchSessionsFloatingActionButton

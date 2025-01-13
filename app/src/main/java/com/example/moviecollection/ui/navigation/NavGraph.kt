@@ -1,6 +1,5 @@
 package com.example.moviecollection.ui.navigation
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -11,17 +10,17 @@ import androidx.navigation.compose.composable
 import com.example.moviecollection.data.database.entities.Genre
 import com.example.moviecollection.data.database.entities.Screening
 import com.example.moviecollection.data.models.results.LoginResult
-import com.example.moviecollection.ui.screens.AccountScreen
-import com.example.moviecollection.ui.screens.AchievementsScreen
+import com.example.moviecollection.ui.screens.account.AccountScreen
+import com.example.moviecollection.ui.screens.achievements.AchievementsScreen
 import com.example.moviecollection.ui.screens.addmovie.AddMovieScreen
 import com.example.moviecollection.ui.screens.addwatchsession.AddWatchSessionScreen
-import com.example.moviecollection.ui.screens.HomeScreen
+import com.example.moviecollection.ui.screens.home.HomeScreen
 import com.example.moviecollection.ui.screens.login.LoginScreen
-import com.example.moviecollection.ui.screens.MovieDetailsScreen
-import com.example.moviecollection.ui.screens.MovieWatchSessionScreen
+import com.example.moviecollection.ui.screens.moviedetails.MovieDetailsScreen
+import com.example.moviecollection.ui.screens.moviewatchsessions.MovieWatchSessionScreen
 import com.example.moviecollection.ui.screens.settings.SettingsScreen
 import com.example.moviecollection.ui.screens.signup.SignupScreen
-import com.example.moviecollection.ui.screens.WatchSessionDetailsScreen
+import com.example.moviecollection.ui.screens.watchsessiondetails.WatchSessionDetailsScreen
 import com.example.moviecollection.ui.screens.addmovie.AddMovieViewModel
 import com.example.moviecollection.ui.screens.addwatchsession.AddWatchSessionViewModel
 import com.example.moviecollection.ui.screens.entityviewmodels.CastViewModel

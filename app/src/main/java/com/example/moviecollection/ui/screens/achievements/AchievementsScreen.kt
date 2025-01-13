@@ -1,4 +1,4 @@
-package com.example.moviecollection.ui.screens
+package com.example.moviecollection.ui.screens.achievements
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

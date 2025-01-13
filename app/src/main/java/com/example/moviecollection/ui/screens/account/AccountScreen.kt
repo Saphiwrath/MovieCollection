@@ -1,6 +1,5 @@
-package com.example.moviecollection.ui.screens
+package com.example.moviecollection.ui.screens.account
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,11 +14,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
-import com.example.moviecollection.data.database.entities.Screening
 import com.example.moviecollection.ui.components.AccountCard
 import com.example.moviecollection.ui.components.AddWatchSessionFloatingActionButton
-import com.example.moviecollection.ui.components.CustomNavBar
-import com.example.moviecollection.ui.components.FilterButton
 import com.example.moviecollection.ui.components.StandardAppBar
 import com.example.moviecollection.ui.components.WatchSessionCard
 import com.example.moviecollection.ui.navigation.NavigationRoute
