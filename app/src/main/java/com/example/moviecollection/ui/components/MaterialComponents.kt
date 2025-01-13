@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.ArrowBack
@@ -31,6 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
+import com.example.moviecollection.data.database.entities.Screening
 import com.example.moviecollection.ui.navigation.NavigationRoute
 
 @Composable
@@ -80,24 +82,6 @@ fun StandardAppBar(
         actions = actions,
         navigationIcon = { NavigateUpButton(navigateUp) }
     )
-}
-
-@Composable
-fun WatchSessionLazyList(
-    navController: NavHostController
-) {
-    LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalAlignment = Alignment.Start
-    ) {
-        items(20) {
-            WatchSessionCard(
-                title = "title",
-                date = "12 gennaio",
-                onClick = {navController.navigate(NavigationRoute.WatchSessionDetails.route)},
-            )
-        }
-    }
 }
 
 @Composable

@@ -140,6 +140,7 @@ fun DetailsCardDataRow(
 fun WatchSessionCard(
     title: String,
     date: String,
+    image: String,
     onClick: () -> Unit = {}
 ) {
     Card (
@@ -158,7 +159,7 @@ fun WatchSessionCard(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
-            if(true) {
+            if(image.isBlank()) {
                 Image(
                     imageVector = Icons.Outlined.Image,
                     contentDescription = stringResource(R.string.movie_details_poster_desc),
@@ -188,7 +189,11 @@ fun WatchSessionCard(
 
 
 @Composable
-fun AccountCard (){
+fun AccountCard (
+    username: String,
+    email: String,
+    image: String
+){
     Card (
         modifier = Modifier
             .height(150.dp)
@@ -204,7 +209,7 @@ fun AccountCard (){
             modifier = Modifier.fillMaxSize()
         ) {
             /*TODO Add real image if present*/
-            if(true) {
+            if(image.isBlank()) {
                 Image(
                     imageVector = Icons.Outlined.AccountCircle,
                     contentDescription = stringResource(R.string.profile_image),
@@ -213,9 +218,13 @@ fun AccountCard (){
                 )
             }
             Text(
-                "Username",
+                username,
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
+            )
+            Text(
+                email,
+                style = MaterialTheme.typography.bodyMedium,
             )
         }
     }

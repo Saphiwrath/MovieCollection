@@ -15,7 +15,6 @@ import com.example.moviecollection.R
 import com.example.moviecollection.ui.components.AddWatchSessionFloatingActionButton
 import com.example.moviecollection.ui.components.CustomNavBar
 import com.example.moviecollection.ui.components.StandardAppBar
-import com.example.moviecollection.ui.components.WatchSessionLazyList
 import com.example.moviecollection.ui.navigation.NavigationRoute
 
 @Composable
@@ -45,7 +44,7 @@ fun MovieWatchSessionScreen(
                 .padding(20.dp)
                 .fillMaxSize()
         ){
-            WatchSessionLazyList(navController)
+            /*WatchSessionLazyList(navController)*/
         }
     }
 }

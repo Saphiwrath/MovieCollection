@@ -22,7 +22,7 @@ data class LoggedUserState(
     val user: User = User()
 ) {
     val id get() = user.id
-    val username get() = user.password
+    val username get() = user.username
     val email get() = user.email
     val password get() = user.password
     val image get() = user.profileImage

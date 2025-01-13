@@ -77,7 +77,15 @@ fun NavGraph(
         }
 
         composable(NavigationRoute.Account.route) {
-            AccountScreen(navController)
+            val movieState by movieViewModel.movieState.collectAsStateWithLifecycle()
+            val screeningState by screeningViewModel.state.collectAsStateWithLifecycle()
+            val userState by userViewModel.state.collectAsStateWithLifecycle()
+            AccountScreen(
+                navController,
+                movieState = movieState,
+                screeningState = screeningState,
+                userState = userState
+            )
         }
 
         composable(NavigationRoute.WatchSessionDetails.route) {
@@ -147,17 +155,21 @@ fun NavGraph(
                 actions = addWatchSessionViewModel.actions,
                 state = state,
                 onSubmit = {
-                    if (state.canSubmit) screeningViewModel.actions.addScreening(
-                        Screening(
-                            movieId = state.movieId,
-                            time = state.time,
-                            date = state.date,
-                            notes = state.notes,
-                            image = state.image.toString(),
-                            place = state.place,
-                            userId = userViewModel.state.value.id
+                    if (state.canSubmit) {
+                        screeningViewModel.actions.addScreening(
+                            Screening(
+                                movieId = state.movieId,
+                                time = state.time,
+                                date = state.date,
+                                notes = state.notes,
+                                image = state.image.toString(),
+                                place = state.place,
+                                userId = userViewModel.state.value.id
+                            )
                         )
-                    ) else Log.d("DEBUG", "no can do")
+                        true
+                    }
+                    else false
                 },
                 movieState = movieState
             )

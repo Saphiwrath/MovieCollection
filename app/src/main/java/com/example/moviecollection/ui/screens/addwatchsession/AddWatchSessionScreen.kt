@@ -14,11 +14,13 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.moviecollection.R
 import com.example.moviecollection.data.models.ListItemData
 import com.example.moviecollection.ui.components.inputs.AutoCompleteTextField
@@ -26,6 +28,7 @@ import com.example.moviecollection.ui.components.ConfirmFloatingActionButton
 import com.example.moviecollection.ui.components.inputs.DatePickerDocked
 import com.example.moviecollection.ui.components.StandardAppBar
 import com.example.moviecollection.ui.components.inputs.DialPicker
+import com.example.moviecollection.ui.navigation.NavigationRoute
 import com.example.moviecollection.ui.screens.entityviewmodels.MovieState
 
 @Composable
@@ -33,9 +36,10 @@ fun AddWatchSessionScreen(
     navController: NavHostController,
     actions: AddWatchSessionActions,
     state: AddWatchSessionState,
-    onSubmit: () -> Unit,
+    onSubmit: () -> Boolean,
     movieState: MovieState
 ) {
+    val backStackEntry = navController.previousBackStackEntry
     Scaffold (
         topBar = {
             StandardAppBar(
@@ -48,12 +52,11 @@ fun AddWatchSessionScreen(
         },
         floatingActionButton = {
             ConfirmFloatingActionButton{
-                onSubmit()
-                Log.println(
-                    Log.DEBUG,
-                    "ADDWATCHSESSIONSTATE",
-                    state.toString()
-                )
+                val res  = onSubmit()
+                if (res) {
+                    navController.navigate(backStackEntry?.destination?.route
+                        ?: NavigationRoute.Account.route)
+                }
             }
         },
     ){ paddingValues ->
