@@ -25,10 +25,14 @@ import com.example.moviecollection.R
 import com.example.moviecollection.ui.components.AchievementCard
 import com.example.moviecollection.ui.components.GraphCard
 import com.example.moviecollection.ui.components.StandardAppBar
+import com.example.moviecollection.ui.screens.entityviewmodels.ScreeningState
+import com.example.moviecollection.utils.getDaysOfWeek
+import java.util.Calendar
 
 @Composable
 fun AchievementsScreen (
-    navController: NavHostController
+    navController: NavHostController,
+    screeningsState: ScreeningState
 ){
     Scaffold (
         topBar = {
@@ -48,7 +52,10 @@ fun AchievementsScreen (
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ){
-            GraphCard()
+            GraphCard(
+                daysOfWeek = getDaysOfWeek(),
+                screenings = screeningsState.screenings
+            )
             Column(
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.spacedBy(15.dp),

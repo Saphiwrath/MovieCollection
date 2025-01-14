@@ -1,5 +1,6 @@
 package com.example.moviecollection.ui.components
 
+import android.util.Log
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
@@ -45,6 +46,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.moviecollection.R
+import com.example.moviecollection.data.database.entities.Screening
 import ir.ehsannarmani.compose_charts.ColumnChart
 import ir.ehsannarmani.compose_charts.models.Bars
 
@@ -261,7 +263,10 @@ fun SelectableCard(
 }
 
 @Composable
-fun GraphCard() {
+fun GraphCard(
+    daysOfWeek: Array<String>,
+    screenings: List<Screening>
+) {
     val firstGraphLine = MaterialTheme.colorScheme.primaryContainer
     val columnLabels = arrayOf(
         stringResource(R.string.first_graph_column),
@@ -274,7 +279,7 @@ fun GraphCard() {
     )
     Card (
         colors = CardDefaults.cardColors(
-            containerColor = Color.White,
+            containerColor = Color.LightGray,
             contentColor = Color.Black
         ),
         modifier = Modifier
@@ -300,43 +305,61 @@ fun GraphCard() {
                         Bars(
                             label = columnLabels[0],
                             values = listOf(
-                                Bars.Data(value = 80.0, color = SolidColor(firstGraphLine)),
+                                Bars.Data(
+                                    value = screenings.count { daysOfWeek[0] == (it.date) }.toDouble(),
+                                    color = SolidColor(firstGraphLine)
+                                )
                             ),
                         ),
                         Bars(
                             label = columnLabels[1],
                             values = listOf(
-                                Bars.Data(value = 80.0, color = SolidColor(firstGraphLine)),
+                                Bars.Data(
+                                    value = screenings.count { daysOfWeek[1] == (it.date) }.toDouble(),
+                                    color = SolidColor(firstGraphLine)),
                             ),
                         ),
                         Bars(
                             label = columnLabels[2],
                             values = listOf(
-                                Bars.Data(value = 80.0, color = SolidColor(firstGraphLine)),
+                                Bars.Data(
+                                    value = screenings.count { daysOfWeek[2] == (it.date) }.toDouble(),
+                                    color = SolidColor(firstGraphLine)),
                             ),
                         ),
                         Bars(
                             label = columnLabels[3],
                             values = listOf(
-                                Bars.Data(value = 80.0, color = SolidColor(firstGraphLine)),
+                                Bars.Data(
+                                    value = screenings.count { daysOfWeek[3] == (it.date) }.toDouble(),
+                                    color = SolidColor(firstGraphLine)),
                             ),
                         ),
                         Bars(
                             label = columnLabels[4],
                             values = listOf(
-                                Bars.Data(value = 80.0, color = SolidColor(firstGraphLine)),
+                                Bars.Data(
+                                    value = screenings.count {
+                                        Log.d("DEBUG", it.date + " vs " +daysOfWeek[4])
+                                        daysOfWeek[4] == (it.date)
+                                    }.toDouble(),
+                                    color = SolidColor(firstGraphLine)),
                             ),
                         ),
                         Bars(
                             label = columnLabels[5],
                             values = listOf(
-                                Bars.Data(value = 80.0, color = SolidColor(firstGraphLine)),
+                                Bars.Data(
+                                    value =screenings.count { daysOfWeek[5] == (it.date) }.toDouble(),
+                                    color = SolidColor(firstGraphLine)),
                             ),
                         ),
                         Bars(
                             label = columnLabels[6],
                             values = listOf(
-                                Bars.Data(value = 50.0, color = SolidColor(firstGraphLine)),
+                                Bars.Data(
+                                    value = screenings.count { daysOfWeek[6] == (it.date) }.toDouble(),
+                                    color = SolidColor(firstGraphLine)),
                             ),
                         ),
 

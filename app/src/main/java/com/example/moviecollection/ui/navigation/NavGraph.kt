@@ -250,7 +250,11 @@ fun NavGraph(
         }
 
         composable(NavigationRoute.Achievements.route) {
-            AchievementsScreen(navController)
+            val screeningState by screeningViewModel.state.collectAsStateWithLifecycle()
+            AchievementsScreen(
+                navController,
+                screeningsState = screeningState
+            )
         }
     }
 }
