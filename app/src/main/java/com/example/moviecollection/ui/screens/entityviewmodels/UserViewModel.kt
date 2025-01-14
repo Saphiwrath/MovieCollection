@@ -41,7 +41,7 @@ interface UserActions{
 class UserViewModel(
     private val repository: UserRepository
 ): ViewModel() {
-    private var _state: MutableStateFlow<LoggedUserState> = MutableStateFlow(LoggedUserState(User()))
+    private var _state: MutableStateFlow<LoggedUserState> = MutableStateFlow(LoggedUserState())
     val state get() = _state.asStateFlow()
 
     val actions = object : UserActions {
@@ -58,7 +58,7 @@ class UserViewModel(
             if (res) {
                 viewModelScope.launch {
                     repository.userFlow.map {
-                        LoggedUserState(it)
+                        LoggedUserState(it ?: User())
                     }.collect {_state.value = it}
                 }
             }
@@ -66,15 +66,7 @@ class UserViewModel(
         }
 
         override fun changeUsername(username: String) = viewModelScope.launch {
-            repository.upsert(
-                User (
-                    id = _state.value.id,
-                    username = username,
-                    password = _state.value.password,
-                    email = _state.value.email,
-                    profileImage = _state.value.image
-                )
-            )
+            repository.updateUsername(username, _state.value.id)
         }
 
         override fun changePassword(password: String) = viewModelScope.launch {

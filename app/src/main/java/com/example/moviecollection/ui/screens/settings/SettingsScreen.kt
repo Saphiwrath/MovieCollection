@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
 import com.example.moviecollection.data.models.Theme
+import com.example.moviecollection.data.models.results.AddGenreResults
 import com.example.moviecollection.ui.components.AddCastCard
 import com.example.moviecollection.ui.components.inputs.RadioButtonRow
 import com.example.moviecollection.ui.components.SettingsLabelText
@@ -49,10 +50,10 @@ fun SettingsScreen(
     navController: NavHostController,
     actions: SettingsActions,
     state: SettingsState,
-    updateUsername: () -> Unit,
-    updatePassword: () -> Unit,
-    updateEmail: () -> Unit,
-    addGenre: () -> Boolean,
+    updateUsername: () -> Boolean,
+    updatePassword: () -> Boolean,
+    updateEmail: () -> Boolean,
+    addGenre: () -> AddGenreResults,
     addCast: () -> Boolean
 ) {
     val scope = rememberCoroutineScope()
@@ -63,6 +64,7 @@ fun SettingsScreen(
     val genreAddedMessage = stringResource(R.string.genre_added)
     val genreNotAddedMessage = stringResource(R.string.genre_not_added)
     val castMessage = stringResource(R.string.cast_member_added)
+    val emptyFieldMessage = stringResource(R.string.empty_text_field)
     Scaffold (
         topBar = {
             StandardAppBar(
@@ -123,7 +125,8 @@ fun SettingsScreen(
                 onClick = {
                     scope.launch {
                         showSnackBar(
-                            message = usernameMessage,
+                            message = if (updateUsername()) usernameMessage
+                                else emptyFieldMessage,
                             snackBarHostState
                         )
                     }
@@ -135,10 +138,10 @@ fun SettingsScreen(
                 rowSpacedBy = rowSpacedBy,
                 text = stringResource(R.string.email_field_label),
                 onClick = {
-                    updateEmail()
                     scope.launch {
                         showSnackBar(
-                            message = emailMessage,
+                            message = if (updateEmail()) emailMessage
+                            else emptyFieldMessage,
                             snackBarHostState
                         )
                     }
@@ -150,10 +153,10 @@ fun SettingsScreen(
                 rowSpacedBy = rowSpacedBy,
                 text = stringResource(R.string.password_field_label),
                 onClick = {
-                    updatePassword()
                     scope.launch {
                         showSnackBar(
-                            message = passwordMessage,
+                            message = if (updatePassword()) passwordMessage
+                            else emptyFieldMessage,
                             snackBarHostState
                         )
                     }
@@ -168,9 +171,11 @@ fun SettingsScreen(
                     val res = addGenre()
                     scope.launch {
                         showSnackBar(
-                            message = if(res) {
-                                genreAddedMessage
-                            } else genreNotAddedMessage,
+                            message = when (res) {
+                                AddGenreResults.Success -> genreAddedMessage
+                                AddGenreResults.ErrorDuplicate -> genreNotAddedMessage
+                                AddGenreResults.ErrorEmptyField -> emptyFieldMessage
+                            },
                             snackBarHostState
                         )
                     }
@@ -184,14 +189,12 @@ fun SettingsScreen(
                 onIsActorChange = actions::setCastIsActor,
                 onIsDirectorChange = actions::setCastIsDirector
             ) {
-                val res = addCast()
-                if (res) {
-                    scope.launch {
-                        showSnackBar(
-                            message = castMessage,
-                            snackBarHostState
-                        )
-                    }
+                scope.launch {
+                    showSnackBar(
+                        message = if(addCast()) castMessage
+                            else emptyFieldMessage,
+                        snackBarHostState
+                    )
                 }
             }
         }

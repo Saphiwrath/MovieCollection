@@ -21,6 +21,7 @@
     <string name="genre_added">Genre added!</string>
     <string name="genre_not_added">Duplicate genre was not added</string>
     <string name="cast_member_added">Cast member added!</string>
+    <string name="empty_text_field">Write something before submitting!</string>
 
     <!-- ACCESSIBILITY DESCRIPTIONS -->
     <!-- Buttons of all types-->

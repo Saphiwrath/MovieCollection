@@ -13,19 +13,29 @@ import kotlinx.coroutines.flow.flowOf
 class UserRepository (
     private val userDAO: UserDAO
 ){
-    private var _userFlow: Flow<User> = emptyFlow()
-    val userFlow: Flow<User>
+    private var _userFlow: Flow<User?> = emptyFlow()
+    val userFlow: Flow<User?>
         get() = _userFlow
 
     suspend fun upsert(user: User) = userDAO.registerUser(user)
 
+    suspend fun updateUsername(username: String, id: Int) = userDAO.updateUsername(username, id)
+
     suspend fun delete(user: User) = userDAO.deleteUser(user)
+
+    private fun getUser(userId: Int) = userDAO.getUser(userId)
 
     fun findUserByEmail(email:String) = userDAO.findUserByEmail(email)
 
+    // Every time you change username or password it makes the whole app crash because
+    // this now returns false methinks, which means userFlow is now null
+    // SOLVED but leaving this here as a reminder of my hybris
     suspend fun attemptLogin(password: String, username: String): Boolean {
-        _userFlow = userDAO.attemptLogin(password, username)
-        return _userFlow.firstOrNull() != null
+        val foundUser = userDAO.attemptLogin(password, username).firstOrNull()
+        return if (foundUser != null) {
+            _userFlow = getUser(foundUser.id)
+            true
+        } else false
     }
 
 }

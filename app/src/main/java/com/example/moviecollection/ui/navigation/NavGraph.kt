@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.moviecollection.data.database.entities.Genre
 import com.example.moviecollection.data.database.entities.Screening
+import com.example.moviecollection.data.models.results.AddGenreResults
 import com.example.moviecollection.data.models.results.LoginResult
 import com.example.moviecollection.ui.screens.account.AccountScreen
 import com.example.moviecollection.ui.screens.achievements.AchievementsScreen
@@ -130,12 +131,30 @@ fun NavGraph(
                 navController = navController,
                 actions = settingsViewModel.actions,
                 state = settingsState,
-                updateUsername = { userViewModel.actions.changeUsername(settingsState.username) },
-                updateEmail = {userViewModel.actions.changeEmail(settingsState.email)},
-                updatePassword = {userViewModel.actions.changePassword(settingsState.password)},
+                updateUsername = {
+                    if (settingsState.canSubmitUsername){
+                        userViewModel.actions.changeUsername(settingsState.username)
+                        true
+                    } else false
+                },
+                updateEmail = {
+                    if (settingsState.canSubmitEmail){
+                        userViewModel.actions.changeEmail(settingsState.email)
+                        true
+                    } else false
+                },
+                updatePassword = {
+                    if (settingsState.canSubmitPassword){
+                        userViewModel.actions.changePassword(settingsState.password)
+                        true
+                    } else false
+                },
                 addGenre = {
-                    if (settingsState.canSubmitGenre) genreViewModel.actions.addGenre(settingsState.toGenre())
-                    else false
+                    if (settingsState.canSubmitGenre) {
+                        if (genreViewModel.actions.addGenre(settingsState.toGenre())) AddGenreResults.Success
+                        else AddGenreResults.ErrorDuplicate
+                    }
+                    else AddGenreResults.ErrorEmptyField
                 },
                 addCast = {
                     if (settingsState.canSubmitActor) {

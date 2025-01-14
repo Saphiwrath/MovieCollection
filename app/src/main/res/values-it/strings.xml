@@ -21,6 +21,7 @@
     <string name="genre_added">Genere aggiunto!</string>
     <string name="genre_not_added">Il genere duplicato non è stato aggiunto</string>
     <string name="cast_member_added">Membro del cast aggiunto!</string>
+    <string name="empty_text_field">Scrivi qualcosa prima di confermare!</string>
 
     <!-- ACCESSIBILITY DESCRIPTIONS -->
     <!-- Buttons of all types-->

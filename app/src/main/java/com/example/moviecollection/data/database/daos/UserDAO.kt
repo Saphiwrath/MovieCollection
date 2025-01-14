@@ -13,6 +13,12 @@ interface UserDAO {
     @Query("SELECT * FROM user WHERE password=:password AND username=:username")
     fun attemptLogin(password: String, username: String) : Flow<User>
 
+    @Query("UPDATE user SET username=:username WHERE id=:id")
+    suspend fun updateUsername(username: String, id: Int)
+
+    @Query("SELECT * FROM user WHERE id=:userId")
+    fun getUser(userId: Int): Flow<User>
+
     @Upsert
     suspend fun registerUser(user: User)
 

@@ -29,6 +29,9 @@ data class SettingsState(
     var castIsActor: Boolean = false,
     var castIsDirector: Boolean = false
 ) {
+    val canSubmitPassword = password.isNotBlank()
+    val canSubmitUsername = username.isNotBlank()
+    val canSubmitEmail = email.isNotBlank()
 
     val canSubmitGenre = genre.isNotBlank()
     fun toGenre() = Genre(
