@@ -100,6 +100,9 @@ val appModule = module {
     }
     single { OSMDataSource(get()) }
 
+    // Camera
+
+
     // ViewModels
     viewModel { SettingsViewModel(get()) }
 

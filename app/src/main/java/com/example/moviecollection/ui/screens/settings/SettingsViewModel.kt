@@ -1,5 +1,6 @@
 package com.example.moviecollection.ui.screens.settings
 
+import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -27,11 +28,13 @@ data class SettingsState(
     var genre: String = "",
     var castName: String = "",
     var castIsActor: Boolean = false,
-    var castIsDirector: Boolean = false
+    var castIsDirector: Boolean = false,
+    var image: Uri = Uri.EMPTY
 ) {
     val canSubmitPassword = password.isNotBlank()
     val canSubmitUsername = username.isNotBlank()
     val canSubmitEmail = email.isNotBlank()
+    val canSubmitImage = image != Uri.EMPTY
 
     val canSubmitGenre = genre.isNotBlank()
     fun toGenre() = Genre(
@@ -61,6 +64,8 @@ interface SettingsActions {
     fun setCastIsActor(castIsActor: Boolean)
 
     fun setCastIsDirector(castIsDirector: Boolean)
+
+    fun setImage(image: Uri)
 }
 
 class SettingsViewModel(
@@ -100,6 +105,10 @@ class SettingsViewModel(
 
         override fun setCastIsDirector(castIsDirector: Boolean) {
             _state.update { it.copy(castIsDirector = castIsDirector) }
+        }
+
+        override fun setImage(image: Uri) {
+            _state.update { it.copy(image = image) }
         }
     }
 

@@ -64,6 +64,7 @@ fun MovieWatchSessionScreen(
                         title = movie.title,
                         date = screening.date,
                         image = screening.image,
+                        poster = movie.poster
                     ) {
                         navController.navigate(
                             NavigationRoute.WatchSessionDetails.buildRoute(screeningId = screening.id)

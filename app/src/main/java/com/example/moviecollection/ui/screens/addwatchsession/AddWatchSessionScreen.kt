@@ -7,10 +7,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.MyLocation
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -19,6 +22,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,6 +35,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.moviecollection.R
 import com.example.moviecollection.data.models.ListItemData
 import com.example.moviecollection.data.remote.OSMDataSource
@@ -47,10 +53,13 @@ import com.example.moviecollection.ui.components.inputs.DialPicker
 import com.example.moviecollection.ui.navigation.NavigationRoute
 import com.example.moviecollection.ui.screens.entityviewmodels.MovieState
 import com.example.moviecollection.utils.LocationService
-import com.example.moviecollection.utils.PermissionStatus
+import com.example.moviecollection.utils.permissions.PermissionStatus
 import com.example.moviecollection.utils.StartMonitoringResult
+import com.example.moviecollection.utils.camera.rememberCameraLauncher
+import com.example.moviecollection.utils.camera.saveImageToStorage
+import com.example.moviecollection.utils.camera.takePicture
 import com.example.moviecollection.utils.isOnline
-import com.example.moviecollection.utils.rememberPermission
+import com.example.moviecollection.utils.permissions.rememberPermission
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
@@ -62,17 +71,32 @@ fun AddWatchSessionScreen(
     onSubmit: () -> Boolean,
     movieState: MovieState
 ) {
+    val ctx = LocalContext.current
     val locationService = koinInject<LocationService>()
     val osmDataSource = koinInject<OSMDataSource>()
     val backStackEntry = navController.previousBackStackEntry
     val snackBarHostState = remember { SnackbarHostState() }
+
     val showLocationDisabledAlert = remember { mutableStateOf (false) }
     val showPermissionDeniedAlert = remember { mutableStateOf (false) }
     val showPermissionPermanentlyDeniedSnackbar = remember { mutableStateOf (false) }
+
     val noInternetMessage = stringResource(R.string.no_internet_connectivity_snackbar_message)
     val noInternetActionLabel = stringResource(R.string.no_internet_connectivity_snackbar_actionLabel)
 
     var place by remember { mutableStateOf <OSMPlace?>(null) }
+
+    val cameraLauncher = rememberCameraLauncher {
+            imageUri -> saveImageToStorage(imageUri, ctx.applicationContext.contentResolver)
+    }
+    val cameraPermission = rememberPermission(Manifest.permission.CAMERA) {
+        if (it.isGranted) {
+            cameraLauncher.captureImage()
+        } else {
+            /*TODO add alerts and snackbar like for location*/
+        }
+    }
+    val capturedImageUri = cameraLauncher.capturedImageUri
 
     val locationPermission = rememberPermission(Manifest.permission.ACCESS_COARSE_LOCATION) {
         when (it) {
@@ -94,7 +118,6 @@ fun AddWatchSessionScreen(
         }
     }
 
-    val ctx = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     fun searchPlaces() = coroutineScope.launch {
         if (isOnline(ctx)) {
@@ -207,6 +230,53 @@ fun AddWatchSessionScreen(
                 modifier = Modifier.fillMaxWidth(),
                 maxLines = 20
             )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    if (capturedImageUri.path?.isNotEmpty() == true) {
+                        actions.addImage(capturedImageUri)
+                        AsyncImage(
+                            ImageRequest.Builder(ctx)
+                                .data(capturedImageUri)
+                                .crossfade(true)
+                                .build(),
+                            stringResource(R.string.profile_image)
+                        )
+                    } else {
+                        Icon(
+                            imageVector = Icons.Outlined.Image,
+                            contentDescription = stringResource(R.string.profile_image),
+                            modifier = Modifier.size(200.dp),
+                            tint = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
+                }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    TextButton(
+                        onClick = {
+                            takePicture(cameraLauncher, cameraPermission)
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer
+                        )
+                    ) {
+                        Text(
+                            text = stringResource(R.string.take_profile_picture)
+
+                        )
+                    }
+                }
+            }
         }
     }
 }

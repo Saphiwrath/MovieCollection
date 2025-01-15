@@ -1,5 +1,6 @@
 package com.example.moviecollection.ui.components
 
+import android.net.Uri
 import android.util.Log
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountCircle
@@ -39,6 +41,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -47,6 +52,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.moviecollection.R
 import com.example.moviecollection.data.database.entities.Screening
+import com.example.moviecollection.utils.camera.uriToBitmap
 import ir.ehsannarmani.compose_charts.ColumnChart
 import ir.ehsannarmani.compose_charts.models.Bars
 
@@ -143,6 +149,7 @@ fun WatchSessionCard(
     title: String,
     date: String,
     image: String,
+    poster: String,
     onClick: () -> Unit = {}
 ) {
     Card (
@@ -161,11 +168,16 @@ fun WatchSessionCard(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
-            if(image.isBlank()) {
+            if(image.isBlank() && poster.isBlank()) {
                 Image(
                     imageVector = Icons.Outlined.Image,
-                    contentDescription = stringResource(R.string.movie_details_poster_desc),
+                    contentDescription = stringResource(R.string.screening_image),
                     modifier = Modifier.width(70.dp)
+                )
+            } else {
+                ScreeningCardImage(
+                    image = image,
+                    poster = poster
                 )
             }
             Column (
@@ -210,7 +222,6 @@ fun AccountCard (
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()
         ) {
-            /*TODO Add real image if present*/
             if(image.isBlank()) {
                 Image(
                     imageVector = Icons.Outlined.AccountCircle,
@@ -218,6 +229,8 @@ fun AccountCard (
                     modifier = Modifier.size(70.dp),
                     alignment = Alignment.Center
                 )
+            } else {
+                ProfileImage(image = image)
             }
             Text(
                 username,
@@ -438,7 +451,9 @@ fun AddCastCard(
             .padding(5.dp)
     ){
         Column (
-            modifier = Modifier.padding(12.dp).fillMaxWidth(),
+            modifier = Modifier
+                .padding(12.dp)
+                .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.Start,
         ){

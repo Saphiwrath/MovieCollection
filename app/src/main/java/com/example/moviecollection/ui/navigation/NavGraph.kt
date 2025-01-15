@@ -1,5 +1,6 @@
 package com.example.moviecollection.ui.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -166,6 +167,11 @@ fun NavGraph(
                         true
                     }
                     else false
+                },
+                updateImage = {
+                    if (settingsState.canSubmitImage) {
+                        userViewModel.actions.changeImage(settingsState.image)
+                    }
                 }
             )
         }

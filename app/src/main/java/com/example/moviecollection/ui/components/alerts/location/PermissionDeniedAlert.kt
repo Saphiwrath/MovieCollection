@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.res.stringResource
 import com.example.moviecollection.R
-import com.example.moviecollection.utils.PermissionHandler
+import com.example.moviecollection.utils.permissions.PermissionHandler
 
 @Composable
 fun LocationPermissionDeniedAlert(

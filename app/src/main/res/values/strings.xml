@@ -35,26 +35,30 @@
     <string name="filter_button_desc">Filter</string>
     <string name="home_button_desc">Go to my movies</string>
     <string name="favorite_movie_button_desc">Add movie to favorites</string>
+
     <string name="light_mode_button">Light</string>
     <string name="dark_mode_button">Dark</string>
     <string name="system_mode_button">System</string>
     <string name="view_watch_sessions_button">View screenings</string>
     <string name="drop_down_actors">Expand actor list</string>
     <string name="drop_down_directors">Expand director list</string>
+    <string name="take_profile_picture">Snap your picture!</string>
 
     <string name="my_location">Your location</string>
     <string name="drop_down_movies">Expand movie title list</string>
     <string name="generic_confirm_button">Confirm</string>
 
-    <string name="login_button">login</string>
-    <string name="signup_button">sign up</string>
+    <string name="login_button">Login</string>
+    <string name="signup_button">Sign up</string>
 
-    <string name="confirm_selection_button">confirm</string>
-    <string name="dismiss_selection_button">dismiss</string>
+    <string name="confirm_selection_button">Confirm</string>
+    <string name="dismiss_selection_button">Dismiss</string>
+
     <!-- images -->
-    <string name="movie_details_poster_desc">movie poster</string>
-    <string name="profile_image">profile picture</string>
-    <string name="achievement_icon">achievement</string>
+    <string name="movie_details_poster_desc">Movie poster</string>
+    <string name="profile_image">Profile picture</string>
+    <string name="achievement_icon">Achievement</string>
+    <string name="screening_image">Screening image</string>
 
     <!-- labels -->
     <string name="genre_label">genre</string>
@@ -94,7 +98,7 @@
 
     <string name="graph_label">Movies you watched this week</string>
 
-    <string name="date_picker_button_icon_label">pick date</string>
+    <string name="date_picker_button_icon_label">Pick date</string>
 
     <!-- formats -->
     <string name="dvd">DVD</string>

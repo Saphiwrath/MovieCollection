@@ -28,6 +28,7 @@ import com.example.moviecollection.R
 import com.example.moviecollection.data.database.entities.Movie
 import com.example.moviecollection.data.database.entities.Screening
 import com.example.moviecollection.ui.components.DetailsCardDataRow
+import com.example.moviecollection.ui.components.DetailsImage
 import com.example.moviecollection.ui.components.StandardAppBar
 
 @Composable
@@ -70,6 +71,8 @@ fun WatchSessionDetailsScreen(
                         modifier = Modifier.size(200.dp),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
+                } else {
+                    DetailsImage(image = screening.image, poster = movie.poster)
                 }
             }
             Text(
@@ -78,7 +81,8 @@ fun WatchSessionDetailsScreen(
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface,
                 overflow = TextOverflow.Visible,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
             )
             DetailsCardDataRow(label = stringResource(R.string.place_label), value = screening.place)
             DetailsCardDataRow(label = stringResource(R.string.date_label), value = screening.date)

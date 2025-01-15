@@ -1,25 +1,37 @@
 package com.example.moviecollection.ui.screens.settings
 
+import android.Manifest
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Image
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.moviecollection.R
 import com.example.moviecollection.data.models.Theme
 import com.example.moviecollection.data.models.results.AddGenreResults
@@ -29,6 +41,10 @@ import com.example.moviecollection.ui.components.SettingsLabelText
 import com.example.moviecollection.ui.components.StandardAppBar
 import com.example.moviecollection.ui.components.inputs.InputFieldWithSideLabel
 import com.example.moviecollection.ui.components.alerts.showSnackBar
+import com.example.moviecollection.utils.camera.rememberCameraLauncher
+import com.example.moviecollection.utils.permissions.rememberPermission
+import com.example.moviecollection.utils.camera.saveImageToStorage
+import com.example.moviecollection.utils.camera.takePicture
 import kotlinx.coroutines.launch
 
 @Composable
@@ -40,10 +56,24 @@ fun SettingsScreen(
     updatePassword: () -> Boolean,
     updateEmail: () -> Boolean,
     addGenre: () -> AddGenreResults,
-    addCast: () -> Boolean
+    addCast: () -> Boolean,
+    updateImage: () -> Unit
 ) {
+    val ctx = LocalContext.current
     val scope = rememberCoroutineScope()
     val snackBarHostState = remember { SnackbarHostState()}
+    val cameraLauncher = rememberCameraLauncher {
+        imageUri -> saveImageToStorage(imageUri, ctx.applicationContext.contentResolver)
+    }
+    val cameraPermission = rememberPermission(Manifest.permission.CAMERA) {
+        if (it.isGranted) {
+            cameraLauncher.captureImage()
+        } else {
+            /*TODO add alerts and snackbar like for location*/
+        }
+    }
+    val capturedImageUri = cameraLauncher.capturedImageUri
+
     val usernameMessage = stringResource(R.string.username_updated)
     val passwordMessage = stringResource(R.string.password_updated)
     val emailMessage = stringResource(R.string.email_updated)
@@ -51,6 +81,7 @@ fun SettingsScreen(
     val genreNotAddedMessage = stringResource(R.string.genre_not_added)
     val castMessage = stringResource(R.string.cast_member_added)
     val emptyFieldMessage = stringResource(R.string.empty_text_field)
+
     Scaffold (
         topBar = {
             StandardAppBar(
@@ -181,6 +212,64 @@ fun SettingsScreen(
                             else emptyFieldMessage,
                         snackBarHostState
                     )
+                }
+            }
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Row (
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ){
+                    if (capturedImageUri.path?.isNotEmpty() == true) {
+                        actions.setImage(capturedImageUri)
+                        AsyncImage(
+                            ImageRequest.Builder(ctx)
+                                .data(capturedImageUri)
+                                .crossfade(true)
+                                .build(),
+                            stringResource(R.string.profile_image)
+                        )
+                    } else {
+                        Icon(
+                            imageVector = Icons.Outlined.Image,
+                            contentDescription = stringResource(R.string.profile_image),
+                            modifier = Modifier.size(200.dp),
+                            tint = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
+                }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    TextButton(
+                        onClick = {
+                            takePicture(cameraLauncher, cameraPermission)
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer
+                        )
+                    ) {
+                        Text(
+                            text = stringResource(R.string.take_profile_picture)
+
+                        )
+                    }
+                    TextButton(
+                        onClick = updateImage,
+                        colors = ButtonDefaults.buttonColors(
+                            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer
+                        )
+                    ) {
+                        Text(
+                            text = stringResource(R.string.generic_confirm_button)
+                        )
+                    }
                 }
             }
         }

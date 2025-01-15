@@ -35,16 +35,18 @@
     <string name="filter_button_desc">Filtra</string>
     <string name="home_button_desc">Vai ai miei film</string>
     <string name="favorite_movie_button_desc">Aggiungi film ai preferiti</string>
+
     <string name="light_mode_button">Chiaro</string>
     <string name="dark_mode_button">Scuro</string>
     <string name="system_mode_button">Sistema</string>
     <string name="view_watch_sessions_button">Visualizza proiezioni</string>
     <string name="drop_down_actors">Espandi lista attori</string>
     <string name="drop_down_directors">Espandi lista registi</string>
+    <string name="take_profile_picture">Scatta la tua foto!</string>
 
     <string name="my_location">La tua posizione</string>
     <string name="drop_down_movies">Espandi lista titoli film</string>
-    <string name="generic_confirm_button">Confirm</string>
+    <string name="generic_confirm_button">Conferma</string>
 
     <string name="login_button">Login</string>
     <string name="signup_button">Registrati</string>
@@ -57,6 +59,7 @@
     <string name="movie_details_poster_desc">poster del film</string>
     <string name="profile_image">Immagine di profilo</string>
     <string name="achievement_icon">Trofeo</string>
+    <string name="screening_image">Immagine della proiezione</string>
 
     <!-- Labels -->
     <string name="genre_label">genere</string>

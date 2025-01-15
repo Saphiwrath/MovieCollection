@@ -1,5 +1,6 @@
 package com.example.moviecollection.ui.screens.entityviewmodels
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -36,6 +37,8 @@ interface UserActions{
     fun changeEmail(email: String) : Job
 
     fun changePassword(password: String) : Job
+
+    fun changeImage(image: Uri): Job
 }
 
 class UserViewModel(
@@ -77,6 +80,18 @@ class UserViewModel(
                     password = password,
                     email = _state.value.email,
                     profileImage = _state.value.image
+                )
+            )
+        }
+
+        override fun changeImage(image: Uri): Job = viewModelScope.launch{
+            repository.upsert(
+                User (
+                    id = _state.value.id,
+                    username = _state.value.username,
+                    password = _state.value.password,
+                    email = _state.value.email,
+                    profileImage = image.toString()
                 )
             )
         }
