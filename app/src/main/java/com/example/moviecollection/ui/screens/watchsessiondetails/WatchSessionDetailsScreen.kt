@@ -67,7 +67,7 @@ fun WatchSessionDetailsScreen(
                 if (movie.poster.isBlank() && screening.image.isBlank()) {
                     Icon(
                         imageVector = Icons.Outlined.Image,
-                        contentDescription = stringResource(R.string.movie_details_poster_desc),
+                        contentDescription = stringResource(R.string.screening_image),
                         modifier = Modifier.size(200.dp),
                         tint = MaterialTheme.colorScheme.onSurface
                     )

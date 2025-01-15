@@ -1,6 +1,7 @@
 package com.example.moviecollection.ui.screens.settings
 
 import android.Manifest
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,6 +23,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -39,13 +41,16 @@ import com.example.moviecollection.ui.components.AddCastCard
 import com.example.moviecollection.ui.components.inputs.RadioButtonRow
 import com.example.moviecollection.ui.components.SettingsLabelText
 import com.example.moviecollection.ui.components.StandardAppBar
+import com.example.moviecollection.ui.components.alerts.camera.CameraPermissionDeniedAlert
 import com.example.moviecollection.ui.components.inputs.InputFieldWithSideLabel
 import com.example.moviecollection.ui.components.alerts.showSnackBar
 import com.example.moviecollection.utils.camera.rememberCameraLauncher
 import com.example.moviecollection.utils.permissions.rememberPermission
 import com.example.moviecollection.utils.camera.saveImageToStorage
 import com.example.moviecollection.utils.camera.takePicture
+import com.example.moviecollection.utils.permissions.PermissionStatus
 import kotlinx.coroutines.launch
+import java.time.Duration
 
 @Composable
 fun SettingsScreen(
@@ -62,14 +67,18 @@ fun SettingsScreen(
     val ctx = LocalContext.current
     val scope = rememberCoroutineScope()
     val snackBarHostState = remember { SnackbarHostState()}
+
+    val showCameraPermissionDeniedAlert = remember { mutableStateOf(false) }
     val cameraLauncher = rememberCameraLauncher {
         imageUri -> saveImageToStorage(imageUri, ctx.applicationContext.contentResolver)
     }
+    val cameraToast = stringResource(R.string.camera_permission_permanently_denied_toast)
     val cameraPermission = rememberPermission(Manifest.permission.CAMERA) {
-        if (it.isGranted) {
-            cameraLauncher.captureImage()
-        } else {
-            /*TODO add alerts and snackbar like for location*/
+        when (it) {
+            PermissionStatus.Granted -> cameraLauncher.captureImage()
+            PermissionStatus.Denied -> showCameraPermissionDeniedAlert.value = true
+            PermissionStatus.Unknown -> {}
+            PermissionStatus.PermanentlyDenied -> Toast.makeText(ctx, cameraToast, Toast.LENGTH_SHORT).show()
         }
     }
     val capturedImageUri = cameraLauncher.capturedImageUri
@@ -82,6 +91,11 @@ fun SettingsScreen(
     val castMessage = stringResource(R.string.cast_member_added)
     val emptyFieldMessage = stringResource(R.string.empty_text_field)
 
+
+    CameraPermissionDeniedAlert(
+        show = showCameraPermissionDeniedAlert,
+        cameraPermission = cameraPermission
+    )
     Scaffold (
         topBar = {
             StandardAppBar(

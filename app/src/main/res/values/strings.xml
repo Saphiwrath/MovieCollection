@@ -170,4 +170,13 @@
     <!--No internet connectivity snackbar-->
     <string name="no_internet_connectivity_snackbar_message">No Internet connectivity.</string>
     <string name="no_internet_connectivity_snackbar_actionLabel">Go to settings</string>
+
+    <!--Camera permission denied-->
+    <string name="camera_permission_denied_alert_title">Camera permission denied</string>
+    <string name="camera_permission_denied_alert_text">Camera permission is required to snap your picture</string>
+    <string name="camera_permission_denied_alert_grant">Grant</string>
+    <string name="camera_permission_denied_alert_dismiss">Dismiss</string>
+
+    <!--Camera permission permanently denied toast-->
+    <string name="camera_permission_permanently_denied_toast">Camera permission denied</string>
 </resources>

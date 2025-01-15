@@ -171,4 +171,13 @@
     <string name="no_internet_connectivity_snackbar_message">Nessuna connessione Internet.</string>
     <string name="no_internet_connectivity_snackbar_actionLabel">Vai alle impostazioni</string>
 
+    <!--Camera permission denied-->
+    <string name="camera_permission_denied_alert_title">Accesso alla fotocamera negato</string>
+    <string name="camera_permission_denied_alert_text">L\'accesso alla fotocamera è necessario per fare la tua foto</string>
+    <string name="camera_permission_denied_alert_grant">Concedi</string>
+    <string name="camera_permission_denied_alert_dismiss">Annulla</string>
+
+    <!--Camera permission permanently denied toast-->
+    <string name="camera_permission_permanently_denied_toast">Accesso alla fotocamera negato</string>
+
 </resources>

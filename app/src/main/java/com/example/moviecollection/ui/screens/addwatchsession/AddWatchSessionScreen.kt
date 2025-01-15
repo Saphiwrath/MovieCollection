@@ -1,6 +1,7 @@
 package com.example.moviecollection.ui.screens.addwatchsession
 
 import android.Manifest
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -45,6 +46,7 @@ import com.example.moviecollection.ui.components.inputs.AutoCompleteTextField
 import com.example.moviecollection.ui.components.ConfirmFloatingActionButton
 import com.example.moviecollection.ui.components.inputs.DatePickerDocked
 import com.example.moviecollection.ui.components.StandardAppBar
+import com.example.moviecollection.ui.components.alerts.camera.CameraPermissionDeniedAlert
 import com.example.moviecollection.ui.components.alerts.internet.NoInternetConnectivitySnackbar
 import com.example.moviecollection.ui.components.alerts.location.LocationDisabledAlert
 import com.example.moviecollection.ui.components.alerts.location.LocationPermissionDeniedAlert
@@ -78,8 +80,10 @@ fun AddWatchSessionScreen(
     val snackBarHostState = remember { SnackbarHostState() }
 
     val showLocationDisabledAlert = remember { mutableStateOf (false) }
-    val showPermissionDeniedAlert = remember { mutableStateOf (false) }
+    val showLocationPermissionDeniedAlert = remember { mutableStateOf (false) }
     val showPermissionPermanentlyDeniedSnackbar = remember { mutableStateOf (false) }
+
+    val showCameraPermissionDeniedAlert = remember { mutableStateOf(false)}
 
     val noInternetMessage = stringResource(R.string.no_internet_connectivity_snackbar_message)
     val noInternetActionLabel = stringResource(R.string.no_internet_connectivity_snackbar_actionLabel)
@@ -89,11 +93,13 @@ fun AddWatchSessionScreen(
     val cameraLauncher = rememberCameraLauncher {
             imageUri -> saveImageToStorage(imageUri, ctx.applicationContext.contentResolver)
     }
+    val cameraToast = stringResource(R.string.camera_permission_permanently_denied_toast)
     val cameraPermission = rememberPermission(Manifest.permission.CAMERA) {
-        if (it.isGranted) {
-            cameraLauncher.captureImage()
-        } else {
-            /*TODO add alerts and snackbar like for location*/
+        when (it) {
+            PermissionStatus.Granted -> cameraLauncher.captureImage()
+            PermissionStatus.Denied -> showCameraPermissionDeniedAlert.value = true
+            PermissionStatus.Unknown -> {}
+            PermissionStatus.PermanentlyDenied -> Toast.makeText(ctx, cameraToast, Toast.LENGTH_SHORT).show()
         }
     }
     val capturedImageUri = cameraLauncher.capturedImageUri
@@ -104,7 +110,7 @@ fun AddWatchSessionScreen(
             PermissionStatus.Granted ->
                 showLocationDisabledAlert.value =
                     locationService.requestCurrentLocation() == StartMonitoringResult.GPSDisabled
-            PermissionStatus.Denied -> showPermissionDeniedAlert.value = true
+            PermissionStatus.Denied -> showLocationPermissionDeniedAlert.value = true
             PermissionStatus.PermanentlyDenied -> showPermissionPermanentlyDeniedSnackbar.value = true
         }
     }
@@ -146,12 +152,16 @@ fun AddWatchSessionScreen(
         locationService = locationService
     )
     LocationPermissionDeniedAlert(
-        show = showPermissionDeniedAlert,
+        show = showLocationPermissionDeniedAlert,
         locationPermission = locationPermission
     )
     LocationPermissionPermanentlyDeniedSnackbar(
         show = showPermissionPermanentlyDeniedSnackbar,
         snackbarHostState = snackBarHostState
+    )
+    CameraPermissionDeniedAlert(
+        show = showCameraPermissionDeniedAlert,
+        cameraPermission = cameraPermission
     )
     Scaffold (
         topBar = {
