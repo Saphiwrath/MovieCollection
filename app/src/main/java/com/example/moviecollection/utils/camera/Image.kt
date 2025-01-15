@@ -10,18 +10,22 @@ import android.os.SystemClock
 import android.provider.MediaStore
 import java.io.FileNotFoundException
 
-fun uriToBitmap(imageUri: Uri, contentResolver: ContentResolver): Bitmap {
-    val bitmap = when {
-        Build.VERSION.SDK_INT < 28 -> {
-            @Suppress("DEPRECATION")
-            MediaStore.Images.Media.getBitmap(contentResolver, imageUri)
+fun uriToBitmap(imageUri: Uri, contentResolver: ContentResolver): Bitmap? {
+    return try {
+        when {
+            Build.VERSION.SDK_INT < 28 -> {
+                @Suppress("DEPRECATION")
+                MediaStore.Images.Media.getBitmap(contentResolver, imageUri)
+            }
+
+            else -> {
+                val source = ImageDecoder.createSource(contentResolver, imageUri)
+                ImageDecoder.decodeBitmap(source)
+            }
         }
-        else -> {
-            val source = ImageDecoder.createSource(contentResolver, imageUri)
-            ImageDecoder.decodeBitmap(source)
-        }
+    } catch (_: Exception) {
+        null
     }
-    return bitmap
 }
 
 fun saveImageToStorage(
@@ -40,6 +44,8 @@ fun saveImageToStorage(
     val outputStream = savedImageUri?.let { contentResolver.openOutputStream(it) }
         ?: throw FileNotFoundException()
 
-    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-    outputStream.close()
+    if (bitmap != null) {
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+        outputStream.close()
+    }
 }

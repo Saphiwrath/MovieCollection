@@ -1,5 +1,6 @@
 package com.example.moviecollection.ui.screens.watchsessiondetails
 
+import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -30,6 +32,7 @@ import com.example.moviecollection.data.database.entities.Screening
 import com.example.moviecollection.ui.components.DetailsCardDataRow
 import com.example.moviecollection.ui.components.DetailsImage
 import com.example.moviecollection.ui.components.StandardAppBar
+import com.example.moviecollection.utils.camera.uriToBitmap
 
 @Composable
 fun WatchSessionDetailsScreen(
@@ -64,7 +67,10 @@ fun WatchSessionDetailsScreen(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()
             ){
-                if (movie.poster.isBlank() && screening.image.isBlank()) {
+                val cr = LocalContext.current.contentResolver
+                val imageBitmap = uriToBitmap(Uri.parse(screening.image), cr)
+                val posterBitmap = uriToBitmap(Uri.parse(movie.poster), cr)
+                if (imageBitmap == null && posterBitmap == null) {
                     Icon(
                         imageVector = Icons.Outlined.Image,
                         contentDescription = stringResource(R.string.screening_image),
@@ -72,7 +78,7 @@ fun WatchSessionDetailsScreen(
                         tint = MaterialTheme.colorScheme.onSurface
                     )
                 } else {
-                    DetailsImage(image = screening.image, poster = movie.poster)
+                    DetailsImage(image = imageBitmap, poster = posterBitmap)
                 }
             }
             Text(

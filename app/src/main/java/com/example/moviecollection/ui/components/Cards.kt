@@ -168,7 +168,10 @@ fun WatchSessionCard(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
-            if(image.isBlank() && poster.isBlank()) {
+            val cr = LocalContext.current.contentResolver
+            val imageBitmap = uriToBitmap(Uri.parse(image), cr)
+            val posterBitmap = uriToBitmap(Uri.parse(poster), cr)
+            if(imageBitmap == null && posterBitmap == null) {
                 Image(
                     imageVector = Icons.Outlined.Image,
                     contentDescription = stringResource(R.string.screening_image),
@@ -176,8 +179,8 @@ fun WatchSessionCard(
                 )
             } else {
                 ScreeningCardImage(
-                    image = image,
-                    poster = poster
+                    image = imageBitmap,
+                    poster = posterBitmap
                 )
             }
             Column (
@@ -222,7 +225,9 @@ fun AccountCard (
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()
         ) {
-            if(image.isBlank()) {
+            val cr = LocalContext.current.contentResolver
+            val imageBitmap = uriToBitmap(Uri.parse(image), cr)
+            if(imageBitmap == null) {
                 Image(
                     imageVector = Icons.Outlined.AccountCircle,
                     contentDescription = stringResource(R.string.profile_image),
@@ -230,7 +235,7 @@ fun AccountCard (
                     alignment = Alignment.Center
                 )
             } else {
-                ProfileImage(image = image)
+                ProfileImage(image = imageBitmap)
             }
             Text(
                 username,

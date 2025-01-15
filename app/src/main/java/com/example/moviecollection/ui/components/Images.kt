@@ -1,5 +1,6 @@
 package com.example.moviecollection.ui.components
 
+import android.graphics.Bitmap
 import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
@@ -20,13 +21,10 @@ import com.example.moviecollection.utils.camera.uriToBitmap
 
 @Composable
 fun ProfileImage(
-    image: String,
+    image: Bitmap?,
 ) {
     Image(
-        bitmap = uriToBitmap(
-            Uri.parse(image),
-            LocalContext.current.contentResolver)
-            .asImageBitmap(),
+        bitmap = image!!.asImageBitmap(),
         contentDescription = stringResource(R.string.profile_image),
         modifier = Modifier.size(70.dp).clip(CircleShape),
         alignment = Alignment.Center,
@@ -36,14 +34,12 @@ fun ProfileImage(
 
 @Composable
 fun ScreeningCardImage(
-    image: String,
-    poster: String
+    image: Bitmap?,
+    poster: Bitmap?
 ) {
     Image(
-        bitmap = uriToBitmap(
-                Uri.parse(image.ifBlank { poster }),
-                LocalContext.current.contentResolver)
-                .asImageBitmap(),
+        bitmap = (image ?: poster)
+                !!.asImageBitmap(),
         contentDescription = stringResource(R.string.screening_image),
         modifier = Modifier.size(70.dp).clip(RoundedCornerShape(0.dp)),
         alignment = Alignment.Center,
@@ -53,14 +49,11 @@ fun ScreeningCardImage(
 
 @Composable
 fun DetailsImage(
-    image: String,
-    poster: String
+    image: Bitmap?,
+    poster: Bitmap?
 ) {
     Image(
-        bitmap = uriToBitmap(
-            Uri.parse(image.ifBlank { poster }),
-            LocalContext.current.contentResolver)
-            .asImageBitmap(),
+        bitmap = (image ?: poster)!!.asImageBitmap(),
         contentDescription = stringResource(R.string.screening_image),
         modifier = Modifier.size(200.dp).clip(RoundedCornerShape(0.dp)),
         alignment = Alignment.Center,
