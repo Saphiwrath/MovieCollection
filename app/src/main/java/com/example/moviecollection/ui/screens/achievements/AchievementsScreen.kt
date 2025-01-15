@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -25,15 +26,19 @@ import com.example.moviecollection.R
 import com.example.moviecollection.ui.components.AchievementCard
 import com.example.moviecollection.ui.components.GraphCard
 import com.example.moviecollection.ui.components.StandardAppBar
+import com.example.moviecollection.ui.screens.entityviewmodels.LockedAchievementsState
 import com.example.moviecollection.ui.screens.entityviewmodels.ScreeningState
+import com.example.moviecollection.ui.screens.entityviewmodels.UnlockedAchievementState
 import com.example.moviecollection.utils.getDaysOfWeek
 import java.util.Calendar
 
 @Composable
 fun AchievementsScreen (
     navController: NavHostController,
-    screeningsState: ScreeningState
-){
+    screeningsState: ScreeningState,
+    lockedAchievementsState: LockedAchievementsState,
+    unlockedAchievementState: UnlockedAchievementState
+) {
     Scaffold (
         topBar = {
             StandardAppBar(
@@ -59,7 +64,9 @@ fun AchievementsScreen (
             Column(
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.spacedBy(15.dp),
-                modifier = Modifier.fillMaxWidth().height(400.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(400.dp),
             ) {
                 Text(
                     text = stringResource(id = R.string.achieved_title),
@@ -72,15 +79,21 @@ fun AchievementsScreen (
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 )
                 {
-                    items(10) {
-                        AchievementCard()
+                    items(unlockedAchievementState.achievements) {
+                        val strings = achievementStringFinder(it.name)
+                        AchievementCard(
+                            name = strings[AchievementPositions.ACHIEVEMENT_NAME],
+                            condition = strings[AchievementPositions.ACHIEVEMENT_CONDITION]
+                        )
                     }
                 }
             }
             Column(
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.spacedBy(15.dp),
-                modifier = Modifier.fillMaxWidth().height(500.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(500.dp),
             ) {
                 Text(
                     text = stringResource(id = R.string.not_achieved_title),
@@ -93,8 +106,13 @@ fun AchievementsScreen (
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 )
                 {
-                    items(10) {
-                        AchievementCard(achieved = false)
+                    items(lockedAchievementsState.achievements) {
+                        val strings = achievementStringFinder(it.name)
+                        AchievementCard(
+                            name = strings[AchievementPositions.ACHIEVEMENT_NAME],
+                            condition = strings[AchievementPositions.ACHIEVEMENT_CONDITION],
+                            achieved = false
+                        )
                     }
                 }
             }

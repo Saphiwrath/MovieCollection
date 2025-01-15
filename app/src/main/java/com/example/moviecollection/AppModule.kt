@@ -7,6 +7,8 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.moviecollection.data.database.MovieCollectionDatabase
 import com.example.moviecollection.data.models.MovieFormat
+import com.example.moviecollection.data.models.results.AchievementNames
+import com.example.moviecollection.data.repositories.AchievementRepository
 import com.example.moviecollection.data.repositories.CastRepository
 import com.example.moviecollection.data.repositories.GenreRepository
 import com.example.moviecollection.data.repositories.MovieRepository
@@ -16,6 +18,7 @@ import com.example.moviecollection.data.repositories.SettingsRepository
 import com.example.moviecollection.data.repositories.UserRepository
 import com.example.moviecollection.ui.screens.addmovie.AddMovieViewModel
 import com.example.moviecollection.ui.screens.addwatchsession.AddWatchSessionViewModel
+import com.example.moviecollection.ui.screens.entityviewmodels.AchievementViewModel
 import com.example.moviecollection.ui.screens.entityviewmodels.CastViewModel
 import com.example.moviecollection.ui.screens.entityviewmodels.GenreViewModel
 import com.example.moviecollection.ui.screens.entityviewmodels.MovieViewModel
@@ -34,6 +37,15 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
     override fun migrate(db: SupportSQLiteDatabase) {
         MovieFormat.entries.forEach {
             db.execSQL("INSERT INTO format (type) VALUES (?)", arrayOf(it.toString()))
+        }
+    }
+}
+
+val MIGRATION_2_3 = object : Migration(2, 3) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        AchievementNames.entries.forEach {
+            db.execSQL("INSERT INTO achievement (name, condition) VALUES (?, ?)",
+                arrayOf(it.toString(), ""))
         }
     }
 }
@@ -65,6 +77,8 @@ val appModule = module {
 
     viewModel { RelationshipsViewModel(get()) }
 
+    viewModel { AchievementViewModel(get()) }
+
     // DATABASE
     single {
         Room.databaseBuilder(
@@ -72,7 +86,9 @@ val appModule = module {
             MovieCollectionDatabase::class.java,
             "movie_collection"
         )
-        .addMigrations(MIGRATION_1_2)
+        .addMigrations(
+            MIGRATION_1_2, MIGRATION_2_3
+        )
         .build()
     }
 
@@ -94,5 +110,8 @@ val appModule = module {
     }
     single {
         RelationshipsRepository(get<MovieCollectionDatabase>().relationshipsDAO())
+    }
+    single {
+        AchievementRepository(get<MovieCollectionDatabase>().achievementDAO())
     }
 }

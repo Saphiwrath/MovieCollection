@@ -2,6 +2,7 @@ package com.example.moviecollection.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.example.moviecollection.data.database.daos.AchievementDAO
 import com.example.moviecollection.data.database.daos.CastDAO
 import com.example.moviecollection.data.database.daos.GenreDAO
 import com.example.moviecollection.data.database.daos.MovieDAO
@@ -38,7 +39,7 @@ import com.example.moviecollection.data.database.relationships.WithActors
         UnlockedAchievements::class,
         WithActors::class
     ],
-    version = 2
+    version = 3
 )
 abstract class MovieCollectionDatabase : RoomDatabase() {
     abstract fun userDAO(): UserDAO
@@ -52,4 +53,6 @@ abstract class MovieCollectionDatabase : RoomDatabase() {
     abstract fun screeningDAO(): ScreeningDAO
 
     abstract fun relationshipsDAO(): RelationshipsDAO
+
+    abstract fun achievementDAO(): AchievementDAO
 }

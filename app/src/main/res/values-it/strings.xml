@@ -115,4 +115,33 @@
     <string name="fifth_graph_column">L\'altro ieri</string>
     <string name="sixth_graph_column">Ieri</string>
     <string name="seventh_graph_column">oggi</string>
+
+    <!-- ACHIEVEMENTS -->
+    <string name="Movie1_ach_name">Sta venendo verso di te?!</string>
+    <string name="Movie1_ach_desc">Aggiungi il tuo primo film</string>
+    <string name="Movie5_ach_name">Ahia! Il mio occhio!</string>
+    <string name="Movie5_ach_desc">Aggiungi 5 film</string>
+    <string name="Movie10_ach_name">Questi SONO i film che stai cercando!</string>
+    <string name="Movie10_ach_desc">Aggiungi 10 film</string>
+    <string name="Movie20_ach_name">Shakerato, non mescolato</string>
+    <string name="Movie20_ach_desc">Aggiungi 20 film</string>
+    <string name="Movie30_ach_name">Ci potevano stare entrambi sulla porta, però!</string>
+    <string name="Movie30_ach_desc">Aggiungi 30 film</string>
+    <string name="Movie40_ach_name">Guardate, sciocchi!</string>
+    <string name="Movie40_ach_desc">Aggiungi 40 film</string>
+    <string name="Movie50_ach_name">Non sono sicuro che tu te ne infischi davvero, sai?</string>
+    <string name="Movie50_ach_desc">Aggiungi 50 film</string>
+
+    <string name="Screening1_ach_name">Un\'offerta che non potevi rifiutare</string>
+    <string name="Screening1_ach_desc">Aggiungi la tua prima proiezione</string>
+    <string name="Screening5_ach_name">Ti servirà uno scaffale più grande</string>
+    <string name="Screening5_ach_desc">Aggiungi 5 proiezioni</string>
+    <string name="Screening20_ach_name">Io vedo… un sacco di film</string>
+    <string name="Screening20_ach_desc">Aggiungi 20 proiezioni</string>
+    <string name="Screening40_ach_name">Il mio tesssssoro</string>
+    <string name="Screening40_ach_desc">Aggiungi 40 proiezioni</string>
+    <string name="Screening60_ach_name">Che i film siano con te</string>
+    <string name="Screening60_ach_desc">Aggiungi 60 proiezioni</string>
+    <string name="Screening80_ach_name">Verso l\'infinito e oltre!</string>
+    <string name="Screening80_ach_desc">Aggiungi 80 proiezioni</string>
 </resources>

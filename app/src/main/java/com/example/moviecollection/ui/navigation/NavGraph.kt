@@ -24,6 +24,7 @@ import com.example.moviecollection.ui.screens.signup.SignupScreen
 import com.example.moviecollection.ui.screens.watchsessiondetails.WatchSessionDetailsScreen
 import com.example.moviecollection.ui.screens.addmovie.AddMovieViewModel
 import com.example.moviecollection.ui.screens.addwatchsession.AddWatchSessionViewModel
+import com.example.moviecollection.ui.screens.entityviewmodels.AchievementViewModel
 import com.example.moviecollection.ui.screens.entityviewmodels.CastViewModel
 import com.example.moviecollection.ui.screens.entityviewmodels.GenreViewModel
 import com.example.moviecollection.ui.screens.entityviewmodels.MovieViewModel
@@ -46,6 +47,8 @@ fun NavGraph(
     val castViewModel = koinViewModel<CastViewModel>()
     val screeningViewModel = koinViewModel<ScreeningViewModel>()
     val relationshipsViewModel = koinViewModel<RelationshipsViewModel>()
+    val achievementViewModel = koinViewModel<AchievementViewModel>()
+
     val genreState by genreViewModel.state.collectAsStateWithLifecycle()
     val castState by castViewModel.state.collectAsStateWithLifecycle()
     val ofGenreState by relationshipsViewModel.ofGenreState.collectAsStateWithLifecycle()
@@ -61,6 +64,7 @@ fun NavGraph(
             val userId = userViewModel.state.value.id
             movieViewModel.actions.getAllMoviesAndFavouritesForUser(userId)
             screeningViewModel.actions.getAllScreeningsForUser(userId)
+            achievementViewModel.actions.getAllAchievements(userId)
         }
 
         composable(NavigationRoute.Home.route) {
@@ -270,9 +274,15 @@ fun NavGraph(
 
         composable(NavigationRoute.Achievements.route) {
             val screeningState by screeningViewModel.state.collectAsStateWithLifecycle()
+            val unlockedAchievementState by achievementViewModel
+                .unlockedAchievementsState.collectAsStateWithLifecycle()
+            val lockedAchievementState by achievementViewModel
+                .lockedAchievementsState.collectAsStateWithLifecycle()
             AchievementsScreen(
                 navController,
-                screeningsState = screeningState
+                screeningsState = screeningState,
+                unlockedAchievementState = unlockedAchievementState,
+                lockedAchievementsState = lockedAchievementState
             )
         }
     }
