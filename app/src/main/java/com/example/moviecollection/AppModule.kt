@@ -11,6 +11,7 @@ import com.example.moviecollection.data.database.MovieCollectionDatabase
 import com.example.moviecollection.data.models.MovieFormat
 import com.example.moviecollection.data.models.AchievementName
 import com.example.moviecollection.data.models.AchievementType
+import com.example.moviecollection.data.remote.OSMDataSource
 import com.example.moviecollection.data.repositories.AchievementRepository
 import com.example.moviecollection.data.repositories.CastRepository
 import com.example.moviecollection.data.repositories.GenreRepository
@@ -32,6 +33,10 @@ import com.example.moviecollection.ui.screens.login.LoginViewModel
 import com.example.moviecollection.ui.screens.settings.SettingsViewModel
 import com.example.moviecollection.ui.screens.signup.SignupViewModel
 import com.example.moviecollection.utils.LocationService
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -83,8 +88,19 @@ val appModule = module {
 
     single { LocationService(androidContext()) }
 
-    // ViewModels
+    // JSON and OSM
+    single {
+        HttpClient {
+            install(ContentNegotiation) {
+                json (Json {
+                    ignoreUnknownKeys = true
+                })
+            }
+        }
+    }
+    single { OSMDataSource(get()) }
 
+    // ViewModels
     viewModel { SettingsViewModel(get()) }
 
     viewModel { AddMovieViewModel() }

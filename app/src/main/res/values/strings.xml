@@ -163,4 +163,7 @@
     <string name="location_permission_permanently_denied_snackbar_message">Location permission is required.</string>
     <string name="location_permission_permanently_denied_snackbar_actionLabel">Go to settings</string>
 
+    <!--No internet connectivity snackbar-->
+    <string name="no_internet_connectivity_snackbar_message">No Internet connectivity.</string>
+    <string name="no_internet_connectivity_snackbar_actionLabel">Go to settings</string>
 </resources>

@@ -20,19 +20,26 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
 import com.example.moviecollection.data.models.ListItemData
+import com.example.moviecollection.data.remote.OSMDataSource
+import com.example.moviecollection.data.remote.OSMPlace
 import com.example.moviecollection.ui.components.inputs.AutoCompleteTextField
 import com.example.moviecollection.ui.components.ConfirmFloatingActionButton
 import com.example.moviecollection.ui.components.inputs.DatePickerDocked
 import com.example.moviecollection.ui.components.StandardAppBar
+import com.example.moviecollection.ui.components.alerts.internet.NoInternetConnectivitySnackbar
 import com.example.moviecollection.ui.components.alerts.location.LocationDisabledAlert
 import com.example.moviecollection.ui.components.alerts.location.LocationPermissionDeniedAlert
 import com.example.moviecollection.ui.components.alerts.location.LocationPermissionPermanentlyDeniedSnackbar
@@ -42,7 +49,9 @@ import com.example.moviecollection.ui.screens.entityviewmodels.MovieState
 import com.example.moviecollection.utils.LocationService
 import com.example.moviecollection.utils.PermissionStatus
 import com.example.moviecollection.utils.StartMonitoringResult
+import com.example.moviecollection.utils.isOnline
 import com.example.moviecollection.utils.rememberPermission
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @Composable
@@ -54,12 +63,16 @@ fun AddWatchSessionScreen(
     movieState: MovieState
 ) {
     val locationService = koinInject<LocationService>()
+    val osmDataSource = koinInject<OSMDataSource>()
     val backStackEntry = navController.previousBackStackEntry
     val snackBarHostState = remember { SnackbarHostState() }
-
     val showLocationDisabledAlert = remember { mutableStateOf (false) }
     val showPermissionDeniedAlert = remember { mutableStateOf (false) }
-    var showPermissionPermanentlyDeniedSnackbar = remember { mutableStateOf (false) }
+    val showPermissionPermanentlyDeniedSnackbar = remember { mutableStateOf (false) }
+    val noInternetMessage = stringResource(R.string.no_internet_connectivity_snackbar_message)
+    val noInternetActionLabel = stringResource(R.string.no_internet_connectivity_snackbar_actionLabel)
+
+    var place by remember { mutableStateOf <OSMPlace?>(null) }
 
     val locationPermission = rememberPermission(Manifest.permission.ACCESS_COARSE_LOCATION) {
         when (it) {
@@ -78,6 +91,30 @@ fun AddWatchSessionScreen(
             showLocationDisabledAlert.value = res == StartMonitoringResult.GPSDisabled
         } else {
             locationPermission.launchPermissionRequest()
+        }
+    }
+
+    val ctx = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    fun searchPlaces() = coroutineScope.launch {
+        if (isOnline(ctx)) {
+            requestLocation()
+            val coordinates = locationService.coordinates
+            if (coordinates != null) {
+                val res = osmDataSource.searchByLatAndLon(
+                    coordinates.latitude,
+                    coordinates.longitude
+                )
+                place = res
+                actions.setPlace(place!!.displayName)
+            }
+        } else {
+            NoInternetConnectivitySnackbar(
+                snackBarHostState,
+                ctx,
+                noInternetMessage,
+                noInternetActionLabel
+            )
         }
     }
 
@@ -149,9 +186,7 @@ fun AddWatchSessionScreen(
                 label = { Text(stringResource(R.string.screening_place_label)) },
                 modifier = Modifier.fillMaxWidth(),
                 trailingIcon = {
-                    IconButton(onClick = {
-                        requestLocation()
-                    }) {
+                    IconButton(onClick = ::searchPlaces) {
                         Icon(
                             imageVector = Icons.Outlined.MyLocation,
                             contentDescription = stringResource(R.string.my_location)

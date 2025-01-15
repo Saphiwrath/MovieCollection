@@ -164,5 +164,8 @@
     <string name="location_permission_permanently_denied_snackbar_message">L\'accesso alla posizione è richiesto.</string>
     <string name="location_permission_permanently_denied_snackbar_actionLabel">Vai alle impostazioni</string>
 
+    <!--No internet connectivity snackbar-->
+    <string name="no_internet_connectivity_snackbar_message">Nessuna connessione Internet.</string>
+    <string name="no_internet_connectivity_snackbar_actionLabel">Vai alle impostazioni</string>
 
 </resources>
