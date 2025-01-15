@@ -3,11 +3,13 @@ package com.example.moviecollection
 import android.content.Context
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
+import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.moviecollection.data.database.MovieCollectionDatabase
 import com.example.moviecollection.data.models.MovieFormat
-import com.example.moviecollection.data.models.results.AchievementNames
+import com.example.moviecollection.data.models.AchievementName
+import com.example.moviecollection.data.models.AchievementType
 import com.example.moviecollection.data.repositories.AchievementRepository
 import com.example.moviecollection.data.repositories.CastRepository
 import com.example.moviecollection.data.repositories.GenreRepository
@@ -43,9 +45,30 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
 
 val MIGRATION_2_3 = object : Migration(2, 3) {
     override fun migrate(db: SupportSQLiteDatabase) {
-        AchievementNames.entries.forEach {
+        AchievementName.entries.forEach {
             db.execSQL("INSERT INTO achievement (name, condition) VALUES (?, ?)",
                 arrayOf(it.toString(), ""))
+        }
+    }
+}
+
+val MIGRATION_3_4 = object : Migration(3, 4) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        AchievementName.entries.forEach {
+            val table = when (it.type) {
+                AchievementType.Movie -> "registeredby"
+                AchievementType.Screening -> "screening"
+            }
+            db.execSQL("""
+                CREATE TRIGGER ${it.name}_trigger
+                AFTER INSERT ON $table
+                WHEN (SELECT COUNT(*) FROM $table WHERE userId = NEW.userId) = ${it.number}
+                BEGIN
+                    INSERT INTO unlockedachievements (userId, achievementId)
+                    VALUES (NEW.userId, (SELECT id FROM achievement WHERE name = '${it.name}'));
+                END;
+                """.trimIndent()
+            )
         }
     }
 }
@@ -87,7 +110,7 @@ val appModule = module {
             "movie_collection"
         )
         .addMigrations(
-            MIGRATION_1_2, MIGRATION_2_3
+            MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4
         )
         .build()
     }

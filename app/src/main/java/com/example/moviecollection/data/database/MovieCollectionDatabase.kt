@@ -39,7 +39,7 @@ import com.example.moviecollection.data.database.relationships.WithActors
         UnlockedAchievements::class,
         WithActors::class
     ],
-    version = 3
+    version = 4
 )
 abstract class MovieCollectionDatabase : RoomDatabase() {
     abstract fun userDAO(): UserDAO

@@ -51,7 +51,7 @@ abstract class MovieDAO {
 
     @Query("SELECT * FROM " +
             "movie WHERE id IN" +
-            "(SELECT movie.id FROM movie JOIN registeredby ON userId=:userId)")
+            "(SELECT movieId FROM registeredby WHERE userId=:userId)")
     abstract fun getAllUserMovies(userId: Int): Flow<List<Movie>>
 
     @Query("SELECT movieId FROM favourites " +
