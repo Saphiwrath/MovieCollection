@@ -39,8 +39,6 @@ import com.example.moviecollection.data.models.ListItemData
 import com.example.moviecollection.data.models.MovieFormat
 import com.example.moviecollection.ui.components.SelectableCard
 import com.example.moviecollection.ui.components.SettingsLabelText
-import com.example.moviecollection.ui.components.showSnackBar
-import kotlinx.coroutines.launch
 
 @Composable
 fun InputFieldWithSideLabel(

@@ -41,6 +41,8 @@
     <string name="view_watch_sessions_button">Visualizza proiezioni</string>
     <string name="drop_down_actors">Espandi lista attori</string>
     <string name="drop_down_directors">Espandi lista registi</string>
+
+    <string name="my_location">La tua posizione</string>
     <string name="drop_down_movies">Espandi lista titoli film</string>
     <string name="generic_confirm_button">Confirm</string>
 
@@ -144,4 +146,23 @@
     <string name="Screening60_ach_desc">Aggiungi 60 proiezioni</string>
     <string name="Screening80_ach_name">Verso l\'infinito e oltre!</string>
     <string name="Screening80_ach_desc">Aggiungi 80 proiezioni</string>
+
+    <!-- ALERTS -->
+    <!--Location permission denied-->
+    <string name="location_permission_denied_alert_title">Accesso alla posizione negato</string>
+    <string name="location_permission_denied_alert_text">L\'accesso alla tua posizione è richiesto per ottenere la tua posizione corrente nell\'app.</string>
+    <string name="location_permission_denied_alert_grant">Concedi</string>
+    <string name="location_permission_denied_alert_dismiss">Annulla</string>
+
+    <!--Location disabled-->
+    <string name="location_disabled_alert_title">Posizione disabilitata</string>
+    <string name="location_disabled_alert_text">La posizione deve essere abilitata per ottenere la tua posizione nell\'app.</string>
+    <string name="location_disabled_alert_enable">Abilita</string>
+    <string name="location_disabled_alert_dismiss">Annulla</string>
+
+    <!--Location permission permanently denied snackbar-->
+    <string name="location_permission_permanently_denied_snackbar_message">L\'accesso alla posizione è richiesto.</string>
+    <string name="location_permission_permanently_denied_snackbar_actionLabel">Vai alle impostazioni</string>
+
+
 </resources>

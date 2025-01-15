@@ -20,12 +20,16 @@ import com.example.moviecollection.ui.navigation.NavGraph
 import com.example.moviecollection.ui.navigation.NavigationRoute
 import com.example.moviecollection.ui.theme.MovieCollectionTheme
 import com.example.moviecollection.ui.screens.settings.SettingsViewModel
+import com.example.moviecollection.utils.LocationService
+import org.koin.android.ext.android.inject
 import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
 
 val NO_BOTTOM_BAR_SCREENS = listOf(NavigationRoute.Login.route,
                                     NavigationRoute.Signup.route)
 
 class MainActivity : ComponentActivity() {
+    private val locationService: LocationService by inject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -59,6 +63,16 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        locationService.pauseLocationRequest()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        locationService.resumeLocationRequest()
     }
 }
 

@@ -1,6 +1,7 @@
 package com.example.moviecollection
 
 import android.content.Context
+import android.location.LocationManager
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -30,6 +31,8 @@ import com.example.moviecollection.ui.screens.entityviewmodels.UserViewModel
 import com.example.moviecollection.ui.screens.login.LoginViewModel
 import com.example.moviecollection.ui.screens.settings.SettingsViewModel
 import com.example.moviecollection.ui.screens.signup.SignupViewModel
+import com.example.moviecollection.utils.LocationService
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -77,6 +80,10 @@ val appModule = module {
     single { get<Context>().dataStore }
 
     single { SettingsRepository(get()) }
+
+    single { LocationService(androidContext()) }
+
+    // ViewModels
 
     viewModel { SettingsViewModel(get()) }
 

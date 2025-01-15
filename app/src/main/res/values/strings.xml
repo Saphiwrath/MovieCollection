@@ -41,6 +41,8 @@
     <string name="view_watch_sessions_button">View screenings</string>
     <string name="drop_down_actors">Expand actor list</string>
     <string name="drop_down_directors">Expand director list</string>
+
+    <string name="my_location">Your location</string>
     <string name="drop_down_movies">Expand movie title list</string>
     <string name="generic_confirm_button">Confirm</string>
 
@@ -130,6 +132,7 @@
     <string name="Movie50_ach_name">I think you DO give a damn, actually.</string>
     <string name="Movie50_ach_desc">Add 50 movies</string>
 
+    <!-- ACHIEVEMENTS -->
     <string name="Screening1_ach_name">An offer you couldn\'t refuse</string>
     <string name="Screening1_ach_desc">Add your first screening</string>
     <string name="Screening5_ach_name">You\'re gonna need a bigger shelf</string>
@@ -142,4 +145,22 @@
     <string name="Screening60_ach_desc">Add 60 screenings</string>
     <string name="Screening80_ach_name">To infinity and beyond!</string>
     <string name="Screening80_ach_desc">Add 80 screenings</string>
+
+    <!-- ALERTS -->
+    <!--Location permission denied-->
+    <string name="location_permission_denied_alert_title">Location permission denied</string>
+    <string name="location_permission_denied_alert_text">Location permission is required to get your current location in the app.</string>
+    <string name="location_permission_denied_alert_grant">Grant</string>
+    <string name="location_permission_denied_alert_dismiss">Dismiss</string>
+
+    <!--Location disabled-->
+    <string name="location_disabled_alert_title">Location disabled</string>
+    <string name="location_disabled_alert_text">Location must be enabled to get your current location in the app.</string>
+    <string name="location_disabled_alert_enable">Enable</string>
+    <string name="location_disabled_alert_dismiss">Dismiss</string>
+
+    <!--Location permission permanently denied snackbar-->
+    <string name="location_permission_permanently_denied_snackbar_message">Location permission is required.</string>
+    <string name="location_permission_permanently_denied_snackbar_actionLabel">Go to settings</string>
+
 </resources>
