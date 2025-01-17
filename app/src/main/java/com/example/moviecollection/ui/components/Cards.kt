@@ -50,6 +50,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.moviecollection.R
 import com.example.moviecollection.data.database.entities.Screening
 import com.example.moviecollection.utils.camera.uriToBitmap
@@ -86,14 +88,17 @@ fun MovieCard(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ){
-                /*TODO add actual image if present*/
-                if (image.isBlank()) {
+                val ctx = LocalContext.current
+                val imageBitmap = uriToBitmap(Uri.parse(image), ctx.contentResolver)
+                if (imageBitmap == null) {
                     Image(
                         Icons.Outlined.Image ,
-                        contentDescription = "Movie poster",
+                        contentDescription = stringResource(R.string.movie_details_poster_desc),
                         modifier = Modifier.size(70.dp),
                         alignment = Alignment.Center,
                     )
+                } else {
+                    MoviePoster(poster = imageBitmap)
                 }
             }
             Row (

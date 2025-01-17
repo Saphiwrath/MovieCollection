@@ -1,5 +1,6 @@
 package com.example.moviecollection.ui.screens.moviedetails
 
+import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -28,6 +30,7 @@ import com.example.moviecollection.R
 import com.example.moviecollection.data.database.entities.Movie
 import com.example.moviecollection.data.models.MovieFormat
 import com.example.moviecollection.ui.components.DetailsCardDataRow
+import com.example.moviecollection.ui.components.DetailsImage
 import com.example.moviecollection.ui.components.StandardAppBar
 import com.example.moviecollection.ui.components.ViewWatchSessionsFloatingActionButton
 import com.example.moviecollection.ui.navigation.NavigationRoute
@@ -35,6 +38,7 @@ import com.example.moviecollection.ui.screens.entityviewmodels.CastState
 import com.example.moviecollection.ui.screens.entityviewmodels.InFormatState
 import com.example.moviecollection.ui.screens.entityviewmodels.OfGenreState
 import com.example.moviecollection.ui.screens.entityviewmodels.WithActorsState
+import com.example.moviecollection.utils.camera.uriToBitmap
 
 const val TAB = "    "
 
@@ -75,19 +79,22 @@ fun MovieDetailsScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.Start
         ) {
-            /* TODO: Add actual movie image if present */
+            val ctx = LocalContext.current
+            val posterBitmap = uriToBitmap(Uri.parse(movie.poster), ctx.contentResolver)
             Row (
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()
             ){
-                if (movie.poster.isBlank()) {
+                if (posterBitmap == null) {
                     Icon(
                         imageVector = Icons.Outlined.Image,
                         contentDescription = stringResource(R.string.movie_details_poster_desc),
                         modifier = Modifier.size(200.dp),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
+                } else {
+                    DetailsImage(poster = posterBitmap)
                 }
             }
             Text(

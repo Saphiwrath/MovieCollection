@@ -6,6 +6,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,7 +51,7 @@ fun ScreeningCardImage(
 
 @Composable
 fun DetailsImage(
-    image: Bitmap?,
+    image: Bitmap? = null,
     poster: Bitmap?
 ) {
     Image(
@@ -58,5 +60,17 @@ fun DetailsImage(
         modifier = Modifier.size(200.dp).clip(RoundedCornerShape(0.dp)),
         alignment = Alignment.Center,
         contentScale = ContentScale.Crop
+    )
+}
+
+@Composable
+fun MoviePoster(
+    poster: Bitmap
+) {
+    Image(
+        bitmap = poster.asImageBitmap() ,
+        contentDescription = stringResource(R.string.movie_details_poster_desc),
+        modifier = Modifier.size(70.dp),
+        alignment = Alignment.Center,
     )
 }

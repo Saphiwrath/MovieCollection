@@ -36,6 +36,8 @@
     <string name="home_button_desc">Go to my movies</string>
     <string name="favorite_movie_button_desc">Add movie to favorites</string>
 
+    <string name="choose_picture">Choose the poster</string>
+
     <string name="light_mode_button">Light</string>
     <string name="dark_mode_button">Dark</string>
     <string name="system_mode_button">System</string>

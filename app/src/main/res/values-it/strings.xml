@@ -36,6 +36,8 @@
     <string name="home_button_desc">Vai ai miei film</string>
     <string name="favorite_movie_button_desc">Aggiungi film ai preferiti</string>
 
+    <string name="choose_picture">Scegli il poster</string>
+
     <string name="light_mode_button">Chiaro</string>
     <string name="dark_mode_button">Scuro</string>
     <string name="system_mode_button">Sistema</string>

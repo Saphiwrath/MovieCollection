@@ -8,9 +8,11 @@ import android.net.Uri
 import android.os.Build
 import android.os.SystemClock
 import android.provider.MediaStore
+import android.util.Log
 import java.io.FileNotFoundException
 
 fun uriToBitmap(imageUri: Uri, contentResolver: ContentResolver): Bitmap? {
+    Log.d("URI_DEBUG", "URI: $imageUri")
     return try {
         when {
             Build.VERSION.SDK_INT < 28 -> {
