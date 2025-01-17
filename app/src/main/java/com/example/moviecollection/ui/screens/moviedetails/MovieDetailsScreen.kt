@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.moviecollection.R
 import com.example.moviecollection.data.database.entities.Movie
+import com.example.moviecollection.data.models.MovieFormat
 import com.example.moviecollection.ui.components.DetailsCardDataRow
 import com.example.moviecollection.ui.components.StandardAppBar
 import com.example.moviecollection.ui.components.ViewWatchSessionsFloatingActionButton
@@ -140,7 +141,12 @@ fun MovieDetailsScreen(
             inFormat.inFormat
                 .filter { movie.id == it.movieId }
                 .forEach {
-                    formatsLabel += it.format.uppercase() + TAB
+                    formatsLabel += (when (MovieFormat.valueOf(it.format)) {
+                        MovieFormat.DVD -> stringResource(R.string.dvd)
+                        MovieFormat.BLURAY -> stringResource(R.string.bluray)
+                        MovieFormat.Digital -> stringResource(R.string.digital)
+                        MovieFormat.VHS -> stringResource(R.string.vhs)
+                    }.uppercase()) + TAB
                 }
             DetailsCardDataRow(
                 label = stringResource(R.string.format_label),

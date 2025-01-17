@@ -80,7 +80,8 @@ fun NavGraph(
                 movieState = movieState,
                 favouritesState = favouritesState,
                 addToFavs = movieViewModel.actions::addToFavourites,
-                removeFromFavs = movieViewModel.actions::removeFromFavourites
+                removeFromFavs = movieViewModel.actions::removeFromFavourites,
+                inFormatState = inFormatState
             )
         }
 

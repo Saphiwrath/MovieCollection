@@ -47,17 +47,6 @@ fun NavigateUpButton(onClick: () -> Unit) {
    }
 }
 
-@Composable
-fun FilterButton(onClick: () -> Unit = {}) {
-    IconButton(
-        onClick = onClick
-    ) {
-        Icon(
-            imageVector = Icons.Outlined.List,
-            contentDescription = stringResource(R.string.navigate_up_button_desc),
-        )
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
