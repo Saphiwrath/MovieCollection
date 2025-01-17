@@ -47,6 +47,8 @@
     <string name="my_location">Your location</string>
     <string name="drop_down_movies">Expand movie title list</string>
     <string name="generic_confirm_button">Confirm</string>
+    <string name="set_alarm_button">Set alarm for today</string>
+    <string name="calendar_event_button">Add to calendar</string>
 
     <string name="login_button">Login</string>
     <string name="signup_button">Sign up</string>
@@ -179,4 +181,8 @@
 
     <!--Camera permission permanently denied toast-->
     <string name="camera_permission_permanently_denied_toast">Camera permission denied</string>
+
+    <!--INTENTS-->
+    <string name="alarm_title">Screening!</string>
+    <string name="calendar_event_title">Screening!</string>
 </resources>

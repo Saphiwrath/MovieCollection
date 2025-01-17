@@ -47,6 +47,8 @@
     <string name="my_location">La tua posizione</string>
     <string name="drop_down_movies">Espandi lista titoli film</string>
     <string name="generic_confirm_button">Conferma</string>
+    <string name="set_alarm_button">Imposta sveglia per oggi</string>
+    <string name="calendar_event_button">Aggiungi al calendario</string>
 
     <string name="login_button">Login</string>
     <string name="signup_button">Registrati</string>
@@ -180,4 +182,8 @@
     <!--Camera permission permanently denied toast-->
     <string name="camera_permission_permanently_denied_toast">Accesso alla fotocamera negato</string>
 
+
+    <!--INTENTS-->
+    <string name="alarm_title">Proiezione!</string>
+    <string name="calendar_event_title">Proiezione!</string>
 </resources>

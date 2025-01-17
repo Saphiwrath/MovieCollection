@@ -12,6 +12,7 @@
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     
     <uses-feature android:name="android.hardware.camera.any"/>
 
@@ -57,6 +58,15 @@
         </intent>
         <intent>
             <action android:name="android.settings.WIRELESS_SETTINGS"/>
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.INSERT"/>
+            <data android:mimeType="vnd.android.cursor.dir/event"/>
+            <category android:name="android.intent.category.DEFAULT"/>
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.SET_ALARM" />
+            <category android:name="android.intent.category.DEFAULT" />
         </intent>
     </queries>
 </manifest>

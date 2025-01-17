@@ -1,6 +1,9 @@
 package com.example.moviecollection.ui.screens.addwatchsession
 
 import android.Manifest
+import android.content.Intent
+import android.provider.AlarmClock
+import android.provider.CalendarContract
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,6 +17,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.MyLocation
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -64,6 +68,10 @@ import com.example.moviecollection.utils.isOnline
 import com.example.moviecollection.utils.permissions.rememberPermission
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun AddWatchSessionScreen(
@@ -87,6 +95,8 @@ fun AddWatchSessionScreen(
 
     val noInternetMessage = stringResource(R.string.no_internet_connectivity_snackbar_message)
     val noInternetActionLabel = stringResource(R.string.no_internet_connectivity_snackbar_actionLabel)
+    val alarmTitle = stringResource(R.string.alarm_title)
+    val calendarEventTitle = stringResource(R.string.calendar_event_title)
 
     var place by remember { mutableStateOf <OSMPlace?>(null) }
 
@@ -233,6 +243,51 @@ fun AddWatchSessionScreen(
             DialPicker(
                 onConfirm = actions::setTime,
             )
+            Row (
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier.fillMaxWidth()
+            ){
+                Button(
+                    enabled = state.time.isNotBlank(),
+                    onClick = {
+                        val time = LocalTime.parse(state.time, DateTimeFormatter.ofPattern("HH:mm"))
+                        val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
+                            putExtra(AlarmClock.EXTRA_MESSAGE, alarmTitle)
+                            putExtra(AlarmClock.EXTRA_HOUR, time.hour)
+                            putExtra(AlarmClock.EXTRA_MINUTES, time.minute)
+                        }
+                        if (intent.resolveActivity(ctx.packageManager) != null) {
+                            ctx.startActivity(intent)
+                        }
+                    }
+                ) {
+                    Text(stringResource(R.string.set_alarm_button))
+                }
+                Button(
+                    enabled = state.date.isNotBlank() && state.time.isNotBlank(),
+                    onClick = {
+                        val time = LocalTime.parse(state.time, DateTimeFormatter.ofPattern("HH:mm"))
+                        val date =
+                            LocalDate.parse(state.date, DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                        val dateTime = date.atTime(time)
+                        val dateMillis = dateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+
+                        val intent = Intent(Intent.ACTION_INSERT).apply {
+                            data = CalendarContract.Events.CONTENT_URI
+                            putExtra(CalendarContract.Events.TITLE, calendarEventTitle)
+                            putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, dateMillis)
+                            if (state.place.isNotBlank()) {
+                                putExtra(CalendarContract.Events.EVENT_LOCATION, state.place)
+                            }
+                        }
+                        if (intent.resolveActivity(ctx.packageManager) != null) {
+                            ctx.startActivity(intent)
+                        }
+                    }
+                ) {
+                    Text(stringResource(R.string.calendar_event_button))
+                }
+            }
             OutlinedTextField(
                 value = state.notes,
                 onValueChange = actions::setNotes,
@@ -276,6 +331,7 @@ fun AddWatchSessionScreen(
                             takePicture(cameraLauncher, cameraPermission)
                         },
                         colors = ButtonDefaults.buttonColors(
+
                             contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
                             containerColor = MaterialTheme.colorScheme.secondaryContainer
                         )
