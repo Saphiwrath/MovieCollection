@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.MyLocation
 import androidx.compose.material3.Button
@@ -263,7 +264,7 @@ fun AddWatchSessionScreen(
                 ) {
                     Text(stringResource(R.string.set_alarm_button))
                 }
-                Button(
+                IconButton(
                     enabled = state.date.isNotBlank() && state.time.isNotBlank(),
                     onClick = {
                         val time = LocalTime.parse(state.time, DateTimeFormatter.ofPattern("HH:mm"))
@@ -285,7 +286,10 @@ fun AddWatchSessionScreen(
                         }
                     }
                 ) {
-                    Text(stringResource(R.string.calendar_event_button))
+                    Icon(
+                        imageVector = Icons.Outlined.CalendarMonth,
+                        contentDescription = stringResource(R.string.calendar_event_button)
+                    )
                 }
             }
             OutlinedTextField(
