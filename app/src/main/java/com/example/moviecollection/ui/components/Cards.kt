@@ -40,6 +40,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
@@ -290,7 +291,7 @@ fun GraphCard(
     daysOfWeek: Array<String>,
     screenings: List<Screening>
 ) {
-    val firstGraphLine = MaterialTheme.colorScheme.primaryContainer
+    val firstGraphLine = Color.Black
     val columnLabels = arrayOf(
         stringResource(R.string.first_graph_column),
         stringResource(R.string.second_graph_column),
@@ -406,11 +407,11 @@ fun AchievementCard(
     Card (
        colors = CardDefaults.cardColors(
            contentColor = if (achieved) {
-               MaterialTheme.colorScheme.primaryContainer
-           } else Color.DarkGray,
+               MaterialTheme.colorScheme.onPrimary
+           } else Color.LightGray,
            containerColor = if(achieved) {
-               MaterialTheme.colorScheme.onPrimaryContainer
-           } else Color.LightGray
+               MaterialTheme.colorScheme.primary
+           } else Color.DarkGray
        ),
         modifier = Modifier.size(200.dp)
     ){
@@ -424,7 +425,12 @@ fun AchievementCard(
             Image(
                 imageVector = Icons.Outlined.EmojiEvents,
                 contentDescription = stringResource(R.string.achievement_icon),
-                modifier = Modifier.size(50.dp)
+                modifier = Modifier.size(50.dp),
+                colorFilter = ColorFilter.tint(
+                    if (achieved) {
+                        MaterialTheme.colorScheme.onPrimary
+                    } else Color.LightGray
+                )
             )
             Text(
                 text = name,

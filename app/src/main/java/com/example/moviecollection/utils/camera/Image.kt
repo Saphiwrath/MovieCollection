@@ -34,20 +34,22 @@ fun saveImageToStorage(
     imageUri: Uri,
     contentResolver: ContentResolver,
     name: String = "IMG_${SystemClock.uptimeMillis()}"
-) {
+) : Uri {
     val bitmap = uriToBitmap(imageUri, contentResolver)
 
     val values = ContentValues()
     values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
     values.put(MediaStore.Images.Media.DISPLAY_NAME, name)
+    values.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/MovieCollection")
 
     val savedImageUri =
         contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
     val outputStream = savedImageUri?.let { contentResolver.openOutputStream(it) }
-        ?: throw FileNotFoundException()
+        ?: throw FileNotFoundException();
 
     if (bitmap != null) {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
         outputStream.close()
     }
+    return savedImageUri
 }

@@ -35,6 +35,7 @@
     <string name="filter_button_desc">Filtra</string>
     <string name="home_button_desc">Vai ai miei film</string>
     <string name="favorite_movie_button_desc">Aggiungi film ai preferiti</string>
+    <string name="map_button_desc">Mostra cinema vicini</string>
 
     <string name="choose_picture">Scegli il poster</string>
 

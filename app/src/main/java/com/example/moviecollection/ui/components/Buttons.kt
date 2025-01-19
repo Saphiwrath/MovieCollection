@@ -15,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.List
+import androidx.compose.material.icons.outlined.Map
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -60,6 +61,20 @@ fun FilterButton(
         Icon(
             imageVector = Icons.Outlined.List,
             contentDescription = stringResource(R.string.filter_button_desc),
+        )
+    }
+}
+
+@Composable
+fun MapButton(
+    onClick: () -> Unit
+) {
+    IconButton(
+        onClick = onClick
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.Map,
+            contentDescription = stringResource(R.string.map_button_desc),
         )
     }
 }

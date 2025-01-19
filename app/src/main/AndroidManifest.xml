@@ -68,5 +68,10 @@
             <action android:name="android.intent.action.SET_ALARM" />
             <category android:name="android.intent.category.DEFAULT" />
         </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="geo" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent>
     </queries>
 </manifest>

@@ -35,6 +35,7 @@
     <string name="filter_button_desc">Filter</string>
     <string name="home_button_desc">Go to my movies</string>
     <string name="favorite_movie_button_desc">Add movie to favorites</string>
+    <string name="map_button_desc">Show closest cinemas</string>
 
     <string name="choose_picture">Choose the poster</string>
 

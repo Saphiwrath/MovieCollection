@@ -70,9 +70,8 @@ fun AddMovieScreen(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = {uri ->
             if (uri != null) {
-                saveImageToStorage(imageUri = uri, ctx.contentResolver)
+                selectedImage = saveImageToStorage(imageUri = uri, ctx.contentResolver)
             }
-            selectedImage = uri ?: Uri.EMPTY
         }
     )
     Scaffold (

@@ -2,8 +2,10 @@ package com.example.moviecollection.ui.screens.addwatchsession
 
 import android.Manifest
 import android.content.Intent
+import android.net.Uri
 import android.provider.AlarmClock
 import android.provider.CalendarContract
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -101,8 +103,10 @@ fun AddWatchSessionScreen(
 
     var place by remember { mutableStateOf <OSMPlace?>(null) }
 
+    var savedImageUri by remember { mutableStateOf(Uri.EMPTY)}
     val cameraLauncher = rememberCameraLauncher {
-            imageUri -> saveImageToStorage(imageUri, ctx.applicationContext.contentResolver)
+            imageUri ->
+            savedImageUri = saveImageToStorage(imageUri, ctx.applicationContext.contentResolver)
     }
     val cameraToast = stringResource(R.string.camera_permission_permanently_denied_toast)
     val cameraPermission = rememberPermission(Manifest.permission.CAMERA) {
@@ -308,8 +312,9 @@ fun AddWatchSessionScreen(
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    if (capturedImageUri.path?.isNotEmpty() == true) {
-                        actions.addImage(capturedImageUri)
+                    if (savedImageUri.path?.isNotEmpty() == true) {
+                        Log.d("URI_DEBUG", savedImageUri.toString())
+                        actions.addImage(savedImageUri)
                         AsyncImage(
                             ImageRequest.Builder(ctx)
                                 .data(capturedImageUri)
