@@ -1,6 +1,13 @@
 package com.example.moviecollection.ui.navigation
 
 import android.util.Log
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideIn
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -58,7 +65,18 @@ fun NavGraph(
     NavHost(
         navController = navController,
         startDestination = NavigationRoute.Login.route,
-        modifier = modifier
+        modifier = modifier,
+        enterTransition = {
+            slideInHorizontally(animationSpec = tween(durationMillis = 200)) {
+                fullWidth ->
+                fullWidth/3
+            } + fadeIn()
+        },
+        exitTransition = {
+            slideOutHorizontally(animationSpec = tween(durationMillis = 200)) { fullWidth ->
+                fullWidth / 3
+            } + fadeOut()
+        }
     ) {
 
         fun initializeElementLists() {

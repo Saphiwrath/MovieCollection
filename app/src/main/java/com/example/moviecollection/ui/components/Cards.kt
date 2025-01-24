@@ -2,6 +2,7 @@ package com.example.moviecollection.ui.components
 
 import android.net.Uri
 import android.util.Log
+import android.widget.ImageView
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image

@@ -2,6 +2,7 @@ package com.example.moviecollection
 
 import android.content.Context
 import android.location.LocationManager
+import android.util.Log
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -45,6 +46,7 @@ val Context.dataStore by preferencesDataStore("theme")
 
 val MIGRATION_1_2 = object : Migration(1, 2) {
     override fun migrate(db: SupportSQLiteDatabase) {
+        Log.d("RoomMigration", "Migrating from version 1 to 2")
         MovieFormat.entries.forEach {
             db.execSQL("INSERT INTO format (type) VALUES (?)", arrayOf(it.toString()))
         }
@@ -53,6 +55,7 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
 
 val MIGRATION_2_3 = object : Migration(2, 3) {
     override fun migrate(db: SupportSQLiteDatabase) {
+        Log.d("RoomMigration", "Migrating from version 2 to 3")
         AchievementName.entries.forEach {
             db.execSQL("INSERT INTO achievement (name, condition) VALUES (?, ?)",
                 arrayOf(it.toString(), ""))
@@ -62,6 +65,7 @@ val MIGRATION_2_3 = object : Migration(2, 3) {
 
 val MIGRATION_3_4 = object : Migration(3, 4) {
     override fun migrate(db: SupportSQLiteDatabase) {
+        Log.d("RoomMigration", "Migrating from version 3 to 4")
         AchievementName.entries.forEach {
             val table = when (it.type) {
                 AchievementType.Movie -> "registeredby"
@@ -138,6 +142,35 @@ val appModule = module {
         .addMigrations(
             MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4
         )
+        .addCallback(object : RoomDatabase.Callback() {
+            override fun onCreate(db: SupportSQLiteDatabase) {
+                super.onCreate(db)
+                // Insert initial data here
+                MovieFormat.entries.forEach {
+                    db.execSQL("INSERT INTO format (type) VALUES (?)", arrayOf(it.toString()))
+                }
+                AchievementName.entries.forEach {
+                    db.execSQL("INSERT INTO achievement (name, condition) VALUES (?, ?)",
+                        arrayOf(it.toString(), ""))
+                }
+                AchievementName.entries.forEach {
+                    val table = when (it.type) {
+                        AchievementType.Movie -> "registeredby"
+                        AchievementType.Screening -> "screening"
+                    }
+                    db.execSQL("""
+                    CREATE TRIGGER ${it.name}_trigger
+                    AFTER INSERT ON $table
+                    WHEN (SELECT COUNT(*) FROM $table WHERE userId = NEW.userId) = ${it.number}
+                    BEGIN
+                        INSERT INTO unlockedachievements (userId, achievementId)
+                        VALUES (NEW.userId, (SELECT id FROM achievement WHERE name = '${it.name}'));
+                    END;
+                    """.trimIndent()
+                    )
+                }
+            }
+        })
         .build()
     }
 

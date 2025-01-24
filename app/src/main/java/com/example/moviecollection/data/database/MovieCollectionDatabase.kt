@@ -55,4 +55,5 @@ abstract class MovieCollectionDatabase : RoomDatabase() {
     abstract fun relationshipsDAO(): RelationshipsDAO
 
     abstract fun achievementDAO(): AchievementDAO
+
 }
