@@ -79,23 +79,12 @@ fun MovieDetailsScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.Start
         ) {
-            val ctx = LocalContext.current
-            val posterBitmap = uriToBitmap(Uri.parse(movie.poster), ctx.contentResolver)
             Row (
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()
             ){
-                if (posterBitmap == null) {
-                    Icon(
-                        imageVector = Icons.Outlined.Image,
-                        contentDescription = stringResource(R.string.movie_details_poster_desc),
-                        modifier = Modifier.size(200.dp),
-                        tint = MaterialTheme.colorScheme.onSurface
-                    )
-                } else {
-                    DetailsImage(poster = posterBitmap)
-                }
+                DetailsImage(image = movie.poster)
             }
             Text(
                 movie.title,

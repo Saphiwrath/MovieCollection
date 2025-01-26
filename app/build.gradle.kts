@@ -77,6 +77,7 @@ dependencies {
     implementation ("androidx.datastore:datastore-preferences:1.0.0")
     implementation ("io.insert-koin:koin-androidx-compose:3.5.3")
     implementation ("io.coil-kt:coil-compose:2.3.0")
+    implementation("io.coil-kt.coil3:coil-compose:3.0.4")
     implementation ("com.google.android.gms:play-services-location:21.2.0")
     val ktorVersion = "2.3.8"
     implementation ("io.ktor:ktor-client-core:$ktorVersion")

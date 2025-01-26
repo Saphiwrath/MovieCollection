@@ -90,18 +90,7 @@ fun MovieCard(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ){
-                val ctx = LocalContext.current
-                val imageBitmap = uriToBitmap(Uri.parse(image), ctx.contentResolver)
-                if (imageBitmap == null) {
-                    Image(
-                        Icons.Outlined.Image ,
-                        contentDescription = stringResource(R.string.movie_details_poster_desc),
-                        modifier = Modifier.size(70.dp),
-                        alignment = Alignment.Center,
-                    )
-                } else {
-                    MoviePoster(poster = imageBitmap)
-                }
+                MoviePoster(poster = image)
             }
             Row (
                 verticalAlignment = Alignment.CenterVertically,
@@ -175,21 +164,7 @@ fun WatchSessionCard(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
-            val cr = LocalContext.current.contentResolver
-            val imageBitmap = uriToBitmap(Uri.parse(image), cr)
-            val posterBitmap = uriToBitmap(Uri.parse(poster), cr)
-            if(imageBitmap == null && posterBitmap == null) {
-                Image(
-                    imageVector = Icons.Outlined.Image,
-                    contentDescription = stringResource(R.string.screening_image),
-                    modifier = Modifier.width(70.dp)
-                )
-            } else {
-                ScreeningCardImage(
-                    image = imageBitmap,
-                    poster = posterBitmap
-                )
-            }
+            ScreeningCardImage(image = image, poster = poster)
             Column (
                 verticalArrangement = Arrangement.SpaceAround,
                 horizontalAlignment = Alignment.Start,
@@ -232,18 +207,7 @@ fun AccountCard (
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()
         ) {
-            val cr = LocalContext.current.contentResolver
-            val imageBitmap = uriToBitmap(Uri.parse(image), cr)
-            if(imageBitmap == null) {
-                Image(
-                    imageVector = Icons.Outlined.AccountCircle,
-                    contentDescription = stringResource(R.string.profile_image),
-                    modifier = Modifier.size(70.dp),
-                    alignment = Alignment.Center
-                )
-            } else {
-                ProfileImage(image = imageBitmap)
-            }
+            ProfileImage(image = image)
             Text(
                 username,
                 style = MaterialTheme.typography.titleLarge,

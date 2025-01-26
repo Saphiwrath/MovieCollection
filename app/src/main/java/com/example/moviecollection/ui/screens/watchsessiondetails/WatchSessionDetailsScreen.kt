@@ -61,25 +61,12 @@ fun WatchSessionDetailsScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.Start
         ) {
-            /* TODO: Add actual session image if present, movie image if not, placeholder if not */
             Row (
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()
             ){
-                val cr = LocalContext.current.contentResolver
-                val imageBitmap = uriToBitmap(Uri.parse(screening.image), cr)
-                val posterBitmap = uriToBitmap(Uri.parse(movie.poster), cr)
-                if (imageBitmap == null && posterBitmap == null) {
-                    Icon(
-                        imageVector = Icons.Outlined.Image,
-                        contentDescription = stringResource(R.string.screening_image),
-                        modifier = Modifier.size(200.dp),
-                        tint = MaterialTheme.colorScheme.onSurface
-                    )
-                } else {
-                    DetailsImage(image = imageBitmap, poster = posterBitmap)
-                }
+                DetailsImage(image = screening.image, poster = movie.poster)
             }
             Text(
                 movie.title,
